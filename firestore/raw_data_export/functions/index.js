@@ -18,4 +18,4 @@ exports.scheduledFirestoreExport = functions.pubsub.schedule(
   const operationInfo = await admin.firestore().exportDocuments(
     {databaseName, collectionIds, outputUriPrefix: outputBucketPath});
   console.log(operationInfo);
-};
+});
