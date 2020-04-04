@@ -1,7 +1,12 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-admin.initializeApp();
+// To trigger the job manually click "Run Now" in Cloud Scheduler console:
+// https://screenshot.googleplex.com/8Oa8Cz6GY3h
 
+const functions = require('firebase-functions');
+const firestore = require('@google-cloud/firestore');
+const admin = require('firebase-admin');
+
+const client = new firestore.v1.FirestoreAdminClient();
+admin.initializeApp();
 
 exports.scheduledFirestoreExport = functions.pubsub.schedule(
   'every day 02:00').onRun(
@@ -10,12 +15,19 @@ exports.scheduledFirestoreExport = functions.pubsub.schedule(
   const collections = await admin.firestore().listCollections();
   const collectionIds = collections.map(c => c.path);
 
-  const databaseName = client.databasePath(
-    process.env.GCLOUD_PROJECT,
-    '(default)'
-  );
+  const projectId = process.env.GCP_PROJECT || process.env.GCLOUD_PROJECT;
+  const databaseName = client.databasePath(projectId, '(default)');
   const outputBucketPath = 'gs://heroes-hat-firestore-raw'
-  const operationInfo = await admin.firestore().exportDocuments(
-    {databaseName, collectionIds, outputUriPrefix: outputBucketPath});
-  console.log(operationInfo);
+
+  return client.exportDocuments({
+    name: databaseName,
+    collectionIds: collectionIds,
+    outputUriPrefix: outputBucketPath}).then(responses => {
+      const response = responses[0];
+      console.log(`Operation Name: ${response['name']}`);
+      return;
+    })
+    .catch(err => {
+      console.error(err);
+    });
 });
