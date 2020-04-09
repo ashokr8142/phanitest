@@ -1,14 +1,14 @@
 const functions = require('firebase-functions');
 const path = require('path');
 
-const Storage = require('@google-cloud/storage');
+const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
-const Bigquery = require('@google-cloud/bigquery');
-const bigquery = new BigQuery()
+const {BigQuery} = require('@google-cloud/bigquery');
+const bigquery = new BigQuery();
 
-BUCKET_NAME = 'heroes-hat-firestore-raw'
+BUCKET_NAME = 'heroes-hat-firestore-raw';
 
-exports.bigqueryExportFromRawData = functions.storage().bucket(
+exports.bigqueryExportFromRawData = functions.storage.bucket(
   BUCKET_NAME).object().onFinalize(async (object) => {
   // File path in the bucket.
   const filePath = object.name;
@@ -18,18 +18,18 @@ exports.bigqueryExportFromRawData = functions.storage().bucket(
   }
 });
 
-async loadBackup(filePath, fileName) {
-  const regex = new RegExp("all_namespaces_kind_(.*).export_metadata")
-  const matches = fileName.match(regex)
+async function loadBackup(filePath, fileName) {
+  const regex = new RegExp("all_namespaces_kind_(.*).export_metadata");
+  const matches = fileName.match(regex);
   if (length(mathes) <= 1) {
     console.error(`File ${fileNmae} does not match export_metadata pattern`);
     return;
   }
-  const tableId = matches[1].replace("-RESPONSES", "")
+  const tableId = matches[1].replace("-RESPONSES", "");
   const datasetId = 'firestoreRawData';
 
   const metadata = {
-    sourceFormat: 'DATASTORE_BACKUP'
+    sourceFormat: 'DATASTORE_BACKUP',
   };
 
   console.info(
