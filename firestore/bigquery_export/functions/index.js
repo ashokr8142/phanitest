@@ -21,15 +21,16 @@ exports.bigqueryExportFromRawData = functions.storage.bucket(
 async function loadBackup(filePath, fileName) {
   const regex = new RegExp("all_namespaces_kind_(.*).export_metadata");
   const matches = fileName.match(regex);
-  if (length(mathes) <= 1) {
-    console.error(`File ${fileNmae} does not match export_metadata pattern`);
+  if (!matches || matches.length <= 1) {
+    console.info(`File ${fileName} does not match export_metadata pattern`);
     return;
   }
-  const tableId = matches[1].replace("-RESPONSES", "");
+  const tableId = matches[1].replace("-RESPONSES", "").replace(/\W/g, "");
   const datasetId = 'firestoreRawData';
 
   const metadata = {
     sourceFormat: 'DATASTORE_BACKUP',
+    writeDisposition: 'WRITE_TRUNCATE'
   };
 
   console.info(
@@ -41,7 +42,7 @@ async function loadBackup(filePath, fileName) {
 
   const errors = job.status.errors;
   if (errors && errors.length > 0) {
-    console.error(`Job ${job.id} failed (importing ${filename})`, errors);
+    console.error(`Job ${job.id} failed (importing ${fileName})`, errors);
   } else {
     console.log(`Job ${job.id} completed.`);
   }

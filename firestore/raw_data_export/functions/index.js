@@ -13,7 +13,16 @@ exports.scheduledFirestoreExport = functions.pubsub.schedule(
     async context => {
   // Get all colletion ids under root.
   const collections = await admin.firestore().listCollections();
-  const collectionIds = collections.map(c => c.path);
+  var collectionIds = collections.map(c => c.path);
+
+  /* eslint-disable no-await-in-loop */
+  for (const collection of collections) {
+    collectionIds.push.apply(collectionIds, await getSubCollecitons(
+      collection));
+  }
+  /* eslint-enable no-await-in-loop */
+  collectionIds =  Array.from(new Set(collectionIds));
+  console.info(`Collection ids to export = ${collectionIds.join(',')}`);
 
   const projectId = process.env.GCP_PROJECT || process.env.GCLOUD_PROJECT;
   const databaseName = client.databasePath(projectId, '(default)');
@@ -31,3 +40,20 @@ exports.scheduledFirestoreExport = functions.pubsub.schedule(
       console.error(err);
     });
 });
+
+async function getSubCollecitons(collection) {
+  var collectionIds = [];
+  /* eslint-disable no-await-in-loop */
+  for (const doc of (await collection.listDocuments())) {
+    collections = await doc.listCollections();
+    collectionIds.push.apply(collectionIds, collections.map(c => {
+      return c.id;
+    }));
+    for (const subcollection of collections) {
+      collectionIds.push.apply(collectionIds, await getSubCollecitons(
+        subcollection));
+    }
+  }
+  /* eslint-enable no-await-in-loop */
+  return collectionIds;
+}
