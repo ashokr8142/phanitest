@@ -22,12 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/bgImg"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_01" />
+                android:background="@color/colorPrimary" />
 
 
             <android.support.v7.widget.AppCompatImageView
