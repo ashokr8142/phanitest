@@ -8,8 +8,7 @@
         android:id="@+id/bgImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/welcome_bg_img1" />
+        android:background="@color/colorSecondaryStatBar"/>
 
 
     <android.support.v7.widget.AppCompatImageView
