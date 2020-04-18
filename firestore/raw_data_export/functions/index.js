@@ -13,7 +13,7 @@ exports.scheduledFirestoreExport = functions.pubsub.schedule(
     async context => {
   // Get all colletion ids under root.
   const collections = await admin.firestore().listCollections();
-  var collectionIds = collections.map(c => c.path);
+  const collectionIds = collections.map(c => c.path);
 
   /* eslint-disable no-await-in-loop */
   for (const collection of collections) {
