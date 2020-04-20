@@ -3170,7 +3170,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Heroes Health Dev";
 				REGISTRATIONSERVER_API_KEY = test_client_id_ma;
 				REGISTRATIONSERVER_API_SECERET = caff08160ade4cd738f9531dbd2ed33c12715abb402296f3479170f626bc7f56;
-				REGISTRATION_URL = "dev.heroes-hat.rocketturtle.net/myStudiesUserMgmtWS";
+				REGISTRATION_URL = "dev.heroes-hat.rocketturtle.net/myStudiesUserMgmtWS/";
 				RESPONSE_URL = "dev.heroes-hat.rocketturtle.net/mystudies-response-server/";
 				SWIFT_OBJC_BRIDGING_HEADER = "HPHC/Utils/Helpers/FDA-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3214,7 +3214,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Heroes Health Dev";
 				REGISTRATIONSERVER_API_KEY = test_client_id_ma;
 				REGISTRATIONSERVER_API_SECERET = caff08160ade4cd738f9531dbd2ed33c12715abb402296f3479170f626bc7f56;
-				REGISTRATION_URL = "dev.heroes-hat.rocketturtle.net/myStudiesUserMgmtWS";
+				REGISTRATION_URL = "dev.heroes-hat.rocketturtle.net/myStudiesUserMgmtWS/";
 				RESPONSE_URL = "dev.heroes-hat.rocketturtle.net/mystudies-response-server/";
 				SWIFT_OBJC_BRIDGING_HEADER = "HPHC/Utils/Helpers/FDA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
