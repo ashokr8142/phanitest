@@ -28,14 +28,14 @@ exports.surveyWriteTrigger = functions.firestore
       const handler = getActivityHandler(activityId);
       handler(activityId, participantId, data);
     } catch(error) {
-      log.error(error);
+      console.error(error);
     }
     return 0;
   });
 
 const getActivityHandler = (activityId) => {
   // All activities publish to common topic.
-  if (activityId == activityPHQDep) {
+  if (activityId === activityPHQDep) {
     return publishResponseValuesSum;
   }
   // For now we push raw data for any other study.
@@ -43,15 +43,15 @@ const getActivityHandler = (activityId) => {
 }
 
 const publishResponseValuesSum = (activityId, participantId, data) => {
-  if (data.results.length == 0 || data.results[0].length == 0) {
+  if (data.results.length === 0 || data.results[0].length === 0) {
     console.log(`Data empty for user ${participantId} activity ${activityId}.`)
     return;
   }
-  const scoreSum = 0;
+  let scoreSum = 0;
   const times = [];
   response = data.results[0];
   for (let [index, question_response] of response) {
-    if (question_response.score != ignoreValue) {
+    if (question_response.score !== ignoreValue) {
       scoreSum = scoreSum + question_response.value;
       times.push(new Date(quesiton_response.endTime));
     }
