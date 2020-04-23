@@ -27,16 +27,7 @@
                 android:id="@+id/bgImg"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:background="@color/colorPrimary" />
-
-
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignBottom="@id/bgImg"
-                android:layout_alignTop="@+id/bgImg"
-                android:alpha=".6"
-                android:background="@android:color/black" />
+                android:background="@color/colorSecondaryStatBar" />
 
 
             <RelativeLayout
@@ -51,7 +42,7 @@
                     android:layout_marginTop="20dp"
                     android:alpha=".5"
                     android:text="@string/websitetxt"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/black" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/welcome"
@@ -61,7 +52,7 @@
                     android:layout_marginBottom="30dp"
                     android:gravity="center"
                     android:text=""
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/black" />
 
             </RelativeLayout>
 
