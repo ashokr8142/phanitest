@@ -67,7 +67,7 @@ public class ChooseTouchIDSignInActivity extends AppCompatActivity {
   @SuppressWarnings("deprecation")
   private void customTextView(AppCompatTextView view) {
     String html =
-        "<font color=\"#007cba\"><u>" + getResources().getString(R.string.sign_in) + "</u></font>";
+        "<font color=\"#2f6942\"><u>" + getResources().getString(R.string.sign_in) + "</u></font>";
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
       view.setText(Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY));
     } else {
