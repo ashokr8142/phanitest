@@ -151,7 +151,7 @@ public class SignInActivity extends AppCompatActivity implements ApiCall.OnAsync
         0,
         spanTxt.length(),
         0);
-    spanTxt.append(getResources().getString(R.string.terms2));
+    spanTxt.append(" " + getResources().getString(R.string.terms2));
     spanTxt.setSpan(
         new ClickableSpan() {
           @Override
