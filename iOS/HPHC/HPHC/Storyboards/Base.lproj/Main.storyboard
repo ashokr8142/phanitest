@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B3S-hy-u0E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B3S-hy-u0E">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -24,8 +24,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="yXb-vr-OpV">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="yXb-vr-OpV">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" red="0.71764705880000002" green="0.86666666670000003" blue="0.76862745099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -850,7 +851,7 @@
                                                         <action selector="dayWeekMonthButtonAction:" destination="HiM-EC-i4w" eventType="touchUpInside" id="AAf-y5-YY1"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePj-VU-Hso">
+                                                <button opaque="NO" tag="12" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePj-VU-Hso">
                                                     <rect key="frame" x="260.5" y="14" width="35" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="bwr-nK-jMe"/>
@@ -870,7 +871,7 @@
                                                         <action selector="dayWeekMonthButtonAction:" destination="HiM-EC-i4w" eventType="touchUpInside" id="OQa-g6-CnX"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1o-Mh-BeP">
+                                                <button opaque="NO" tag="13" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1o-Mh-BeP">
                                                     <rect key="frame" x="311.5" y="14" width="45" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="H6i-7M-Bsu"/>
@@ -890,7 +891,7 @@
                                                         <action selector="dayWeekMonthButtonAction:" destination="HiM-EC-i4w" eventType="touchUpInside" id="Xmz-Iu-GQd"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RlU-c6-Npb">
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RlU-c6-Npb">
                                                     <rect key="frame" x="369.5" y="14" width="14.5" height="22"/>
                                                     <state key="normal" image="calenderIcon"/>
                                                 </button>
@@ -943,10 +944,10 @@
                                                                         <rect key="frame" x="0.0" y="0.0" width="125" height="110"/>
                                                                         <subviews>
                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="staticIcon1" translatesAutoresizingMaskIntoConstraints="NO" id="ngL-dG-bUm">
-                                                                                <rect key="frame" x="50.5" y="15.5" width="24" height="24"/>
+                                                                                <rect key="frame" x="38.5" y="15.5" width="48" height="48"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL HOURS OF SLEEP" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="OBs-tE-wLZ">
-                                                                                <rect key="frame" x="6.5" y="46" width="112" height="24"/>
+                                                                                <rect key="frame" x="6.5" y="70" width="112" height="24"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="112" id="KQS-V0-OtF"/>
                                                                                     <constraint firstAttribute="height" constant="24" id="n0l-5A-GU4"/>
@@ -956,7 +957,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="y6P-MQ-skz">
-                                                                                <rect key="frame" x="47" y="72" width="31" height="32"/>
+                                                                                <rect key="frame" x="47" y="96" width="31" height="32"/>
                                                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                 <nil key="highlightedColor"/>
@@ -1318,7 +1319,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="enter first name" textAlignment="right" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="deZ-Ym-GNo">
-                                                    <rect key="frame" x="147" y="14.5" width="238" height="22.5"/>
+                                                    <rect key="frame" x="147" y="16" width="238" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
