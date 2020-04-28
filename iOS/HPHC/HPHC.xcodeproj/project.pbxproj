@@ -438,7 +438,7 @@
 		AB4F5C61243DA6DC00572AFC /* ComprehensionFailure.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E61BCC31F27262F00C156B9 /* ComprehensionFailure.xib */; };
 		AB4F5C62243DA6DC00572AFC /* GatewayOverview.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486304D51E6FE77C003CD406 /* GatewayOverview.plist */; };
 		AB4F5C63243DA6DC00572AFC /* Profile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B3DD1B1E6ED8E500327AE5 /* Profile.plist */; };
-		AB4F5C64243DA6DC00572AFC /* AnanomousFilterData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E417AD21F4D5DA1007F27DA /* AnanomousFilterData.plist */; };
+		AB4F5C64243DA6DC00572AFC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		AB4F5C65243DA6DC00572AFC /* UserProfile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E7D2D8B1E4340B200763D4C /* UserProfile.plist */; };
 		AB4F5C66243DA6DC00572AFC /* Register.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E7D2D8F1E43526100763D4C /* Register.plist */; };
 		AB4F5C69243DA6DC00572AFC /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EF0BC3C2223D1D6004F2357 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -2284,7 +2284,7 @@
 				AB4F5C61243DA6DC00572AFC /* ComprehensionFailure.xib in Resources */,
 				AB4F5C62243DA6DC00572AFC /* GatewayOverview.plist in Resources */,
 				AB4F5C63243DA6DC00572AFC /* Profile.plist in Resources */,
-				AB4F5C64243DA6DC00572AFC /* AnanomousFilterData.plist in Resources */,
+				AB4F5C64243DA6DC00572AFC /* (null) in Resources */,
 				AB4F5C65243DA6DC00572AFC /* UserProfile.plist in Resources */,
 				AB4F5C66243DA6DC00572AFC /* Register.plist in Resources */,
 			);
@@ -3160,7 +3160,7 @@
 				ENROLLMENT_URL = "dev.heroes-hat.rocketturtle.net/myStudiesEnrollmentMgmt/";
 				INFOPLIST_FILE = "HeroesHealth-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				IS_STANDALONE_STUDY = false;
+				IS_STANDALONE_STUDY = true;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -3172,6 +3172,7 @@
 				REGISTRATIONSERVER_API_SECERET = caff08160ade4cd738f9531dbd2ed33c12715abb402296f3479170f626bc7f56;
 				REGISTRATION_URL = "dev.heroes-hat.rocketturtle.net/myStudiesUserMgmtWS/";
 				RESPONSE_URL = "dev.heroes-hat.rocketturtle.net/mystudies-response-server/";
+				STANDALONE_STUDY_ID = SurveyTeamfood;
 				SWIFT_OBJC_BRIDGING_HEADER = "HPHC/Utils/Helpers/FDA-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -3205,7 +3206,7 @@
 				ENROLLMENT_URL = "dev.heroes-hat.rocketturtle.net/myStudiesEnrollmentMgmt/";
 				INFOPLIST_FILE = "HeroesHealth-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				IS_STANDALONE_STUDY = false;
+				IS_STANDALONE_STUDY = true;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				ORG_ID = OrgName;
@@ -3216,6 +3217,7 @@
 				REGISTRATIONSERVER_API_SECERET = caff08160ade4cd738f9531dbd2ed33c12715abb402296f3479170f626bc7f56;
 				REGISTRATION_URL = "dev.heroes-hat.rocketturtle.net/myStudiesUserMgmtWS/";
 				RESPONSE_URL = "dev.heroes-hat.rocketturtle.net/mystudies-response-server/";
+				STANDALONE_STUDY_ID = SurveyTeamfood;
 				SWIFT_OBJC_BRIDGING_HEADER = "HPHC/Utils/Helpers/FDA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
