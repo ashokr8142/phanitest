@@ -27,7 +27,7 @@ class StudyDashboardStudyPercentageTableViewCell: UITableViewCell {
   @IBOutlet var studyPercentagePie: KDCircularProgress?
   @IBOutlet var completedPercentagePie: KDCircularProgress?
 
-  let blueColor = UIColor.init(red: 56 / 255, green: 124 / 255, blue: 186 / 255, alpha: 1)
+  let accentColor = kUiColorForAccent
   let greyColor = UIColor.init(red: 216 / 255, green: 227 / 255, blue: 230 / 255, alpha: 1)
 
   ///  Display Study Percentage cell.
@@ -44,7 +44,7 @@ class StudyDashboardStudyPercentageTableViewCell: UITableViewCell {
     studyPercentagePie?.roundedCorners = false
     studyPercentagePie?.glowMode = .forward
     studyPercentagePie?.glowAmount = 0.1
-    studyPercentagePie?.set(colors: blueColor)
+    studyPercentagePie?.set(colors: accentColor)
 
     completedPercentagePie?.startAngle = -90
     completedPercentagePie?.progressThickness = 0.25
@@ -55,7 +55,7 @@ class StudyDashboardStudyPercentageTableViewCell: UITableViewCell {
     completedPercentagePie?.roundedCorners = false
     completedPercentagePie?.glowMode = .forward
     completedPercentagePie?.glowAmount = 0.1
-    completedPercentagePie?.set(colors: blueColor)
+    completedPercentagePie?.set(colors: accentColor)
 
     if let userStudyStatus = currentUser.participatedStudies.filter({ $0.studyId == study?.studyId }
     ).first {

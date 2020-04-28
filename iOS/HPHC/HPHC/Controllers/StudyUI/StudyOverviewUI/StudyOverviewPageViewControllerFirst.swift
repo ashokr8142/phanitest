@@ -102,7 +102,7 @@ class StudyOverviewViewControllerFirst: UIViewController {
     )
     attributedText.addAttribute(
       NSAttributedString.Key.foregroundColor,
-      value: UIColor.white,
+      value: UIColor.black,
       range: (attrStr.string as NSString).range(of: attrStr.string)
     )
 
