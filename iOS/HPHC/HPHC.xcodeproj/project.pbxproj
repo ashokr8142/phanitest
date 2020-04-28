@@ -442,6 +442,8 @@
 		AB4F5C65243DA6DC00572AFC /* UserProfile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E7D2D8B1E4340B200763D4C /* UserProfile.plist */; };
 		AB4F5C66243DA6DC00572AFC /* Register.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E7D2D8F1E43526100763D4C /* Register.plist */; };
 		AB4F5C69243DA6DC00572AFC /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EF0BC3C2223D1D6004F2357 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AB6F13ED2458D2E2000D91D1 /* ColorTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB6F13E92458D2D3000D91D1 /* ColorTheme.xcassets */; };
+		AB6F13EE2458D2E4000D91D1 /* ColorTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB6F13E92458D2D3000D91D1 /* ColorTheme.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -757,6 +759,7 @@
 		A2CE974C81943F2AB0C602C1 /* Pods-HPHCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HPHCTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HPHCTests/Pods-HPHCTests.release.xcconfig"; sourceTree = "<group>"; };
 		AB4F5C6D243DA6DC00572AFC /* HeroesHealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeroesHealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4F5C70243DA6DF00572AFC /* HPHC copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "HPHC copy-Info.plist"; path = "/Users/ykyyip/Source/fda-mystudies/iOS/HPHC/HPHC copy-Info.plist"; sourceTree = "<absolute>"; };
+		AB6F13E92458D2D3000D91D1 /* ColorTheme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = ColorTheme.xcassets; path = HPHC/Assets/ColorTheme.xcassets; sourceTree = SOURCE_ROOT; };
 		E4CF7BB238C017BF7E2A6346 /* Pods_HPHCUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HPHCUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC9CA22924E3FDD2E7D31960 /* Pods_HPHC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HPHC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1331,6 +1334,7 @@
 			children = (
 				6EDDB65F1EE05FDC00C79337 /* OtherAssets */,
 				6E7D2D601E433E8800763D4C /* Assets.xcassets */,
+				AB6F13E92458D2D3000D91D1 /* ColorTheme.xcassets */,
 				94B3DD3B1E6ED8E500327AE5 /* Study.xcassets */,
 				94B3DD2D1E6ED8E500327AE5 /* LoginAssets.xcassets */,
 				6ECF75D11E6EF1E7008C935E /* FetalKickCounter.xcassets */,
@@ -2173,6 +2177,7 @@
 				8923429122B122DF0059F910 /* LoginAssets.xcassets in Resources */,
 				6E93C7E11EE2EC26006788B1 /* ConsentLatest.json in Resources */,
 				89893F0622B1125300A846CE /* Assets.xcassets in Resources */,
+				AB6F13EE2458D2E4000D91D1 /* ColorTheme.xcassets in Resources */,
 				89893F0722B112A000A846CE /* LaunchScreen.storyboard in Resources */,
 				6E7D2D8E1E43445600763D4C /* UserPreferences.plist in Resources */,
 				9450598F1F29FA2C007906A7 /* AppGlossary.pdf in Resources */,
@@ -2243,6 +2248,7 @@
 				AB4F5C38243DA6DC00572AFC /* LoginAssets.xcassets in Resources */,
 				AB4F5C39243DA6DC00572AFC /* ConsentLatest.json in Resources */,
 				AB4F5C3A243DA6DC00572AFC /* Assets.xcassets in Resources */,
+				AB6F13ED2458D2E2000D91D1 /* ColorTheme.xcassets in Resources */,
 				AB4F5C3B243DA6DC00572AFC /* LaunchScreen.storyboard in Resources */,
 				AB4F5C3C243DA6DC00572AFC /* UserPreferences.plist in Resources */,
 				AB4F5C3D243DA6DC00572AFC /* AppGlossary.pdf in Resources */,

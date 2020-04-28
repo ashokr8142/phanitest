@@ -29,24 +29,26 @@ let kNavigationTitlePrivacyPolicy = "Privacy Policy"
 let kAlertPleaseEnterValidValue = "Please Enter Valid Value"
 
 //Used for corner radius Color for sign in , sign up , forgot password etc screens
+let kUiColorForAccent = Utilities.getUIColorFromHex(0x2F6942)
+
 let kUicolorForButtonBackground = UIColor.init(
-  red: 0 / 255.0,
-  green: 124 / 255.0,
-  blue: 186 / 255.0,
+  red: 47 / 255.0,
+  green: 105 / 255.0,
+  blue: 66 / 255.0,
   alpha: 1.0
 ).cgColor
 
 let kUicolorForCancelBackground = UIColor.init(
-  red: 140 / 255.0,
-  green: 149 / 255.0,
-  blue: 163 / 255.0,
+  red: 227 / 255.0,
+  green: 82 / 255.0,
+  blue: 117 / 255.0,
   alpha: 1.0
 ).cgColor
 
 let kUIColorForSubmitButtonBackground = UIColor.init(
-  red: 0 / 255.0,
-  green: 124 / 255.0,
-  blue: 186 / 255.0,
+  red: 47 / 255.0,
+  green: 105 / 255.0,
+  blue: 66 / 255.0,
   alpha: 1.0
 )
 

@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -26,7 +27,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="yXb-vr-OpV">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" red="0.71764705880000002" green="0.86666666670000003" blue="0.76862745099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="AccentLight"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -229,7 +230,7 @@
                                 <rect key="frame" x="124" y="814" width="166" height="54"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Submit">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" name="Accent"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -377,13 +378,13 @@
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-2R-TkP">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
-                                <color key="backgroundColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="Accent"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="k6e-mm-YzD"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Glt-6Q-ch7">
-                                <rect key="frame" x="20" y="54" width="20.5" height="22"/>
+                                <rect key="frame" x="20" y="54" width="41" height="43"/>
                                 <state key="normal" image="homeIconWhite"/>
                                 <connections>
                                     <action selector="homeButtonAction:" destination="dBo-w9-jvv" eventType="touchUpInside" id="ERL-9X-Xhv"/>
@@ -399,7 +400,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iux-Wi-VgU">
-                                <rect key="frame" x="376.5" y="54" width="15.5" height="22.5"/>
+                                <rect key="frame" x="361" y="54" width="31" height="45"/>
                                 <state key="normal" image="shareIcon"/>
                                 <connections>
                                     <action selector="shareButtonAction:" destination="dBo-w9-jvv" eventType="touchUpInside" id="o15-kc-DiP"/>
@@ -475,7 +476,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDc-BD-rWW">
                                                     <rect key="frame" x="228" y="30" width="79" height="18"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" name="Accent"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -651,7 +652,7 @@
                                                 </label>
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ALU-N3-hc6">
                                                     <rect key="frame" x="35" y="54" width="157.5" height="2"/>
-                                                    <color key="progressTintColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="progressTintColor" name="Accent"/>
                                                 </progressView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Won-2E-j3L">
                                                     <rect key="frame" x="207.5" y="28" width="1" height="25"/>
@@ -675,7 +676,7 @@
                                                 </label>
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1nj-5K-7BW">
                                                     <rect key="frame" x="222.5" y="54" width="157.5" height="2"/>
-                                                    <color key="progressTintColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="progressTintColor" name="Accent"/>
                                                 </progressView>
                                             </subviews>
                                             <constraints>
@@ -735,13 +736,13 @@
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="9UC-Jd-1m7">
                                                                         <rect key="frame" x="70" y="49" width="16" height="32"/>
                                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
-                                                                        <color key="textColor" red="0.0" green="0.48627450980392156" blue="0.72941176470588232" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="textColor" name="Accent"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMPLETED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="9Gm-yg-ywQ">
                                                                         <rect key="frame" x="43" y="83" width="69" height="14"/>
                                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="11"/>
-                                                                        <color key="textColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="textColor" name="Accent"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Survey, 1 task" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="WOK-eq-CJE">
@@ -761,13 +762,13 @@
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="2Z1-U0-8Iz">
                                                                         <rect key="frame" x="211.5" y="49" width="16" height="32"/>
                                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
-                                                                        <color key="textColor" red="0.0" green="0.48627450980392156" blue="0.72941176470588232" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="textColor" name="Accent"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PENDING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="GN9-j6-XaI">
                                                                         <rect key="frame" x="193.5" y="83" width="50" height="14"/>
                                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="11"/>
-                                                                        <color key="textColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="textColor" name="Accent"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 Surveys, 1 task" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="9KQ-jR-WKo">
@@ -831,8 +832,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5K4-yU-BVN">
-                                                    <rect key="frame" x="213.5" y="14" width="30" height="20"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <rect key="frame" x="199" y="14" width="30" height="20"/>
+                                                    <color key="backgroundColor" name="Accent"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="9BA-Ue-xBg"/>
                                                     </constraints>
@@ -851,8 +852,8 @@
                                                         <action selector="dayWeekMonthButtonAction:" destination="HiM-EC-i4w" eventType="touchUpInside" id="AAf-y5-YY1"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="12" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePj-VU-Hso">
-                                                    <rect key="frame" x="260.5" y="14" width="35" height="20"/>
+                                                <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePj-VU-Hso">
+                                                    <rect key="frame" x="246" y="14" width="35" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="bwr-nK-jMe"/>
                                                     </constraints>
@@ -871,8 +872,8 @@
                                                         <action selector="dayWeekMonthButtonAction:" destination="HiM-EC-i4w" eventType="touchUpInside" id="OQa-g6-CnX"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="13" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1o-Mh-BeP">
-                                                    <rect key="frame" x="311.5" y="14" width="45" height="20"/>
+                                                <button opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1o-Mh-BeP">
+                                                    <rect key="frame" x="297" y="14" width="45" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="H6i-7M-Bsu"/>
                                                     </constraints>
@@ -891,12 +892,12 @@
                                                         <action selector="dayWeekMonthButtonAction:" destination="HiM-EC-i4w" eventType="touchUpInside" id="Xmz-Iu-GQd"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RlU-c6-Npb">
-                                                    <rect key="frame" x="369.5" y="14" width="14.5" height="22"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RlU-c6-Npb">
+                                                    <rect key="frame" x="355" y="14" width="29" height="31"/>
                                                     <state key="normal" image="calenderIcon"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSz-m1-cii">
-                                                    <rect key="frame" x="87" y="47" width="8" height="22"/>
+                                                    <rect key="frame" x="79" y="47" width="16" height="27"/>
                                                     <state key="normal" image="leftIconBlue"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17, MAR 2017 - 24, MAR 2017" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="YDT-f5-CTQ">
@@ -906,7 +907,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pom-AN-xJS">
-                                                    <rect key="frame" x="317" y="47" width="8" height="22"/>
+                                                    <rect key="frame" x="317" y="47" width="16" height="27"/>
                                                     <state key="normal" image="rightIconBlue"/>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IdM-CS-gER">
@@ -963,7 +964,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="backgroundColor" name="Accent"/>
                                                                         <constraints>
                                                                             <constraint firstItem="OBs-tE-wLZ" firstAttribute="top" secondItem="ngL-dG-bUm" secondAttribute="bottom" constant="6.5" id="Rka-Cd-96O"/>
                                                                             <constraint firstItem="ngL-dG-bUm" firstAttribute="top" secondItem="Q1Q-LY-6Lx" secondAttribute="top" constant="15.5" id="X3f-5A-kom"/>
@@ -1059,7 +1060,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrowBlue" translatesAutoresizingMaskIntoConstraints="NO" id="WAq-d6-r7X">
-                                                    <rect key="frame" x="360" y="19" width="23" height="18"/>
+                                                    <rect key="frame" x="337" y="19" width="46" height="36"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -1136,22 +1137,22 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="surveyIcon" translatesAutoresizingMaskIntoConstraints="NO" id="hn4-0y-CKb">
-                                                    <rect key="frame" x="27" y="28" width="21.5" height="21.5"/>
+                                                    <rect key="frame" x="27" y="28" width="43" height="43"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Izq-bR-aTL">
-                                                    <rect key="frame" x="58.5" y="27" width="41" height="15"/>
+                                                    <rect key="frame" x="80" y="27" width="41" height="15"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
-                                                    <color key="textColor" red="0.0" green="0.48627450980392156" blue="0.72941176470588232" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" name="Accent"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1st Trimester Survey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8n-qg-kQu">
-                                                    <rect key="frame" x="58.5" y="42" width="166" height="21"/>
+                                                    <rect key="frame" x="80" y="42" width="166" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Every Saturday - 02:00 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lle-16-u6s">
-                                                    <rect key="frame" x="58.5" y="70" width="157" height="16"/>
+                                                    <rect key="frame" x="80" y="70" width="157" height="16"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1367,7 +1368,7 @@
                                 <rect key="frame" x="124" y="814" width="166" height="54"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Submit">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" name="Accent"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1500,5 +1501,11 @@
         <image name="splash" width="375" height="667"/>
         <image name="staticIcon1" width="24" height="24"/>
         <image name="surveyIcon" width="21.5" height="21.5"/>
+        <namedColor name="Accent">
+            <color red="0.1843137255" green="0.41176470590000003" blue="0.25882352939999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="AccentLight">
+            <color red="0.71764705880000002" green="0.86666666670000003" blue="0.76862745099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

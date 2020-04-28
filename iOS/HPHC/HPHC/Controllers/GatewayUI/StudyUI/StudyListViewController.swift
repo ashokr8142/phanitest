@@ -209,7 +209,7 @@ class StudyListViewController: UIViewController {
     titleLabel.text = NSLocalizedString(navTitle, comment: "")
     titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
     titleLabel.textAlignment = .left
-    titleLabel.textColor = Utilities.getUIColorFromHex(0x007CBA)
+    titleLabel.textColor = kUiColorForAccent
     titleLabel.frame = CGRect(x: 0, y: 0, width: 300, height: 44)
 
     navigationItem.titleView = titleLabel
@@ -229,7 +229,7 @@ class StudyListViewController: UIViewController {
     button.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
     button.frame = CGRect(x: 0, y: 0, width: 120, height: 30)
     button.contentHorizontalAlignment = .left
-    button.setTitleColor(Utilities.getUIColorFromHex(0x007CBA), for: .normal)
+    button.setTitleColor(kUiColorForAccent, for: .normal)
 
     let barItem = UIBarButtonItem(customView: button)
 

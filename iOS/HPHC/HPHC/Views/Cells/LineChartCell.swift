@@ -76,8 +76,7 @@ class LineChartCell: GraphChartTableViewCell {
     let stringStartDate = LineChartCell.formatter.string(from: startDateOfWeek!) + " - "
     let stringEndDate = LineChartCell.formatter.string(from: endDateOfWeek!)
 
-    let color = Utilities.getUIColorFromHex(0x007CBA)
-
+    let color = kUiColorForAccent
     let attributedStartDate: NSMutableAttributedString = NSMutableAttributedString(
       string: stringStartDate
     )
@@ -107,7 +106,7 @@ class LineChartCell: GraphChartTableViewCell {
 
     let stringStartDate2 = stringStartDate + " - "
 
-    let color = Utilities.getUIColorFromHex(0x007CBA)
+    let color = kUiColorForAccent
 
     let attributedStartDate: NSMutableAttributedString = NSMutableAttributedString(
       string: stringStartDate2
