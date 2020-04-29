@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ProductTitleName</key>
-	<string>App Name</string>
+	<string>Heroes Health</string>
 	<key>JoinStudyButtonTitle</key>
 	<string>Join Study</string>
 	<key>ViewConsentButtonTitle</key>
@@ -23,13 +23,13 @@
 	<key>TermsAndConditionURL</key>
 	<string></string>
 	<key>PrivacyPolicyURL</key>
-	<string></string>
+	<string>https://heroeshealth.unc.edu/about-the-app/privacy-policy/</string>
 	<key>ValidatedTitle</key>
 	<string>Eligibility Confirmed</string>
 	<key>AllowFeedback</key>
 	<true/>
 	<key>NavigationTitleName</key>
-	<string>App Name</string>
+	<string>Heroes Health</string>
 	<key>PoweredByTitleName</key>
 	<string>Powered by FDA MyStudies on Google Cloud</string>
 </dict>

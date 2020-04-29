@@ -1502,10 +1502,11 @@
         <image name="staticIcon1" width="24" height="24"/>
         <image name="surveyIcon" width="21.5" height="21.5"/>
         <namedColor name="Accent">
-            <color red="0.1843137255" green="0.41176470590000003" blue="0.25882352939999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.18400000035762787" green="0.41200000047683716" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="AccentLight">
-            <color red="0.71764705880000002" green="0.86666666670000003" blue="0.76862745099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.71799999475479126" green="0.86699998378753662" blue="0.76899999380111694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
+    <color key="tintColor" name="Accent"/>
 </document>
