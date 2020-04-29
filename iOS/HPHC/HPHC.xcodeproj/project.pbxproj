@@ -444,6 +444,7 @@
 		AB4F5C69243DA6DC00572AFC /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EF0BC3C2223D1D6004F2357 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB6F13ED2458D2E2000D91D1 /* ColorTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB6F13E92458D2D3000D91D1 /* ColorTheme.xcassets */; };
 		AB6F13EE2458D2E4000D91D1 /* ColorTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB6F13E92458D2D3000D91D1 /* ColorTheme.xcassets */; };
+		AB6F13F52459E870000D91D1 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD4F679244F2EE900584C0C /* DateHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2657,6 +2658,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB6F13F52459E870000D91D1 /* DateHelper.swift in Sources */,
 				AB4F5B93243DA6DC00572AFC /* UIApplication+Extensions.swift in Sources */,
 				AB4F5B94243DA6DC00572AFC /* UIViewController+Extensions.swift in Sources */,
 				AB4F5B95243DA6DC00572AFC /* SignUpTableViewCell.swift in Sources */,
