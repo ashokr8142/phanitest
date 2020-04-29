@@ -1946,5 +1946,5 @@
             <color red="0.71799999475479126" green="0.86699998378753662" blue="0.76899999380111694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
-    <color key="tintColor" red="0.54901960780000003" green="0.58431372550000005" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+    <color key="tintColor" name="Accent"/>
 </document>

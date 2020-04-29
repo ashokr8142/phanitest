@@ -42,7 +42,8 @@
     <resources>
         <image name="splash" width="375" height="667"/>
         <namedColor name="AccentLight">
-            <color red="0.71764705880000002" green="0.86666666670000003" blue="0.76862745099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.71799999475479126" green="0.86699998378753662" blue="0.76899999380111694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
+    <color key="tintColor" name="Accent"/>
 </document>
