@@ -63,7 +63,7 @@ public class URLs {
   public static String SPECIFIC_STUDY = "study";
   public static String STUDY_UPDATES = "studyUpdates";
   public static String ACTIVITY_LIST = "activityList";
-  public static String RESOURCE_LIST = "resources";
+  public static String RESOURCE_LIST = "userResources";
   public static String NOTIFICATIONS = "notifications";
   public static String DASHBOARD_INFO = "studyDashboard";
   public static String GET_CONSENT_DOC = "consentDocument";
