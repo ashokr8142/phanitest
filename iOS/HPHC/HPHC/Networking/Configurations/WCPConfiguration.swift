@@ -27,6 +27,7 @@ enum WCPMethods: String {
   case gatewayInfo
   case studyList
   case eligibilityConsent
+  case userResources
   case resources
   case studyInfo
   case activityList
