@@ -11,4 +11,4 @@ COPY . ./app
 RUN pip install -r app/requirements.txt
 
 # Run the script.
-CMD ["python3", "app/phqdep_subscription_main.py"]
+CMD ["python3", "app/subscription_main.py"]

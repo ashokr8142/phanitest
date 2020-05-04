@@ -29,20 +29,24 @@ class EmailSender(object):
 
   def send(self, subject, body, recipients):
     """Send mail with given subject and body to resipients."""
-    msg = EmailMessage()
-    msg['Subject'] = subject
-    msg['From'] = _EMAIL_ADDRESS
-    msg['To'] = ', '.join(recipients)
-    msg.set_content(body)
-    self.server.send_message(msg, _EMAIL_ADDRESS, recipients)
+    try:
+      msg = EmailMessage()
+      msg['Subject'] = subject
+      msg['From'] = _EMAIL_ADDRESS
+      msg['To'] = ', '.join(recipients)
+      msg.set_content(body)
+      self.server.send_message(msg, _EMAIL_ADDRESS, recipients)
+    except Exception as e:
+      print('Had trouble sending email to: {}'.format(msg['To']))
 
 
 @six.add_metaclass(abc.ABCMeta)
 class Subscriber(object):
-  def __init__(self, project_id, subscription_name):
+  def __init__(self, project_id, subscription_name, activity_id=None):
     self.subscriber_client = SubscriberClient()
     self.subscription_path = self.subscriber_client.subscription_path(
       project_id, subscription_name)
+    self.activity_id = activity_id
 
   def get_streaming_subscription(self):
     """Retruns streaming subscription on Google Pub/Sub topic."""
@@ -70,10 +74,58 @@ class TestSubscriber(Subscriber):
     return _callback
 
 
+class RoutingSubscriber(Subscriber):
+  """Delegates work to subsubscribers or messages without explicit suscriber."""
+  def __init__(self, project_id, subscription_name):
+     # Map from activityId to subscriber.
+     self.subscriber_map = {
+      'PHQDepWithSum': PHQDepSubscriber(project_id, subscription_name),
+      'Demographics': DemographicsSubscriber(project_id, subscription_name)
+     }
+     super(RoutingSubscriber, self).__init__(project_id, subscription_name)
+
+  def get_callback(self):
+
+    def _callback(message):
+      data = json.loads(message.data)
+      activity_id = data['activityId']
+      if activity_id in self.subscriber_map:
+        self.subscriber_map[activity_id].get_callback()(message)
+      else:
+        print('Ignoring message from activity {}'.format(activity_id))
+        message.ack()
+
+    return _callback
+
+
+class DemographicsSubscriber(Subscriber):
+  """Subsctiber fro Demographics survey massages."""
+  def __init__(self, project_id, subscription_name):
+    super(DemographicsSubscriber, self).__init__(project_id, subscription_name,
+                                                 'Demographics')
+
+  def get_callback(self):
+
+    def _callback(message):
+      data = json.loads(message.data)
+      if data['activityId'] == self.activity_id:
+        institution = ''
+        for result in data['data']['results']:
+          if result['key'] == 'HealthcareSys':
+            institution = result['value']
+        print(
+          '''Received Demogrphics message from participant {}
+            with institution {}'''.format(data['participantId'], institution))
+        message.ack()
+      else:
+        print('Ignoring message from activity {}'.format(data['activityId']))
+        message.nack()
+
+    return _callback
+
 class PHQDepSubscriber(Subscriber):
   """Subscriber for PHQDep survey messages."""
   def __init__(self, project_id, subscription_name):
-    self.activity_id = 'PHQDepWithSum';
     self.db = sqlalchemy.create_engine(
       sqlalchemy.engine.url.URL(
         drivername="mysql+pymysql",
@@ -83,7 +135,8 @@ class PHQDepSubscriber(Subscriber):
         # To run with local cloud proxy instance add query to the method above:
         # query={"unix_socket": "/cloudsql/{}".format(_SQL_CONNECTION)}
     self.email_sender = EmailSender()
-    super(PHQDepSubscriber, self).__init__(project_id, subscription_name)
+    super(PHQDepSubscriber, self).__init__(project_id, subscription_name,
+                                           'PHQDepWithSum')
 
   def get_callback(self):
 
@@ -105,7 +158,7 @@ class PHQDepSubscriber(Subscriber):
         message.ack()
       else:
         print('Ignoring message from activity {}'.format(data['activityId']))
-        message.ack()
+        message.nack()
 
     return _callback
 
