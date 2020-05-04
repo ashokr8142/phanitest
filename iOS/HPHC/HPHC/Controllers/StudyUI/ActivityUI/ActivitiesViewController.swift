@@ -1060,6 +1060,7 @@ extension ActivitiesViewController: NMWebServiceDelegate {
       || (requestName as String == ResponseMethods.updateActivityState.method.methodName)
       || (requestName as String == WCPMethods.studyDashboard.method.methodName)
       || (requestName as String == WCPMethods.resources.method.methodName)
+      || (requestName as String == WCPMethods.userResources.method.methodName)
     {
     } else {
       self.addProgressIndicator()
@@ -1092,7 +1093,8 @@ extension ActivitiesViewController: NMWebServiceDelegate {
       self.sendRequestToGetResourcesInfo()
       self.getLabkeyResponse()
 
-    } else if requestName as String == WCPMethods.resources.method.methodName {
+    } else if requestName as String == WCPMethods.resources.method.methodName
+        || requestName as String == WCPMethods.userResources.method.methodName {
       self.removeProgressIndicator()
 
     } else if requestName as String == ResponseMethods.processResponse.method.methodName {

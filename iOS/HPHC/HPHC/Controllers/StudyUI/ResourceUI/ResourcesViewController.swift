@@ -649,6 +649,10 @@ extension ResourcesViewController: NMWebServiceDelegate {
       self.removeProgressIndicator()
       self.loadResourceFromDatabase()
 
+    case WCPMethods.userResources.method.methodName:
+      self.removeProgressIndicator()
+      self.loadResourceFromDatabase()
+
     case EnrollmentMethods.withdrawfromstudy.method.methodName:
       if !Utilities.isStandaloneApp() {
         if let response = response as? JSONDictionary {
@@ -732,7 +736,8 @@ extension ResourcesViewController: NMWebServiceDelegate {
       )
     } else {
 
-      if requestName as String == WCPMethods.resources.method.methodName {
+      if requestName as String == WCPMethods.resources.method.methodName
+        || requestName as String == WCPMethods.userResources.method.methodName {
 
         self.removeProgressIndicator()
         tableViewRowDetails = []
