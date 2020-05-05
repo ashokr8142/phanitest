@@ -43,7 +43,7 @@ module "project" {
   version = "~> 7.0"
 
   name                    = var.devops_project_id
-  org_id		  = "123"
+  org_id                  = "123"
   folder_id               = var.folder_id
   billing_account         = var.billing_account
   lien                    = true

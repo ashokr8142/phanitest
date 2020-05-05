@@ -17,7 +17,7 @@ variable "name" {
 }
 
 variable "folder_id" {
-  type    = string
+  type = string
 }
 
 variable "billing_account" {
