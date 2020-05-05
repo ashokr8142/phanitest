@@ -3161,7 +3161,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CONSENTMGMT_URL = "dev.heroes-hat.rocketturtle.net/myStudiesConsentMgmtWS/";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
 				ENABLE_BITCODE = NO;
@@ -3207,7 +3207,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CONSENTMGMT_URL = "dev.heroes-hat.rocketturtle.net/myStudiesConsentMgmtWS/";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = EQHXZ8M8AV;
 				ENABLE_BITCODE = NO;
