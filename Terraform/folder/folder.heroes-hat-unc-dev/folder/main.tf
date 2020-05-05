@@ -12,4 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+# This folder contains Terraform resources to setup the folder.
+
+terraform {
+  required_version = "~> 0.12.0"
+  required_providers {
+    google      = "~> 3.0"
+    google-beta = "~> 3.0"
+  }
+  backend "gcs" {}
+}
+
+resource "google_folder" "folder" {
+  display_name = var.display_name
+  parent       = var.parent
+}

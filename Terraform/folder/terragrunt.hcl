@@ -12,4 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+remote_state {
+  backend = "gcs"
+  config = {
+    bucket = "heroes-hat-unc-dev-terraform-state"
+    prefix = "${path_relative_to_include()}"
+  }
+}

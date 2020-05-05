@@ -12,4 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+output "private_network" {
+  value = module.private.network.network
+}
+
+output "gke_subnetwork" {
+  value = local.gke_subnet
+}
+
+output "bastion_service_account" {
+  value = module.bastion.service_account
+}

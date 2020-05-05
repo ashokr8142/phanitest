@@ -31,7 +31,7 @@ terraform {
     google-beta = "~> 3.0"
   }
   backend "gcs" {
-    bucket = "heroes-hat-dev-terraform-state-08679"
+    bucket = "heroes-hat-unc-dev-terraform-state"
     prefix = "bootstrap"
   }
 }
@@ -43,7 +43,8 @@ module "project" {
   version = "~> 7.0"
 
   name                    = var.devops_project_id
-  org_id                  = var.org_id
+  org_id		  = "123"
+  folder_id               = var.folder_id
   billing_account         = var.billing_account
   lien                    = true
   default_service_account = "keep"
@@ -72,8 +73,8 @@ resource "google_project_iam_binding" "devops_owners" {
 }
 
 # Org level IAM permissions for org admins.
-resource "google_organization_iam_member" "org_admin" {
-  org_id = var.org_id
-  role   = "roles/resourcemanager.organizationAdmin"
-  member = var.org_admin
-}
+#resource "google_organization_iam_member" "org_admin" {
+#  org_id = var.org_id
+#  role   = "roles/resourcemanager.organizationAdmin"
+#  member = var.org_admin
+#}

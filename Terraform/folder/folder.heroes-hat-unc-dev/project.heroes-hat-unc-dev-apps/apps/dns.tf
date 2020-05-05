@@ -12,4 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+# DNS sets up nameservers to connect to the GKE clusters.
+module "dns" {
+  source  = "terraform-google-modules/cloud-dns/google"
+  version = "3.0.1"
+
+  name       = var.dns_name
+  project_id = var.project_id
+  type       = "public"
+  domain     = var.dns_domain
+
+  recordsets = [{
+    name = "tf-dev"
+    type = "A"
+    ttl  = 30
+    records = [
+      module.heroes_hat_cluster.endpoint,
+    ]
+  }]
+}

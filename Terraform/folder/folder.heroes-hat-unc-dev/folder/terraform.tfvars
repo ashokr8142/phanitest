@@ -12,4 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+display_name = "heroes-hat-unc-dev"
+parent       = "organizations/"

@@ -12,4 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+project_id         = "heroes-hat-unc-dev-data"
+secrets_project_id = "heroes-hat-unc-dev-devops"
+storage_location   = "us-east1"
+cloudsql_region    = "us-east1"
+cloudsql_zone      = "b"

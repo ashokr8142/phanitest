@@ -12,4 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+org_id       = ""
+project_id   = "heroes-hat-unc-dev-audit"
+dataset_name = "1yr_org_audit_logs"
+bucket_name  = "7yr-org-audit-logs-08679"
+auditors     = "group:roachjm@unc.edu"

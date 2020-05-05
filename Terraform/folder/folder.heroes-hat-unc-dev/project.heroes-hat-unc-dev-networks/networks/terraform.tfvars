@@ -12,4 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+project_id       = "heroes-hat-unc-dev-networks"
+region           = "us-east1"
+zone             = "us-east1-b"
+gke_network_name = "heroes-hat-unc-dev-apps-network"
+bastion_users = [
+  "group:roachjm@unc.edu",
+]

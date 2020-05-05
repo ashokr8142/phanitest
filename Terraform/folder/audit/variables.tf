@@ -12,4 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+variable "org_id" {
+  type = string
+}
+
+variable "project_id" {
+  type = string
+}
+
+variable "dataset_name" {
+  type = string
+}
+
+variable "bucket_name" {
+  type = string
+}
+
+variable "auditors" {
+  type = string
+}

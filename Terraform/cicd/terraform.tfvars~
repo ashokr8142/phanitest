@@ -12,4 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+folder                        = "455887492777"
+devops_project_id             = "heroes-hat-unc-dev-devops"
+state_bucket                  = "heroes-hat-unc-dev-terraform-state"
+repo_owner                    = "roachjm-unc"
+repo_name                     = "fda-mystudies-unc"
+branch_regex                  = "^master$"
+continuous_deployment_enabled = true
+trigger_enabled               = true
+terraform_root                = "Terraform"
+build_viewers = [
+  "group:heroes-health-approvers@gcp.unc.edu",
+]

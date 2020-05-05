@@ -12,4 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+include {
+  path = find_in_parent_folders()
+}
+
+dependencies {
+  paths = [
+    "../project.heroes-hat-unc-dev-audit/project",
+  ]
+}

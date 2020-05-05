@@ -12,4 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+name            = "heroes-hat-unc-dev-networks"
+org_id          = ""
+billing_account = "00936C-CC8624-429851"
+apis = [
+  "compute.googleapis.com",
+  "container.googleapis.com",
+  "iap.googleapis.com",
+  "servicenetworking.googleapis.com",
+  "sqladmin.googleapis.com",
+]

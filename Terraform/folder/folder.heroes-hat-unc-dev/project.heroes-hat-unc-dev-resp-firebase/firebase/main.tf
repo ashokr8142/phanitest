@@ -12,4 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+# This folder contains Terraform resources to setup a Google Cloud Firebase instance. It enables
+# Firebase resources on the given GCP project.
+
+terraform {
+  required_version = "~> 0.12.0"
+  required_providers {
+    google      = "~> 3.0"
+    google-beta = "~> 3.0"
+  }
+  backend "gcs" {}
+}
+
+resource "google_firebase_project" "firebase" {
+  provider = google-beta
+  project  = var.project_id
+}

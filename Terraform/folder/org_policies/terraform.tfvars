@@ -12,4 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+org_id = ""
+allowed_shared_vpc_host_projects = [
+  "projects/heroes-hat-unc-dev-networks",
+]

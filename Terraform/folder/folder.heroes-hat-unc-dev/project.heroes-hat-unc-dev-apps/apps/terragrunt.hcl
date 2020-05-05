@@ -12,4 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+include {
+  path = find_in_parent_folders()
+}
+
+dependency "project" {
+  config_path  = "../project"
+  skip_outputs = true
+}
+
+dependency "network" {
+  config_path = "../../project.heroes-hat-unc-dev-networks/networks/"
+
+  mock_outputs = {
+    private_network = {
+      name = "mock-network"
+    }
+    gke_subnetwork = {
+      name = "mock-subnetwork"
+    }
+  }
+}
+
+inputs = {
+  network    = dependency.network.outputs.private_network.name
+  subnetwork = dependency.network.outputs.gke_subnetwork.name
+}

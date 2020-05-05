@@ -12,4 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+include {
+  path = find_in_parent_folders()
+}
+
+dependency "parent_folder" {
+  config_path = "../../folder"
+  mock_outputs = {
+    name = "mock-folder"
+  }
+}
+
+inputs = {
+  folder_id = dependency.parent_folder.outputs.name
+}

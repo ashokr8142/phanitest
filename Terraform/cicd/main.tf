@@ -30,7 +30,7 @@ terraform {
     google-beta = "~> 3.0"
   }
   backend "gcs" {
-    bucket = "heroes-hat-dev-terraform-state-08679"
+    bucket = "heroes-hat-unc-dev-terraform-state"
     prefix = "cicd"
   }
 }
@@ -61,11 +61,11 @@ locals {
     "roles/iam.securityReviewer",
   ]
   cloudbuild_sa_editor_roles = [
-    "roles/billing.user",
+#    "roles/billing.user",
     "roles/compute.xpnAdmin",
     "roles/logging.configWriter",
-    "roles/orgpolicy.policyAdmin",
-    "roles/resourcemanager.organizationAdmin",
+#    "roles/orgpolicy.policyAdmin",
+#    "roles/resourcemanager.organizationAdmin",
     "roles/resourcemanager.folderCreator",
     "roles/resourcemanager.projectCreator",
   ]
@@ -103,6 +103,15 @@ resource "google_project_iam_member" "cloudbuild_viewers" {
   ]
 }
 
+resource "google_billing_account_iam_member" "binding" {
+  billing_account_id = "00936C-CC8624-429851"
+  role               = "roles/billing.user"
+  member             = local.cloud_build_sa
+  depends_on = [
+    google_project_service.devops_apis,
+  ]
+}
+
 # Cloud Build - Cloud Build Service Account IAM permissions
 # IAM permissions to allow Cloud Build SA to access state.
 resource "google_storage_bucket_iam_member" "cloudbuild_state_iam" {
@@ -115,9 +124,9 @@ resource "google_storage_bucket_iam_member" "cloudbuild_state_iam" {
 }
 
 # Grant Cloud Build Service Account access to the organization.
-resource "google_organization_iam_member" "cloudbuild_sa_org_iam" {
+resource "google_folder_iam_member" "cloudbuild_sa_folder_iam" {
   for_each = toset(var.continuous_deployment_enabled ? local.cloudbuild_sa_editor_roles : local.cloudbuild_sa_viewer_roles)
-  org_id   = var.org_id
+  folder   = var.folder
   role     = each.value
   member   = local.cloud_build_sa
   depends_on = [

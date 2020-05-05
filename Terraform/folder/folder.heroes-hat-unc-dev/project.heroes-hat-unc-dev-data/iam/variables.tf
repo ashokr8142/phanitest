@@ -12,4 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+variable "project_id" {
+  type = string
+}
+
+variable "sql_clients" {
+  description = "Clients who have access to the SQL instances in this project"
+  type        = list(string)
+}

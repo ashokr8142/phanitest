@@ -12,4 +12,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-devops"
+variable "project_id" {
+  type = string
+}
+
+variable "secrets_project_id" {
+  type = string
+}
+
+variable "network" {
+  type = string
+}
+
+variable "storage_location" {
+  type = string
+}
+
+variable "cloudsql_region" {
+  type = string
+}
+
+variable "cloudsql_zone" {
+  type = string
+}
+
+variable "consent_documents_iam_members" {
+  type = list(object({
+    role   = string
+    member = string
+  }))
+  default = []
+}
+
+variable "fda_resources_iam_members" {
+  type = list(object({
+    role   = string
+    member = string
+  }))
+  default = []
+}
