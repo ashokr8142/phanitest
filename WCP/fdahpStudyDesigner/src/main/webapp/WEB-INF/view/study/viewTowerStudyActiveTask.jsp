@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <div class="changeContent">
 	<form:form
-		action="/fdahpStudyDesigner/adminStudies/saveOrUpdateActiveTaskContent.do?_S=${param._S}"
+		action="/studybuilder/adminStudies/saveOrUpdateActiveTaskContent.do?_S=${param._S}"
 		name="activeContentFormId" id="activeContentFormId" method="post"
 		role="form">
 		<input type="hidden" name="id" id="taskContentId"
@@ -276,11 +276,11 @@
 									to the mobile app user</div>
 								<div>
 									<span class="mr-lg"><span class="mr-sm"><img
-											src="../images/icons/tick.png" /></span><span>Current Day</span></span> <span
+											src="../images/icons/tick.png" alt=""/></span><span>Current Day</span></span> <span
 										class="mr-lg"><span class="mr-sm"><img
-											src="../images/icons/tick.png" /></span><span>Current Week</span></span> <span
+											src="../images/icons/tick.png" alt=""/></span><span>Current Week</span></span> <span
 										class="mr-lg"><span class="mr-sm"><img
-											src="../images/icons/tick.png" /></span><span>Current Month</span></span>
+											src="../images/icons/tick.png" alt=""/></span><span>Current Month</span></span>
 									<span class="txt-gray">(Rollback option provided for
 										these three options)</span>
 								</div>
@@ -512,11 +512,11 @@
 											available to the mobile app user</div>
 										<div>
 											<span class="mr-lg"><span class="mr-sm"><img
-													src="../images/icons/tick.png" /></span><span>Current Day</span></span> <span
+													src="../images/icons/tick.png" alt="" /></span><span>Current Day</span></span> <span
 												class="mr-lg"><span class="mr-sm"><img
-													src="../images/icons/tick.png" /></span><span>Current Week</span></span>
+													src="../images/icons/tick.png" alt=""/></span><span>Current Week</span></span>
 											<span class="mr-lg"><span class="mr-sm"><img
-													src="../images/icons/tick.png" /></span><span>Current Month</span></span>
+													src="../images/icons/tick.png" alt="" /></span><span>Current Month</span></span>
 											<span class="txt-gray">(Rollback option provided for
 												these three options)</span>
 										</div>
@@ -835,7 +835,7 @@ function validateShortTitleId(item,callback){
 		    $('.shortTitleClass').parent().find(".help-block").empty();
 		     if(existedKey !=shortTitle){
 	 			$.ajax({
-	 				url: "/fdahpStudyDesigner/adminStudies/validateActiveTaskShortTitleId.do?_S=${param._S}",
+	 				url: "/studybuilder/adminStudies/validateActiveTaskShortTitleId.do?_S=${param._S}",
 	                type: "POST",
 	                datatype: "json",
 	                data: {
@@ -888,7 +888,7 @@ function validateShortTitleStatId(event, thisAttr, callback){
 	    	 //alert("dbIdentifierVal"+dbIdentifierVal);
 	    	 if(dbIdentifierVal!=activeTaskAttIdVal){
 	    		 $.ajax({
-		               url: "/fdahpStudyDesigner/adminStudies/validateActiveTaskShortTitleId.do?_S=${param._S}",
+		               url: "/studybuilder/adminStudies/validateActiveTaskShortTitleId.do?_S=${param._S}",
 		               type: "POST",
 		               datatype: "json",
 		               data: {
@@ -936,7 +936,7 @@ function validateShortTitleStatId(event, thisAttr, callback){
 		 	}
 	     }else{
 	    	 $.ajax({
-	               url: "/fdahpStudyDesigner/adminStudies/validateActiveTaskShortTitleId.do?_S=${param._S}",
+	               url: "/studybuilder/adminStudies/validateActiveTaskShortTitleId.do?_S=${param._S}",
 	               type: "POST",
 	               datatype: "json",
 	               data: {

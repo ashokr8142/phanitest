@@ -52,11 +52,11 @@
                     <table id="activedatatable_list" class="display bor-none dragtbl" cellspacing="0" width="100%">
                          <thead>
                             <tr>
-                                <th style="display: none;"></th>
-                                <th>TITLE<span class="sort"></span></th>
-                                <th>TYPE<span class="sort"></span></th>
-                                <th>FREQUENCY<span class="sort"></span></th>                                
-                                <th>
+                                <th style="display: none;" id=""></th>
+                                <th id="">TITLE<span class="sort"></span></th>
+                                <th id="">TYPE<span class="sort"></span></th>
+                                <th id="">FREQUENCY<span class="sort"></span></th>                                
+                                <th id="">
                                     <div class="dis-line form-group mb-none">
                                          <c:if test="${empty permission}">
                                          <button type="button" class="btn btn-primary blue-btn" onclick="addActiveTaskPage();">Add Active Task</button>
@@ -90,12 +90,12 @@
             
         </div>
         <!-- End right Content here -->
-<form:form action="/fdahpStudyDesigner/adminStudies/viewActiveTask.do?_S=${param._S}" name="activeTaskInfoForm" id="activeTaskInfoForm" method="post">
+<form:form action="/studybuilder/adminStudies/viewActiveTask.do?_S=${param._S}" name="activeTaskInfoForm" id="activeTaskInfoForm" method="post">
 <input type="hidden" name="activeTaskInfoId" id="activeTaskInfoId" value="">
 <input type="hidden" name="actionType" id="actionType">
 <input type="hidden" name="studyId" id="studyId" value="${studyBo.id}" />
 </form:form> 
-<form:form action="/fdahpStudyDesigner/adminStudies/activeTAskMarkAsCompleted.do?_S=${param._S}" name="completeInfoForm" id="completeInfoForm" method="post">
+<form:form action="/studybuilder/adminStudies/activeTAskMarkAsCompleted.do?_S=${param._S}" name="completeInfoForm" id="completeInfoForm" method="post">
 <input type="hidden" name="studyId" id="studyId" value="${studyBo.id}" />
 </form:form>    
 <c:set var="studyId">${_S}studyId</c:set>   
@@ -119,6 +119,9 @@ $(document).ready(function(){
                                ],
                   "order": [[ 0, "desc" ]],
                  "info" : false, 
+                 language: {
+                 	"zeroRecords": "You haven't created any content yet.",
+			    },
                  "lengthChange": false, 
                  "searching": false, 
                  "pageLength": 10 
@@ -160,7 +163,7 @@ function deleteTaskInfo(activeTaskInfoId){
 			if(result){
 		    	if(activeTaskInfoId != '' && activeTaskInfoId != null && typeof activeTaskInfoId != 'undefined'){
 		    		$.ajax({
-		    			url: "/fdahpStudyDesigner/adminStudies/deleteActiveTask.do?_S=${param._S}",
+		    			url: "/studybuilder/adminStudies/deleteActiveTask.do?_S=${param._S}",
 		    			type: "POST",
 		    			datatype: "json",
 		    			data:{

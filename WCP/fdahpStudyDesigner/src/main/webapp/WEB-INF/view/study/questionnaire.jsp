@@ -28,10 +28,9 @@
 	display: none;
 }
 
-.manually-option:last-child .addBtnDis {  
+.manually-option:last-child .addBtnDis {
 	display: inline-block;
 }
-
 
 .manually-anchor-option .addBtnDis {
 	display: none;
@@ -55,7 +54,7 @@
 	*border-collapse: expression('separate', cellSpacing = '10px');
 }
 
-.dis_inlinetop{
+.dis_inlinetop {
 	display: inline-block;
 	vertical-align: top;
 }
@@ -99,7 +98,7 @@ function isNumber(evt, thisAttr) {
 		<div class="text-right">
 			<div class="black-md-f text-uppercase dis-line pull-left line34">
 				<span class="pr-sm cur-pointer" onclick="goToBackPage(this);"><img
-					src="../images/icons/back-b.png" class="pr-md" /></span>
+					src="../images/icons/back-b.png" class="pr-md" alt="" /></span>
 				<c:if test="${actionType eq 'add'}">Add Questionnaire</c:if>
 				<c:if test="${actionType eq 'edit'}">Edit Questionnaire</c:if>
 				<c:if test="${actionType eq 'view'}">View Questionnaire <c:set
@@ -153,7 +152,7 @@ function isNumber(evt, thisAttr) {
 			<!-- Content-->
 			<div id="contentTab" class="tab-pane fade in active mt-lg">
 				<form:form
-					action="/fdahpStudyDesigner/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
+					action="/studybuilder/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
 					name="contentFormId" id="contentFormId" method="post"
 					data-toggle="validator" role="form">
 					<input type="hidden" name="${csrf.parameterName}"
@@ -172,7 +171,6 @@ function isNumber(evt, thisAttr) {
 						value="">
 					<input type="hidden" name="formId" id="formId" value="">
 					<input type="hidden" name="questionId" id="questionId" value="">
-					<!-- <input type="hidden" id="actionType" name="actionType"> -->
 					<input type="hidden" id="actionTypeForQuestionPage"
 						name="actionTypeForQuestionPage">
 					<div class="gray-xs-f mb-xs">
@@ -194,7 +192,7 @@ function isNumber(evt, thisAttr) {
 					</div>
 					<div class="clearfix"></div>
 					<div class="gray-xs-f mb-xs">
-						Title (1 to 300 characters)<span class="requiredStar">*</span>
+						Title (300 characters max)<span class="requiredStar">*</span>
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" name="title" id="titleId"
@@ -321,7 +319,7 @@ function isNumber(evt, thisAttr) {
 			<!-- End Content-->
 			<!-- Schedule-->
 			<div id="schedule" class="tab-pane fade mt-lg">
-				<div class="gray-xs-f mb-sm">Questionnaire Schedule Type</div>
+				<div class="gray-xs-f mb-sm">Schedule Type</div>
 				<div class="pb-lg ">
 					<span class="radio radio-info radio-inline p-40"> <input
 						type="radio" id="schedule1" class="typeofschedule"
@@ -333,7 +331,7 @@ function isNumber(evt, thisAttr) {
 					</span> <span id="anchorspanId" class="tool-tip" data-toggle="tooltip"
 						data-html="true" data-placement="top"
 						<c:if test="${isAnchorQuestionnaire}">
-	             title="This option has been disabled, since this questionnaire has 1 or more Anchor Dates defined in it." 
+	             title="This option has been disabled, since this questionnaire has 1 or more anchor dates defined in it." 
 	           </c:if>>
 						<span class="radio radio-inline p-40"> <input type="radio"
 							id="schedule2" class="typeofschedule" scheduletype="AnchorDate"
@@ -342,7 +340,7 @@ function isNumber(evt, thisAttr) {
 							${questionnaireBo.scheduleType=='AnchorDate' ?'checked':''}
 							${questionnaireBo.shortTitleDuplicate > 0?'disabled' : ''}
 							<c:if test="${empty anchorTypeList}">disabled</c:if>> <label
-							for="schedule2">Anchor-Date-based</label>
+							for="schedule2">Anchor date based</label>
 					</span>
 					</span>
 				</div>
@@ -372,7 +370,7 @@ function isNumber(evt, thisAttr) {
 					</div>
 				</form:form>
 				<!-- Ancor date type -->
-				<div class="gray-xs-f mb-sm">Questionnaire Frequency</div>
+				<div class="gray-xs-f mb-sm">Questionnaire Scheduling Options</div>
 				<div class="pb-lg b-bor">
 					<span class="radio radio-info radio-inline p-40"> <input
 						type="radio" id="inlineRadio1" class="schedule"
@@ -412,7 +410,7 @@ function isNumber(evt, thisAttr) {
 				</div>
 				<!-- One Time Section-->
 				<form:form
-					action="/fdahpStudyDesigner/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
+					action="/studybuilder/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
 					name="oneTimeFormId" id="oneTimeFormId" method="post" role="form"
 					data-toggle="validator">
 					<input type="hidden" name="frequency" id="frequencyId"
@@ -541,7 +539,6 @@ function isNumber(evt, thisAttr) {
 								</span>
 							</div>
 						</div>
-						<!-- <div class="gray-xs-f mb-sm mt-md">Lifetime of the run and of the questionnaire (pick one)<span class="requiredStar">*</span></div> -->
 						<div class="gray-xs-f mb-sm mt-md">
 							Lifetime of the run/questionnaire (choose between Study Lifetime
 							and custom end date)<span class="requiredStar">*</span>
@@ -632,7 +629,7 @@ function isNumber(evt, thisAttr) {
 				</form:form>
 				<!-- Daily Section-->
 				<form:form
-					action="/fdahpStudyDesigner/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
+					action="/studybuilder/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
 					name="dailyFormId" id="dailyFormId" method="post" role="form"
 					data-toggle="validator">
 					<input type="hidden" name="frequency" id="dailyFrequencyId"
@@ -661,9 +658,7 @@ function isNumber(evt, thisAttr) {
 										onclick='timep(this.id);' /> <span
 										class='help-block with-errors red-txt'></span>
 									</span> <span class="addBtnDis addbtn mr-sm align-span-center"
-										onclick='addTime();'>+</span> <!-- <span
-										class="delete vertical-align-middle remBtnDis hide pl-md align-span-center"
-										onclick='removeTime(this);'></span> -->
+										onclick='addTime();'>+</span>
 								</div>
 							</c:if>
 							<c:if
@@ -698,7 +693,7 @@ function isNumber(evt, thisAttr) {
 							<div class="dailyStartCls col-md-3 pl-none">
 								<span
 									class="form-group m-none dis-inline vertical-align-middle pr-md">
-									<span class="gray-xs-f">Start date (pick a date) <span
+									<span class="gray-xs-f">Start date <span
 										class="requiredStar">*</span></span><br /> <input id="startDate"
 									type="text"
 									class="form-control mt-sm calendar ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
@@ -714,7 +709,7 @@ function isNumber(evt, thisAttr) {
 									<div>
 										<span
 											class="form-group m-none dis-inline vertical-align-middle pr-md">
-											<span class="gray-xs-f">Start date (pick a date) <span
+											<span class="gray-xs-f">Start date <span
 												class="requiredStar">*</span></span><br /> <span class="pr-md">Anchor
 												Date</span> <span> <select
 												class="signDropDown selectpicker sign-box ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
@@ -782,7 +777,7 @@ function isNumber(evt, thisAttr) {
 				</form:form>
 				<!-- Weekly Section-->
 				<form:form
-					action="/fdahpStudyDesigner/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
+					action="/studybuilder/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
 					name="weeklyFormId" id="weeklyFormId" method="post" role="form"
 					data-toggle="validator">
 					<input type="hidden" name="frequency" id="weeklyfrequencyId">
@@ -801,8 +796,7 @@ function isNumber(evt, thisAttr) {
 							<span class="gray-xs-f">Day/Time (of the week) <span
 								class="requiredStar">*</span><br /> <span
 								class=" form-group m-none dis-inline vertical-align-middle pr-md">
-									<span class=""> 
-									<select id="startDateWeekly"
+									<span class=""> <select id="startDateWeekly"
 										class="form-control mt-sm ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''} weeklyCls"
 										name="dayOfTheWeek" required>
 											<option value=''>Select</option>
@@ -826,8 +820,7 @@ function isNumber(evt, thisAttr) {
 							</span>
 							</span> <span
 								class="form-group m-none dis-inline vertical-align-middle pr-md">
-								<!-- <span class="gray-xs-f">&nbsp;</span><br/> --> <input
-								id="selectWeeklyTime" type="text"
+								<input id="selectWeeklyTime" type="text"
 								class="form-control mt-sm clock ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''} weeklyCls"
 								required onclick="timep(this.id)" placeholder="Time"
 								name="questionnairesFrequenciesBo.frequencyTime"
@@ -839,7 +832,7 @@ function isNumber(evt, thisAttr) {
 							<div class="weeklyStartCls col-md-3 pl-none">
 								<span
 									class="form-group m-none dis-inline vertical-align-middle pr-md">
-									<span class="gray-xs-f">Start date (pick a date) <span
+									<span class="gray-xs-f">Start date <span
 										class="requiredStar">*</span></span><br /> <input
 									id="startWeeklyDate" type="text"
 									class="form-control mt-sm calendar ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
@@ -856,7 +849,7 @@ function isNumber(evt, thisAttr) {
 									<div>
 										<span
 											class="form-group m-none dis-inline vertical-align-middle pr-md">
-											<span class="gray-xs-f">Start date (pick a date) <span
+											<span class="gray-xs-f">Start date <span
 												class="requiredStar">*</span></span><br /> <span class="pr-md">Anchor
 												Date</span> <span> <select
 												class="signDropDown selectpicker sign-box ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
@@ -895,21 +888,21 @@ function isNumber(evt, thisAttr) {
 										<span class='help-block with-errors red-txt'></span>
 									</span>
 								</div>
-								
+
 								<div class="dis_inlinetop">
 									<span
-									class="form-group m-none dis-inline vertical-align-middle pr-md">
-									<span class="gray-xs-f">No. of times to repeat the
-										questionnaire <span class="requiredStar">*</span>
-								</span><br /> <input id="weeksAnchor" type="text"
-									class="form-control mt-sm numChk ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
-									name="repeatQuestionnaire" placeholder="No of Times"
-									value="${questionnaireBo.repeatQuestionnaire}" required
-									onkeypress="return isNumber(event, this)"
-									pattern="^(0{0,2}[1-9]|0?[1-9][0-9]|[1-9][0-9][0-9])$"
-									data-pattern-error="Please enter valid number." maxlength="3" />
-									<span class='help-block with-errors red-txt'></span>
-								</span>
+										class="form-group m-none dis-inline vertical-align-middle pr-md">
+										<span class="gray-xs-f">No. of times to repeat the
+											questionnaire <span class="requiredStar">*</span>
+									</span><br /> <input id="weeksAnchor" type="text"
+										class="form-control mt-sm numChk ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
+										name="repeatQuestionnaire" placeholder="No of Times"
+										value="${questionnaireBo.repeatQuestionnaire}" required
+										onkeypress="return isNumber(event, this)"
+										pattern="^(0{0,2}[1-9]|0?[1-9][0-9]|[1-9][0-9][0-9])$"
+										data-pattern-error="Please enter valid number." maxlength="3" />
+										<span class='help-block with-errors red-txt'></span>
+									</span>
 								</div>
 
 							</div>
@@ -953,7 +946,7 @@ function isNumber(evt, thisAttr) {
 				</form:form>
 				<!-- Monthly Section-->
 				<form:form
-					action="/fdahpStudyDesigner/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
+					action="/studybuilder/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
 					name="monthlyFormId" id="monthlyFormId" method="post" role="form"
 					data-toggle="validator">
 					<input type="hidden" name="frequency" id="monthlyfrequencyId"
@@ -982,7 +975,6 @@ function isNumber(evt, thisAttr) {
 							</span>
 							</span> <span
 								class="form-group m-none dis-inline vertical-align-middle pr-md">
-								<!-- 	                  <span class="gray-xs-f">&nbsp;</span><br/> -->
 								<input id="selectMonthlyTime" type="text"
 								class="form-control mt-sm clock ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
 								required onclick="timep(this.id)" placeholder="Time"
@@ -997,7 +989,7 @@ function isNumber(evt, thisAttr) {
 							<div class="monthlyStartCls dis_inlinetop p-none">
 								<span
 									class="form-group m-none dis-inline vertical-align-middle pr-md">
-									<span class="gray-xs-f">Start date (pick a date) <span
+									<span class="gray-xs-f">Start date <span
 										class="requiredStar">*</span></span><br /> <input id="pickStartDate"
 									type="text"
 									class="form-control mt-sm calendar ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
@@ -1007,7 +999,7 @@ function isNumber(evt, thisAttr) {
 									readonly="readonly" /> <span
 									class='help-block with-errors red-txt'></span>
 								</span>
-							</div> 		
+							</div>
 							<div class="dis_inlinetop p-none monthlyRegular">
 								<span
 									class="form-group m-none dis-inline vertical-align-middle pr-md">
@@ -1025,8 +1017,7 @@ function isNumber(evt, thisAttr) {
 							</div>
 						</div>
 						<!-- Anchordate start-->
-						<!-- <div class="mt-lg"> -->
-							<%-- <div class="monthlyStartCls dis_inlinetop p-none">
+						<%-- <div class="monthlyStartCls dis_inlinetop p-none">
 								<span
 									class="form-group m-none dis-inline vertical-align-middle pr-md">
 									<span class="gray-xs-f">Start date (pick a date) <span
@@ -1040,56 +1031,55 @@ function isNumber(evt, thisAttr) {
 									class='help-block with-errors red-txt'></span>
 								</span>
 							</div> --%>
-							<div class="monthlyanchorDiv"
-								style="display: none;">
-								<div class="dis_inlinetop p-none">
-									<div class=" resetDate dis_inlinetop p-none">
-										<div>
-											<span
-												class="form-group m-none dis-inline vertical-align-middle pr-md">
-												<span class="gray-xs-f">Start date (pick a date) <span
-													class="requiredStar">*</span></span><br /> <span class="pr-md">Anchor
-													Date</span> <span> <select
-													class="signDropDown selectpicker sign-box ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
-													title="Select" name="questionnairesFrequenciesBo.xDaysSign"
-													id="monthlyXSign">
-														<option value="0"
-															${not questionnaireBo.questionnairesFrequenciesBo.xDaysSign ?'selected':''}>+</option>
-														<option value="1"
-															${questionnaireBo.questionnairesFrequenciesBo.xDaysSign ?'selected':''}>-</option>
-												</select>
-											</span> <span
-												class="form-group m-none dis-inline vertical-align-middle">
-													<input id="monthlyxdaysId" type="text"
-													class="form-control wid70 disRadBtn1 disBtn1 remReqOnSave daysMask mt-sm ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
-													placeholder="X"
-													name="questionnairesFrequenciesBo.timePeriodFromDays"
-													value="${questionnaireBo.questionnairesFrequenciesBo.timePeriodFromDays}"
-													maxlength="3" pattern="[0-9]+"
-													data-pattern-error="Please enter valid number." /> <span
-													class="help-block with-errors red-txt"></span>
-											</span> <span class="mb-sm pr-md"> <span
-													class="light-txt opacity06">days</span>
-											</span>
-											</span>
-										</div>
+						<div class="monthlyanchorDiv" style="display: none;">
+							<div class="dis_inlinetop p-none">
+								<div class=" resetDate dis_inlinetop p-none">
+									<div>
+										<span
+											class="form-group m-none dis-inline vertical-align-middle pr-md">
+											<span class="gray-xs-f">Start date <span
+												class="requiredStar">*</span></span><br /> <span class="pr-md">Anchor
+												Date</span> <span> <select
+												class="signDropDown selectpicker sign-box ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
+												title="Select" name="questionnairesFrequenciesBo.xDaysSign"
+												id="monthlyXSign">
+													<option value="0"
+														${not questionnaireBo.questionnairesFrequenciesBo.xDaysSign ?'selected':''}>+</option>
+													<option value="1"
+														${questionnaireBo.questionnairesFrequenciesBo.xDaysSign ?'selected':''}>-</option>
+											</select>
+										</span> <span
+											class="form-group m-none dis-inline vertical-align-middle">
+												<input id="monthlyxdaysId" type="text"
+												class="form-control wid70 disRadBtn1 disBtn1 remReqOnSave daysMask mt-sm ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
+												placeholder="X"
+												name="questionnairesFrequenciesBo.timePeriodFromDays"
+												value="${questionnaireBo.questionnairesFrequenciesBo.timePeriodFromDays}"
+												maxlength="3" pattern="[0-9]+"
+												data-pattern-error="Please enter valid number." /> <span
+												class="help-block with-errors red-txt"></span>
+										</span> <span class="mb-sm pr-md"> <span
+												class="light-txt opacity06">days</span>
+										</span>
+										</span>
 									</div>
 								</div>
-								
-								
-							  <div class="dis_inlinetop p-none">
-									<span class="gray-xs-f">Time <span class="requiredStar">*</span></span><br />
-									<span
-										class="form-group m-none dis-inline vertical-align-middle pr-md">
-										<input id="selectMonthlyTimeAnchor" type="text"
-										class="form-control mt-sm clock ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
-										required onclick="timep(this.id)" placeholder="Time"
-										name="questionnairesFrequenciesBo.frequencyTime"
-										value="${questionnaireBo.questionnairesFrequenciesBo.frequencyTime}" />
-										<span class='help-block with-errors red-txt'></span>
-									</span>
-								</div>
-									<div class="dis_inlinetop">
+							</div>
+
+
+							<div class="dis_inlinetop p-none">
+								<span class="gray-xs-f">Time <span class="requiredStar">*</span></span><br />
+								<span
+									class="form-group m-none dis-inline vertical-align-middle pr-md">
+									<input id="selectMonthlyTimeAnchor" type="text"
+									class="form-control mt-sm clock ${(questionnaireBo.shortTitleDuplicate > 0)?'cursor-none' : ''}"
+									required onclick="timep(this.id)" placeholder="Time"
+									name="questionnairesFrequenciesBo.frequencyTime"
+									value="${questionnaireBo.questionnairesFrequenciesBo.frequencyTime}" />
+									<span class='help-block with-errors red-txt'></span>
+								</span>
+							</div>
+							<div class="dis_inlinetop">
 								<span
 									class="form-group m-none dis-inline vertical-align-middle pr-md">
 									<span class="gray-xs-f">No. of times to repeat the
@@ -1103,11 +1093,10 @@ function isNumber(evt, thisAttr) {
 									data-pattern-error="Please enter valid number." maxlength="3" />
 									<span class='help-block with-errors red-txt'></span>
 								</span>
-							</div> 
 							</div>
-						<!-- </div> -->
+						</div>
 						<!-- Anchordate End -->
-						
+
 						<div class="mt-md col-md-12 p-none">
 							<div class="gray-xs-f mb-xs">End Date</div>
 							<div class="black-xs-f" id="monthEndDate">${not empty questionnaireBo.studyLifetimeEnd ? questionnaireBo.studyLifetimeEnd :'NA'}</div>
@@ -1129,7 +1118,7 @@ function isNumber(evt, thisAttr) {
 				</form:form>
 				<!-- Manually Section-->
 				<form:form
-					action="/fdahpStudyDesigner/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
+					action="/studybuilder/adminStudies/saveorUpdateQuestionnaireSchedule.do?_S=${param._S}"
 					name="customFormId" id="customFormId" method="post" role="form"
 					data-toggle="validator">
 					<input type="hidden" name="id" id="id"
@@ -1175,9 +1164,7 @@ function isNumber(evt, thisAttr) {
 										placeholder="Time" onclick='timep(this.id);' disabled required />
 										<span class='help-block with-errors red-txt'></span>
 									</span> <span class="addbtn addBtnDis align-span-center mr-md"
-										onclick="addDate();">+</span> <!-- <span id="delete"
-										class="sprites_icon delete vertical-align-middle remBtnDis hide align-span-center"
-										onclick="removeDate(this);"></span> -->
+										onclick="addDate();">+</span>
 								</div>
 							</c:if>
 							<c:if
@@ -1302,9 +1289,7 @@ function isNumber(evt, thisAttr) {
 										class='help-block with-errors red-txt'></span>
 									</span> <span id="addbtn0"
 										class="addbtn addBtnDis dis-inline vertical-align-middle mr-sm"
-										onclick="addDateAnchor();">+</span> <!-- <span id="deleteAncchor0"
-										class="sprites_icon delete vertical-align-middle remBtnDis hide align-span-center"
-										onclick="removeDateAnchor(this);"></span> -->
+										onclick="addDateAnchor();">+</span>
 								</div>
 							</c:if>
 							<c:if
@@ -1417,7 +1402,7 @@ function isNumber(evt, thisAttr) {
 			<div class="modal-header cust-hdr pt-lg">
 				<button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title pl-lg">
-					<b>Setting up a Questionnaire</b>
+					<strong>Setting up a Questionnaire</strong>
 				</h4>
 			</div>
 
@@ -1721,6 +1706,9 @@ $(document).ready(function() {
 	    "info": false,
 	    "filter": false,
 	     rowReorder: reorder,
+	     language: {
+         	"zeroRecords": "You haven't created any content yet.",
+	    },
          "columnDefs": [ 
           { orderable: false, targets: [0,1,2,3] },
           ],
@@ -1763,7 +1751,7 @@ $(document).ready(function() {
 			&& newOrderNumber !== undefined && newOrderNumber != null && newOrderNumber != ""){
 	    	
 	    	$.ajax({
-				url: "/fdahpStudyDesigner/adminStudies/reOrderQuestionnaireStepInfo.do?_S=${param._S}",
+				url: "/studybuilder/adminStudies/reOrderQuestionnaireStepInfo.do?_S=${param._S}",
 				type: "POST",
 				datatype: "json",
 				data:{
@@ -2303,7 +2291,7 @@ $(document).ready(function() {
 						if(val) {
 							validateLinceChartSchedule('','',function(valid){
 								if(valid){
-									document.contentFormId.action="/fdahpStudyDesigner/adminStudies/viewStudyQuestionnaires.do?_S=${param._S}";
+									document.contentFormId.action="/studybuilder/adminStudies/viewStudyQuestionnaires.do?_S=${param._S}";
 									document.contentFormId.submit();
 								}else{
 									$("body").removeClass("loading");
@@ -3160,7 +3148,7 @@ function saveQuestionnaire(item, callback){
 	if(study_id != null && short_title != '' && short_title != null && isFormValid ){
 		$("body").addClass("loading");
 		$.ajax({ 
-	        url: "/fdahpStudyDesigner/adminStudies/saveQuestionnaireSchedule.do?_S=${param._S}",
+	        url: "/studybuilder/adminStudies/saveQuestionnaireSchedule.do?_S=${param._S}",
 	        type: "POST",
 	        datatype: "json",
 	        data: {questionnaireScheduleInfo:data},
@@ -3379,7 +3367,7 @@ function deletStep(stepId,stepType){
 				if((stepId != null && stepId != '' && typeof stepId != 'undefined') && 
 						(questionnaireId != null && questionnaireId != '' && typeof questionnaireId != 'undefined')){
 					$.ajax({
-		    			url: "/fdahpStudyDesigner/adminStudies/deleteQuestionnaireStep.do?_S=${param._S}",
+		    			url: "/studybuilder/adminStudies/deleteQuestionnaireStep.do?_S=${param._S}",
 		    			type: "POST",
 		    			datatype: "json",
 		    			data:{
@@ -3402,7 +3390,7 @@ function deletStep(stepId,stepType){
 		    					}
 		    					var isAnchorQuestionnaire = jsonobject.isAnchorQuestionnaire;
 		    					if(isAnchorQuestionnaire){
-		    						$('#anchorspanId').prop('title','This option has been disabled, since this questionnaire has 1 or more Anchor Dates defined in it.');
+		    						$('#anchorspanId').prop('title','This option has been disabled, since this questionnaire has 1 or more anchor dates defined in it.');
 		    						$('#anchorspanId').attr('disabled',true);
 		    						$('#schedule2').attr('disabled',true);
 		    						$('.schedule').attr('disabled',true);
@@ -3533,13 +3521,13 @@ function ellipseUnHover(item){
 function getQuestionnaireStep(stepType){
 	$("#actionTypeForQuestionPage").val('add');
 	if(stepType == 'Instruction'){
-		document.contentFormId.action="/fdahpStudyDesigner/adminStudies/instructionsStep.do?_S=${param._S}";
+		document.contentFormId.action="/studybuilder/adminStudies/instructionsStep.do?_S=${param._S}";
 		document.contentFormId.submit();
 	}else if(stepType == 'Form'){
-		document.contentFormId.action="/fdahpStudyDesigner/adminStudies/formStep.do?_S=${param._S}";
+		document.contentFormId.action="/studybuilder/adminStudies/formStep.do?_S=${param._S}";
 		document.contentFormId.submit();
 	}else if(stepType == 'Question'){
-		document.contentFormId.action="/fdahpStudyDesigner/adminStudies/questionStep.do?_S=${param._S}";
+		document.contentFormId.action="/studybuilder/adminStudies/questionStep.do?_S=${param._S}";
 		document.contentFormId.submit();
 	}
 }
@@ -3547,15 +3535,15 @@ function editStep(stepId,stepType){
 	$("#actionTypeForQuestionPage").val('edit');
 	if(stepType == 'Instruction'){
 		$("#instructionId").val(stepId);
-		document.contentFormId.action="/fdahpStudyDesigner/adminStudies/instructionsStep.do?_S=${param._S}";
+		document.contentFormId.action="/studybuilder/adminStudies/instructionsStep.do?_S=${param._S}";
 		document.contentFormId.submit();
 	}else if(stepType == 'Form'){
 		$("#formId").val(stepId);
-		document.contentFormId.action="/fdahpStudyDesigner/adminStudies/formStep.do?_S=${param._S}";
+		document.contentFormId.action="/studybuilder/adminStudies/formStep.do?_S=${param._S}";
 		document.contentFormId.submit();
 	}else if(stepType == 'Question'){
 		$("#questionId").val(stepId);
-		document.contentFormId.action="/fdahpStudyDesigner/adminStudies/questionStep.do?_S=${param._S}";
+		document.contentFormId.action="/studybuilder/adminStudies/questionStep.do?_S=${param._S}";
 		document.contentFormId.submit();
 	}
 }
@@ -3564,15 +3552,15 @@ function viewStep(stepId,stepType){
 	$("#actionTypeForQuestionPage").val('view');
 	if(stepType == 'Instruction'){
 		$("#instructionId").val(stepId);
-		document.contentFormId.action="/fdahpStudyDesigner/adminStudies/instructionsStep.do?_S=${param._S}";
+		document.contentFormId.action="/studybuilder/adminStudies/instructionsStep.do?_S=${param._S}";
 		document.contentFormId.submit();
 	}else if(stepType == 'Form'){
 		$("#formId").val(stepId);
-		document.contentFormId.action="/fdahpStudyDesigner/adminStudies/formStep.do?_S=${param._S}";
+		document.contentFormId.action="/studybuilder/adminStudies/formStep.do?_S=${param._S}";
 		document.contentFormId.submit();
 	}else if(stepType == 'Question'){
 		$("#questionId").val(stepId);
-		document.contentFormId.action="/fdahpStudyDesigner/adminStudies/questionStep.do?_S=${param._S}";
+		document.contentFormId.action="/studybuilder/adminStudies/questionStep.do?_S=${param._S}";
 		document.contentFormId.submit();
 	}
 }
@@ -3594,7 +3582,7 @@ function goToBackPage(item){
 			    callback: function(result) {
 			        if (result) {
 			        	var a = document.createElement('a');
-			        	a.href = "/fdahpStudyDesigner/adminStudies/viewStudyQuestionnaires.do?_S=${param._S}";
+			        	a.href = "/studybuilder/adminStudies/viewStudyQuestionnaires.do?_S=${param._S}";
 			        	document.body.appendChild(a).click();
 			        }else{
 			        	$(item).prop('disabled', false);
@@ -3604,7 +3592,7 @@ function goToBackPage(item){
 		</c:if>
 		<c:if test="${actionType eq 'view'}">
 			var a = document.createElement('a');
-			a.href = "/fdahpStudyDesigner/adminStudies/viewStudyQuestionnaires.do?_S=${param._S}";
+			a.href = "/studybuilder/adminStudies/viewStudyQuestionnaires.do?_S=${param._S}";
 			document.body.appendChild(a).click();
 		</c:if>
 }
@@ -3640,7 +3628,7 @@ function validateShortTitle(item,callback){
         $(thisAttr).parent().find(".help-block").html("");
 		if( existedKey !=shortTitle){
 		$.ajax({
-            url: "/fdahpStudyDesigner/adminStudies/validateQuestionnaireKey.do?_S=${param._S}",
+            url: "/studybuilder/adminStudies/validateQuestionnaireKey.do?_S=${param._S}",
             type: "POST",
             datatype: "json",
             data: {
@@ -3691,7 +3679,7 @@ function validateLinceChartSchedule(questionnaireId,frequency,callback){
 	if((questionnaireId != null && questionnaireId !='' && typeof questionnaireId!= 'undefined') &&
 			(frequencyTxt != null && frequencyTxt !='' && typeof frequencyTxt!= 'undefined')){
 		 $.ajax({
-            url: "/fdahpStudyDesigner/adminStudies/validateLineChartSchedule.do?_S=${param._S}",
+            url: "/studybuilder/adminStudies/validateLineChartSchedule.do?_S=${param._S}",
             type: "POST",
             datatype: "json",
             data: {

@@ -5,22 +5,22 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
-<html class="overflow-hidden">
+<html class="overflow-hidden" lang="">
 	<head>
         
     <!-- Basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
             
-    <title>FDA MSMP</title>	
+    <title>Study Builder</title>	
     
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/fdahpStudyDesigner/images/icons/fav.png" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="/fdahpStudyDesigner/images/icons/fav.png">
+    <link rel="shortcut icon" href="/studybuilder/images/icons/FAV_Icon.png" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/studybuilder/images/icons/FAV_Icon.png">
         
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="vendor/datatable/css/dataTables.bootstrap.min.css">
     
      <!-- Your custom styles (optional) -->
-    <link href="/fdahpStudyDesigner/css/loader.css" rel="stylesheet">
+    <link href="/studybuilder/css/loader.css" rel="stylesheet">
     
     <link rel="stylesheet" href="vendor/dragula/dragula.min.css">
     <link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css">        
@@ -56,19 +56,6 @@
     <div id="loader"><span></span></div>
     <div id="lg-container" class="lg-container">
         
-        <!-- Login Left Section-->
-        <!-- <div class="lg-space-left">
-            <div class="lg-space-img">
-                <img src="images/logo/fda-logo-w.png"/>
-            </div>
-            <div class="lg-space-txt">
-               My Studies <br>Management Portal
-            </div>
-             <div class="lg-space-cover">
-                <img src="images/icons/web.png"/>
-            </div>
-        </div> -->
-        <!-- End Login Left Section-->
         
         <!-- Login Right Section-->
         <!-- <div class="lg-space-right">
@@ -103,7 +90,7 @@
 
 
               <div class="logo__ll">
-            <img src="images/logo/fda-logo-w.png"/>
+            <img src="images/logo/logo_innerScreens.png" alt=""/>
         </div>
         
         <div class="login__container">
@@ -114,7 +101,7 @@
                     <div id="sucMsg" class="suceess_msg">${sucMsg}</div>
                     <c:if test="${isValidToken}">
                     <div>
-                    <p class="white__text">To begin using the services on FDA and complete your account setup process, kindly use the access code provided on your email and set up your account password.</p>
+                    <p class="white__text">Please set up your new password using this form. You would be required to enter the access code provided to you over email for the same.</p>
                         <div class="mb-lg form-group">
                              <input autofocus="autofocus" type="text" class="input-field wow_input" id="" tabindex="1" name="accessCode" maxlength="6" placeholder="Access Code" data-error="Access Code is invalid" required autocomplete="off"/>
                             <div class="help-block with-errors red-txt"></div>
@@ -150,7 +137,7 @@
             <div class="clearfix"></div>
             
              <div class="footer">
-                    <span>Copyright © 2017 FDA</span><span><a href="https://www.fda.gov/AboutFDA/AboutThisWebsite/WebsitePolicies/" id="" target="_blank">Terms</a></span><span><a href="https://www.fda.gov/AboutFDA/AboutThisWebsite/WebsitePolicies/#privacy" id="" target="_blank">Privacy Policy</a></span>
+                    <span>Copyright Placeholder</span><span><a href="/studybuilder/terms.do" id="" target="_blank">Terms</a></span><span><a href="/studybuilder/privacyPolicy.do" id="" target="_blank">Privacy Policy</a></span>
               </div>
              
         </div>
@@ -166,7 +153,7 @@
       </div>
       <div class="modal-body pt-xs pb-lg pl-xlg pr-xlg">
       		 <div>
-      			<div class="mt-md mb-md"><u><b>Terms</b></u></div>
+      			<div class="mt-md mb-md"><u><strong>Terms</strong></u></div>
 		               <span>${masterDataBO.termsText}</span>
             </div>
       </div>
@@ -185,7 +172,7 @@
       
       <div class="modal-body pt-xs pb-lg pl-xlg pr-xlg">
       		 <div>
-      			<div class="mt-md mb-md"><u><b>Privacy Policy</b></u></div>
+      			<div class="mt-md mb-md"><u><strong>Privacy Policy</strong></u></div>
 		               <span>${masterDataBO.privacyPolicyText}</span>
             </div>
       </div>
@@ -194,7 +181,7 @@
 </div>
         
     </div>
-    <form:form action="/fdahpStudyDesigner/login.do" id="backToLoginForm" name="backToLoginForm" method="post">
+    <form:form action="/studybuilder/login.do" id="backToLoginForm" name="backToLoginForm" method="post">
 	</form:form>
     
     <!-- Vendor -->
@@ -206,15 +193,15 @@
     <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>    
     <script src="vendor/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="js/validator.min.js"></script>
-    <script src="/fdahpStudyDesigner/js/jquery.mask.min.js"></script>
-    <script src="/fdahpStudyDesigner/js/jquery.password-validator.js"></script>
-    <script type="text/javascript" src="/fdahpStudyDesigner/js/loader.js"></script>   
-    <script type="text/javascript" src="/fdahpStudyDesigner/js/jquery.password-validator.js"></script>
-	<script src="/fdahpStudyDesigner/js/underscore-min.js"></script>
+    <script src="/studybuilder/js/jquery.mask.min.js"></script>
+    <script src="/studybuilder/js/jquery.password-validator.js"></script>
+    <script type="text/javascript" src="/studybuilder/js/loader.js"></script>   
+    <script type="text/javascript" src="/studybuilder/js/jquery.password-validator.js"></script>
+	<script src="/studybuilder/js/underscore-min.js"></script>
     
     <!-- Theme Custom JS-->
-    <script src="/fdahpStudyDesigner/js/theme.js"></script>
-    <script src="/fdahpStudyDesigner/js/common.js"></script>
+    <script src="/studybuilder/js/theme.js"></script>
+    <script src="/studybuilder/js/common.js"></script>
     <!--common js-->
     
    

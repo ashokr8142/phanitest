@@ -7,11 +7,11 @@
          <!-- Start right Content here -->
          <!-- ============================================================== --> 
         <div class="col-sm-10 col-rc white-bg p-none">
-        <form:form action="/fdahpStudyDesigner/adminStudies/saveOrUpdateResource.do?${_csrf.parameterName}=${_csrf.token}&_S=${param._S}" data-toggle="validator" id="resourceForm" role="form" method="post" autocomplete="off" enctype="multipart/form-data">    
+        <form:form action="/studybuilder/adminStudies/saveOrUpdateResource.do?${_csrf.parameterName}=${_csrf.token}&_S=${param._S}" data-toggle="validator" id="resourceForm" role="form" method="post" autocomplete="off" enctype="multipart/form-data">    
             <!--  Start top tab section-->
             <div class="right-content-head">        
                 <div class="text-right">
-                    <div class="black-md-f dis-line pull-left line34"><span class="pr-sm"><a href="javascript:void(0)" class="goToResourceListForm" id="goToResourceListForm"><img src="/fdahpStudyDesigner/images/icons/back-b.png"/></a></span>
+                    <div class="black-md-f dis-line pull-left line34"><span class="pr-sm"><a href="javascript:void(0)" class="goToResourceListForm" id="goToResourceListForm"><img src="/studybuilder/images/icons/back-b.png" alt=""/></a></span>
                     <c:if test="${isstudyProtocol ne 'isstudyProtocol'}">
                     <c:if test="${actionOn eq 'add'}">Add Resource</c:if>
                     <c:if test="${actionOn eq 'edit'}">Edit Resource</c:if>
@@ -246,9 +246,9 @@
         </form:form>   
         </div>
         <!-- End right Content here -->
-<form:form action="/fdahpStudyDesigner/adminStudies/getResourceList.do?_S=${param._S}" name="resourceListForm" id="resourceListForm" method="post">
+<form:form action="/studybuilder/adminStudies/getResourceList.do?_S=${param._S}" name="resourceListForm" id="resourceListForm" method="post">
 </form:form>
-<form:form action="/fdahpStudyDesigner/downloadPdf.do?_S=${param._S}"  id="pdfDownloadFormId" method="post" target="_blank" >
+<form:form action="/studybuilder/downloadPdf.do?_S=${param._S}"  id="pdfDownloadFormId" method="post" target="_blank" >
 	<input type="hidden" value="studyResources"  name="fileFolder"/>
 	<input type="hidden" value="${resourceBO.pdfUrl}"  name="fileName"/>
 </form:form>
@@ -274,9 +274,13 @@ $(document).ready(function(){
         
 	 $("#doneResourceId").on('click', function(){
 		 $('#doneResourceId').prop('disabled',true);
-          if( chkDaysValid(true) && isFromValid('#resourceForm')){
+		 var isValid = true;
+		 if($('#inlineRadio1').is(':checked')){
+			 isValid = isEmptyEditor();
+		 }
+          if( chkDaysValid(true) && isFromValid('#resourceForm') && isValid){
         	  if($('#inlineRadio5').is(':checked')){
-        		  var text = "You have chosen to use a period of visibility based on an Anchor Date. Please ensure that the Source Questionnaire providing the Anchor Date response is scheduled appropriately.";
+        		  var text = "You have chosen to use a period of visibility based on an anchor date. Please ensure that the Source Questionnaire providing the anchor date response is scheduled appropriately.";
               	  bootbox.confirm({
               		closeButton: false,
               		message: text,
@@ -411,30 +415,31 @@ $(document).ready(function(){
        $("#uploadImg").click();
     });
 	 
-    if($("#richText").length > 0){
-    tinymce.init({
-        selector: "#richText",
-        theme: "modern",
-        skin: "lightgray",
-        height:150,
-        plugins: [
-            "advlist autolink link image lists charmap hr anchor pagebreak spellchecker",
-            "save contextmenu directionality paste"
-        ],
-        toolbar: "anchor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | underline link | hr removeformat | cut undo redo | fontsizeselect fontselect",
-        menubar: false,
-        toolbar_items_size: 'small',
-        content_style: "div, p { font-size: 13px;letter-spacing: 1px;}",
-        setup : function(ed) {
-            ed.on('keypress change', function(ed) {
-            	resetValidation('.resetContentType');
-            	resetValidation($('#'+ed.target.id).val(tinyMCE.get(ed.target.id).getContent()).parents('form #richText'));
-            });
-     	  },
-     	 <c:if test="${actionOn eq 'view'}">readonly:1</c:if>
-    });
-	}
-  
+
+if($("#richText").length > 0){
+   $('#richText').summernote({    
+        placeholder: '',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+        	['font', ['bold','italic']],
+        	['para', ['paragraph','ul','ol']],
+        	['font',['underline']],
+        	['insert', ['link']],
+        	['hr'],
+        	['clear'],
+        	['cut'],
+        	['undo'],
+        	['redo'],
+        	['fontname', ['fontname']],
+        	['fontsize', ['fontsize']],
+        	]
+      });
+}
+   <c:if test="${actionOn eq 'view'}">
+    	$('#richText').summernote('disable');
+   </c:if> 
+
     //Toggling Rich richText and Upload Button    
     $(".addResource").click(function(){
         var a = $(this).val();
@@ -456,7 +461,6 @@ $(document).ready(function(){
     
     
   //Changing & Displaying upload button text & file name
-  
     $('#uploadImg').on('change',function (){
     
     	var fileExtension = ['pdf'];
@@ -873,4 +877,14 @@ function toJSDate( dateTime ) {
     return new Date(date[2], (date[0]-1), date[1]);
 }
 </c:if>
+
+function isEmptyEditor() {
+	var isValid = true; 
+	var value = $('#richText').summernote('code');
+	if(value == '<p><br></p>' || value == '' ){
+		isValid = false; 
+		$('#richText').parent().addClass('has-error-cust').find(".help-block").empty().append('<ul class="list-unstyled"><li>Please fill out this field.</li></ul>');
+	}
+	return isValid;
+}
 </script>

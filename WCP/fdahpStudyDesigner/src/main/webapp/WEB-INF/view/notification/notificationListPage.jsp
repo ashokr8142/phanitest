@@ -15,7 +15,7 @@
          <!-- widgets section-->        
          <div class="col-sm-12 col-md-12 col-lg-12 p-none">
             <div class="black-lg-f">
-                Manage Gateway Notifications
+                Manage App-level Notifications
             </div>          
             <div class="dis-line pull-right ml-md">
              	<c:if test="${fn:contains(sessionObject.userPermissions,'ROLE_MANAGE_APP_WIDE_NOTIFICATION_EDIT')}">
@@ -36,9 +36,9 @@
             <table id="app_Wide_Notification_list" class="table table-right tbl">
             <thead>
               <tr>
-                <th>TITLE</th>
-                <th class="linkDis">Status</th>
-                <th class="linkDis">ACTIONS</th>  
+                <th id="">TITLE</th>
+                <th id="" class="linkDis">Status</th>
+                <th id="" class="linkDis">ACTIONS</th>  
               </tr>
             </thead>
             <tbody>
@@ -65,13 +65,13 @@
         </div>
   </div>
 </div>
-<form:form action="/fdahpStudyDesigner/adminNotificationEdit/getNotificationToEdit.do" id="getNotificationEditPage" name="getNotificationEditPage" method="post">
+<form:form action="/studybuilder/adminNotificationEdit/getNotificationToEdit.do" id="getNotificationEditPage" name="getNotificationEditPage" method="post">
 		<input type="hidden" id="notificationId" name="notificationId">
 		<input type="hidden" id="notificationText" name="notificationText">
 		<input type="hidden" id="actionType" name="actionType">
 		<input type="hidden" name="chkRefreshflag" value="y">
 </form:form>
-<form:form action="/fdahpStudyDesigner/adminNotificationView/getNotificationToView.do" id="getNotificationViewPage" name="getNotificationViewPage" method="post">
+<form:form action="/studybuilder/adminNotificationView/getNotificationToView.do" id="getNotificationViewPage" name="getNotificationViewPage" method="post">
 		<input type="hidden" id="notificationIdToView" name="notificationId">
 		<input type="hidden" id="actionTypeToView" name="actionType">
 		<input type="hidden" name="chkRefreshflag" value="y">
@@ -107,6 +107,9 @@
 		    "columnDefs": [ { orderable: false, orderable: false, targets: [0] } ],
 		    "info" : false, 
 		    "lengthChange": false, 
+		    language: {
+            	"zeroRecords": "You haven't created any content yet.",
+		    },
 		    "searching": false, 
 		    "pageLength": 15,
 		});
