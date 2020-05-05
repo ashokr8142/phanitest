@@ -61,11 +61,11 @@ locals {
     "roles/iam.securityReviewer",
   ]
   cloudbuild_sa_editor_roles = [
-#    "roles/billing.user",
+    #    "roles/billing.user",
     "roles/compute.xpnAdmin",
     "roles/logging.configWriter",
-#    "roles/orgpolicy.policyAdmin",
-#    "roles/resourcemanager.organizationAdmin",
+    #    "roles/orgpolicy.policyAdmin",
+    #    "roles/resourcemanager.organizationAdmin",
     "roles/resourcemanager.folderCreator",
     "roles/resourcemanager.projectCreator",
   ]

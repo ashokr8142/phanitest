@@ -13,7 +13,7 @@
 # limitations under the License.
 
 devops_project_id = "heroes-hat-unc-dev-devops"
-folder_id            = "455887492777"
+folder_id         = "455887492777"
 billing_account   = "00936C-CC8624-429851"
 state_bucket      = "heroes-hat-unc-dev-terraform-state"
 storage_location  = "us-east1"
