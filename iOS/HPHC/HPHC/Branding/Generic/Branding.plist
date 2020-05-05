@@ -15,13 +15,13 @@
 	<key>LeaveStudy</key>
 	<string>Leave Study</string>
 	<key>LeaveStudyConfirmationText</key>
-	<string>If you tap “Proceed” you will no longer be able to use this app for eye doctor appointments and medication tracking</string>
+	<string>If you tap “Proceed” you will no longer participate in the Heroes Health study.</string>
 	<key>WebsiteLink</key>
-	<string></string>
+	<string>https://heroeshealth.unc.edu</string>
 	<key>WebsiteButtonTitle</key>
-	<string>App Website</string>
+	<string>Website</string>
 	<key>TermsAndConditionURL</key>
-	<string></string>
+	<string>https://heroeshealth.unc.edu/terms-of-service/</string>
 	<key>PrivacyPolicyURL</key>
 	<string>https://heroeshealth.unc.edu/about-the-app/privacy-policy/</string>
 	<key>ValidatedTitle</key>
