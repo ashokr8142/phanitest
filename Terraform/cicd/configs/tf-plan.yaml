@@ -38,20 +38,11 @@ steps:
     entrypoint: terragrunt
     args: ["init"]
     dir: "${_TERRAFORM_ROOT}/org"
-    id: Init (org)
 
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
-    entrypoint: bash
-    args: ["../cicd/configs/terragrunt.sh", "plan-all"]
+    entrypoint: terragrunt
+    args: ["plan-all", "--lock=false"]
     dir: "${_TERRAFORM_ROOT}/org"
-    id: Speculative plan (org)
-
-  # Check for delete operations as an FYI, it won't fail the build.
-  - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
-    entrypoint: bash
-    args: ["../cicd/configs/tf-deletion-check.sh"]
-    dir: "${_TERRAFORM_ROOT}/org"
-    id: Resource deletion check
 
 substitutions:
     _TERRAFORM_ROOT: "."

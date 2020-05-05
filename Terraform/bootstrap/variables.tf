@@ -20,7 +20,7 @@ variable "devops_owners" {
   type = list(string)
 }
 
-variable "org_id" {
+variable "folder_id" {
   type = string
 }
 
@@ -36,6 +36,6 @@ variable "storage_location" {
   type = string
 }
 
-variable "org_admin" {
-  type = string
-}
+#variable "org_admin" {
+#  type = string
+#}
