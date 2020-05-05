@@ -12,7 +12,7 @@
     <string name="gateway_des1">&lt;Introductory content paragraph goes here&gt;</string>
     <string name="delete_account_content">You have chosen to delete your &app_name; Account. This will result in automatic withdrawal from all studies.\n\nBelow is a list of studies that you are a part of and information on how your response data will be handled with each after you withdraw. Please review and confirm.</string>
     <string name="studie_your_enrolled">It\'s been a while since you visited the &app_name; app. Please consider continuing your participation in any studies in which you\'re enrolled.</string>
-    <string name="termsurl"></string>
+    <string name="termsurl">https://heroeshealth.unc.edu/terms-of-service/</string>
     <string name="privacyurl">https://heroeshealth.unc.edu/about-the-app/privacy-policy/</string>
     <string name="view_consent">View Consent</string>
     <string name="visit_website">Visit Website</string>
