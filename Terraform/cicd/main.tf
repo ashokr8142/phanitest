@@ -106,6 +106,15 @@ resource "google_project_iam_member" "cloudbuild_viewers" {
   ]
 }
 
+resource "google_billing_account_iam_member" "binding" {
+  billing_account_id = "00936C-CC8624-429851"
+  role               = "roles/billing.user"
+  member             = local.cloud_build_sa
+  depends_on = [
+    google_project_service.devops_apis,
+  ]
+}
+
 # Cloud Build - Cloud Build Service Account IAM permissions
 # IAM permissions to allow Cloud Build SA to access state.
 resource "google_storage_bucket_iam_member" "cloudbuild_state_iam" {

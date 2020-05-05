@@ -12,16 +12,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-folder                        = "455887492777"
-billing_account               = "00936C-CC8624-429851"
-project_id                    = "heroes-hat-unc-dev-devops"
-state_bucket                  = "heroes-hat-unc-dev-terraform-state"
-repo_owner                    = "roachjm-unc"
-repo_name                     = "fda-mystudies-unc"
-branch_regex                  = "^master$"
-continuous_deployment_enabled = true
-trigger_enabled               = false
-terraform_root                = "Terraform"
-build_viewers = [
-  "group:heroes-health-approvers@gcp.unc.edu",
-]
+variable "project_id" {
+  type = string
+}
+
+variable "secrets_project_id" {
+  type = string
+}
+
+variable "network" {
+  type = string
+}
+
+variable "storage_location" {
+  type = string
+}
+
+variable "cloudsql_region" {
+  type = string
+}
+
+variable "cloudsql_zone" {
+  type = string
+}
+
+variable "consent_documents_iam_members" {
+  type = list(object({
+    role   = string
+    member = string
+  }))
+  default = []
+}
+
+variable "fda_resources_iam_members" {
+  type = list(object({
+    role   = string
+    member = string
+  }))
+  default = []
+}

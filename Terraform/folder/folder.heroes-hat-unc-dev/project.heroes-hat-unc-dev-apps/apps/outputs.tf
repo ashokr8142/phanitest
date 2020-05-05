@@ -12,16 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-folder                        = "455887492777"
-billing_account               = "00936C-CC8624-429851"
-project_id                    = "heroes-hat-unc-dev-devops"
-state_bucket                  = "heroes-hat-unc-dev-terraform-state"
-repo_owner                    = "roachjm-unc"
-repo_name                     = "fda-mystudies-unc"
-branch_regex                  = "^master$"
-continuous_deployment_enabled = true
-trigger_enabled               = false
-terraform_root                = "Terraform"
-build_viewers = [
-  "group:heroes-health-approvers@gcp.unc.edu",
-]
+output "service_account" {
+  value = module.heroes_hat_cluster.service_account
+}
+
+output "gke_cluster" {
+  value = module.heroes_hat_cluster
+}
+
+output "apps_service_accounts" {
+  value = google_service_account.apps_service_accounts
+}
