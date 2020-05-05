@@ -103,6 +103,7 @@ resource "google_project_iam_member" "cloudbuild_viewers" {
   ]
 }
 
+# IAM permissions to allow Cloud Build Service Account use the billing account.
 resource "google_billing_account_iam_member" "binding" {
   billing_account_id = "00936C-CC8624-429851"
   role               = "roles/billing.user"
