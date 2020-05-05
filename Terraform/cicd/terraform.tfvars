@@ -20,7 +20,7 @@ repo_owner                    = "roachjm-unc"
 repo_name                     = "fda-mystudies-unc"
 branch_regex                  = "^master$"
 continuous_deployment_enabled = true
-trigger_enabled               = false
+trigger_enabled               = true
 terraform_root                = "Terraform"
 build_viewers = [
   "group:heroes-health-approvers@gcp.unc.edu",
