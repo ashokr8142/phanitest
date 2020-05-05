@@ -9,15 +9,15 @@
             <table id="studies_list" class="table wid100 tbl">
             <thead>
               <tr>
-                <th style="display: none;"> <span class="sort"></span></th>
-                <th style="display: none;">Live Study ID <span class="sort"></span></th>
-                <th>Study ID <span class="sort"></span></th>
-                <th>Study name <span class="sort"></span></th>
-                <th>Study Category <span class="sort"></span></th>
-                <th>FDA PROJECT LEAD <span class="sort"></span></th>
-                <th>Research Sponsor <span class="sort"></span></th>
-                <th>Status <span class="sort"></span></th>
-                <th>Actions</th>
+                <th style="display: none;" id=""> <span class="sort"></span></th>
+                <th style="display: none;" id="">Live Study ID <span class="sort"></span></th>
+                <th id="">Study ID <span class="sort"></span></th>
+                <th id="">Study name <span class="sort"></span></th>
+                <th id="">Category <span class="sort"></span></th>
+                <th id="">Project lead <span class="sort"></span></th>
+                <th id="">Research Sponsor <span class="sort"></span></th>
+                <th id="">Status <span class="sort"></span></th>
+                <th id="">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -32,7 +32,6 @@
                 <td>${study.researchSponsor}</td>
                 <td>${study.status}</td>
                 <td>
-                    <!-- <span class="sprites_icon preview-g mr-lg"></span> -->
                     <span class="sprites_icon preview-g mr-lg viewStudyClass" isLive="" studyId="${study.id}" permission="view" data-toggle="tooltip" data-placement="top" title="View"></span>
                     <span class="${(not empty study.liveStudyId)?((study.flag)?'edit-inc-draft mr-md':'edit-inc mr-md'):'edit-inc-draft mr-md'}
                         addEditStudyClass 
@@ -58,7 +57,7 @@
             </tbody>
           </table>
         </div>  
-<form:form action="/fdahpStudyDesigner/adminStudies/viewBasicInfo.do" id="addEditStudyForm" name="addEditStudyForm" method="post">
+<form:form action="/studybuilder/adminStudies/viewBasicInfo.do" id="addEditStudyForm" name="addEditStudyForm" method="post">
   <input type="hidden" id="studyId" name="studyId">
 </form:form>
 <script>
@@ -81,7 +80,7 @@
 				input.value= '${_csrf.token}';
 				form.appendChild(input);
 				
-		    	form.action= '/fdahpStudyDesigner/adminStudies/viewStudyDetails.do';
+		    	form.action= '/studybuilder/adminStudies/viewStudyDetails.do';
 		    	document.body.appendChild(form);
 		    	form.submit();
 		 });
@@ -113,7 +112,7 @@
 				input.value= '${_csrf.token}';
 				form.appendChild(input);
 				
-		    	form.action= '/fdahpStudyDesigner/adminStudies/viewStudyDetails.do';
+		    	form.action= '/studybuilder/adminStudies/viewStudyDetails.do';
 		    	document.body.appendChild(form);
 		    	form.submit();
  	     });
@@ -131,9 +130,14 @@
                "columnDefs": [ { orderable: false, targets: [8] } ],
                "order": [[ 0, "desc" ]],
              "info" : false, 
+             
              "lengthChange": false, 
+             language: {
+               	"zeroRecords": "You haven't created any content yet.",
+ 			    },
              "searching": false, 
-             "pageLength": 10 
+             "pageLength": 10
+              
          } );
          
         });
@@ -152,7 +156,7 @@
 				input.value= '${_csrf.token}';
 				form.appendChild(input);
 				
-		    	form.action= '/fdahpStudyDesigner/adminStudies/crateNewStudy.do';
+		    	form.action= '/studybuilder/adminStudies/crateNewStudy.do';
 		    	document.body.appendChild(form);
 		    	form.submit();
 	     });

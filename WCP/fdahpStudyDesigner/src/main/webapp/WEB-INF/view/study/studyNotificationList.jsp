@@ -33,9 +33,9 @@
                     <table id="notification_list" class="display bor-none tbl_rightalign" cellspacing="0" width="100%">
                          <thead>
                             <tr>
-                                <th>Title</th>  
-                                <th class="linkDis">Status</th>                             
-                                <th class="text-right">
+                                <th id="">Title</th>  
+                                <th class="linkDis" id="">Status</th>                             
+                                <th class="text-right" id="">
                                     <c:if test="${empty permission}">
                                     <div class="dis-line form-group mb-none">
                                          <button type="button" class="btn btn-primary blue-btn hideButtonIfPaused studyNotificationDetails">Add Notification</button>
@@ -68,7 +68,7 @@
             <!--  End body tab section -->
         </div>
         <!-- End right Content here -->
-<form:form action="/fdahpStudyDesigner/adminStudies/getStudyNotification.do?_S=${param._S}" id="getStudyNotificationEditPage" name="getNotificationEditPage" method="post">
+<form:form action="/studybuilder/adminStudies/getStudyNotification.do?_S=${param._S}" id="getStudyNotificationEditPage" name="getNotificationEditPage" method="post">
 		<input type="hidden" id="notificationId" name="notificationId">
 		<input type="hidden" id="notificationText" name="notificationText">
 		<input type="hidden" id="actionType" name="actionType">
@@ -76,10 +76,10 @@
 		<input type="hidden" name="chkRefreshflag" value="y">
 </form:form>
 
-<form:form action="/fdahpStudyDesigner/adminStudies/studyList.do?_S=${param._S}" name="studyListPage" id="studyListPage" method="post">
+<form:form action="/studybuilder/adminStudies/studyList.do?_S=${param._S}" name="studyListPage" id="studyListPage" method="post">
 </form:form>        
 
-<form:form action="/fdahpStudyDesigner/adminStudies/notificationMarkAsCompleted.do?_S=${param._S}" name="notificationMarkAsCompletedForm" id="notificationMarkAsCompletedForm" method="post">
+<form:form action="/studybuilder/adminStudies/notificationMarkAsCompleted.do?_S=${param._S}" name="notificationMarkAsCompletedForm" id="notificationMarkAsCompletedForm" method="post">
 </form:form>
     <script>
         $(document).ready(function(){ 
@@ -111,6 +111,9 @@
               "info" : false, 
               "lengthChange": false, 
               "searching": false,
+              language: {
+              	"zeroRecords": "You haven't created any content yet.",
+			    },
            });
             
      });

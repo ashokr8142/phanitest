@@ -32,18 +32,13 @@
 	vertical-align: top;
 }
 
-/* .time-opts .remBtnDis{
-	display: initial;
-} */
-
 .help-block ul {
     width: 150px;
     //font-size:10px !important;
 }
 
 </style>
-<!-- <div id="schedule" class="tab-pane fade in active mt-xlg"> -->
-    <div class="gray-xs-f mb-sm">Activetask Schedule Type</div>
+    <div class="gray-xs-f mb-sm">Active Task Schedule Type</div>
     <div class="pb-lg ">
                <span class="radio radio-info radio-inline p-40">
                <input type="radio" id="schedule1" class="typeofschedule" scheduletype="Regular" value="Regular" name="scheduleType" ${empty activeTaskBo.scheduleType  || activeTaskBo.scheduleType=='Regular' ?'checked':''} ${(activeTaskBo.isDuplicate > 0)?'disabled' : ''}
@@ -53,11 +48,11 @@
                <span class="radio radio-inline p-40">
                <input type="radio" id="schedule2" class="typeofschedule" scheduletype="AnchorDate" value="AnchorDate" name="scheduleType" ${isAnchorQuestionnaire?'disabled':''} ${activeTaskBo.scheduleType=='AnchorDate' ?'checked':''} ${(activeTaskBo.isDuplicate > 0)?'disabled' : ''}
                                                       <c:if test="${empty anchorTypeList}">disabled</c:if> >
-               <label for="schedule2">Anchor-Date-based</label>
+               <label for="schedule2">Anchor date based</label>
                </span>
     </div>
     <!-- Anchor date type -->
-    <form:form action="" name="anchorFormId" id="anchorFormId" method="post" role="form" data-toggle="validator">
+    <form:form action="" name="anchorFormId" id="anchorFormId" method="post" role="form" data-toggle="validator" >
     <div class="anchortypeclass" style="display:none;">
     <c:if test="${fn:length(anchorTypeList) gt 0}">
     <div class="gray-xs-f mb-sm">Select Anchor Date Type</div>
@@ -78,7 +73,7 @@
      </div>
      </form:form> 
      <!-- Ancor date type -->
-	<div class="gray-xs-f mb-sm">Active Task Frequency</div>
+	<div class="gray-xs-f mb-sm">Active Task Scheduling Options</div>
 	<div class="pb-lg b-bor">
 	   <span class="radio radio-info radio-inline p-40">
 	   <input type="radio" id="oneTimeRadio1" class="schedule" frequencytype="oneTime" value="One time" name="frequency" ${empty activeTaskBo.frequency  || activeTaskBo.frequency=='One time' ?'checked':''} ${(activeTaskBo.isDuplicate > 0)?'disabled' : ''} >
@@ -102,7 +97,7 @@
 	   </span>
 	</div>
 	<!-- One time Section-->    
-	<form:form action="/fdahpStudyDesigner/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="oneTimeFormId" id="oneTimeFormId" method="post" role="form">
+	<form:form action="/studybuilder/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="oneTimeFormId" id="oneTimeFormId" method="post" role="form">
 	 <input type="hidden" name="frequency" id="frequencyId" value="${activeTaskBo.frequency}">
 	 <input type="hidden" name="previousFrequency" id="previousFrequency" value="${activeTaskBo.frequency}">
 	 <input type="hidden" name="id" id="activeTaskId" class="activeTaskIdClass" value="${activeTaskBo.id}">
@@ -225,7 +220,7 @@
 	 </div>
 	</form:form>
 	<!-- Daily Section-->    
-	<form:form action="/fdahpStudyDesigner/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="dailyFormId" id="dailyFormId" method="post" role="form">
+	<form:form action="/studybuilder/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="dailyFormId" id="dailyFormId" method="post" role="form">
 		 <input type="hidden" name="frequency" id="dailyFrequencyId" value="${activeTaskBo.frequency}">
 		 <input type="hidden" name="previousFrequency" id="previousFrequency" value="${activeTaskBo.frequency}">
 	  <input type="hidden" name="id" id="id" value="${activeTaskBo.id}">
@@ -243,7 +238,6 @@
 	        <span class='help-block with-errors red-txt'></span>
 	        </span> 
 	        <span class="addBtnDis addbtn mr-sm align-span-center ${(activeTaskBo.isDuplicate > 0)?'cursor-none' : ''}" onclick='addTime();'>+</span>
-	        <!-- <span class="delete vertical-align-middle remBtnDis hide pl-md align-span-center" onclick='removeTime(this);'></span> -->
 	     </div>
 	    </c:if>
 	    <c:if test="${fn:length(activeTaskBo.activeTaskFrequenciesList) gt 0}">
@@ -263,7 +257,7 @@
 	    <div class="mt-md"> 
 	       <div class="dailyStartCls col-md-3 pl-none">                       
 	       <span class="form-group m-none dis-inline vertical-align-middle pr-md">
-	       <span class="gray-xs-f">Start date (pick a date)<span class="requiredStar"> * </span></span><br/>                          
+	       <span class="gray-xs-f">Start date <span class="requiredStar"> * </span></span><br/>                          
 	       <input id="startDate" type="text" class="form-control mt-sm calendar ${(activeTaskBo.isDuplicate > 0)?'cursor-none' : ''}" placeholder="Choose Date" required name="activeTaskLifetimeStart" value="${activeTaskBo.activeTaskLifetimeStart}"/>
 	       <span class='help-block with-errors red-txt'></span>
 	       </span>
@@ -273,7 +267,7 @@
              <div class=" resetDate">
                <div>
                     <span class="form-group m-none dis-inline vertical-align-middle pr-md">
-                              <span class="gray-xs-f">Start date (pick a date) <span class="requiredStar">*</span></span><br/>
+                              <span class="gray-xs-f">Start date <span class="requiredStar">*</span></span><br/>
 	                <span class="pr-md">Anchor Date</span>
 	                <span>
 		                 <select class="signDropDown selectpicker sign-box ${(activeTaskBo.isDuplicate > 0)?'cursor-none' : ''}" title="Select" name="activeTaskFrequenciesList[0].xDaysSign" id="dailyXSign">
@@ -320,7 +314,7 @@
 	 </div> 
 	</form:form>
 	<!-- Weekly Section-->    
-	<form:form action="/fdahpStudyDesigner/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="weeklyFormId" id="weeklyFormId" method="post" role="form">
+	<form:form action="/studybuilder/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="weeklyFormId" id="weeklyFormId" method="post" role="form">
 	  <input type="hidden" name="frequency" id="weeklyfrequencyId">
 	  <input type="hidden" name="previousFrequency" id="previousFrequency" value="${activeTaskBo.frequency}">
 	  <input type="hidden" name="id" id="id" class="activeTaskIdClass" value="${activeTaskBo.id}">
@@ -346,7 +340,6 @@
 	       </span>
 	       </div>
 	       <span class="form-group m-none dis-inline vertical-align-middle pr-md">
-<!-- 	       <span class="gray-xs-f">&nbsp;</span><br/> -->
 	       <input id="selectWeeklyTime" type="text" class="form-control mt-sm clock ${(activeTaskBo.isDuplicate > 0)?'cursor-none' : ''}" required onclick="timep(this.id)" placeholder="Time" name="activeTaskFrequenciesBo.frequencyTime" value="${activeTaskBo.activeTaskFrequenciesBo.frequencyTime}"/>
 	       <span class='help-block with-errors red-txt'></span>
 	       </span>                        
@@ -354,7 +347,7 @@
 	    <div class="mt-md">
 	       <span class="weeklyStartCls  col-md-3 pl-none">                         
 	       <span class="form-group m-none dis-inline vertical-align-middle pr-md">
-	       <span class="gray-xs-f">Start date<span class="requiredStar"> * </span></span><br/>                           
+	       <span class="gray-xs-f">Start date <span class="requiredStar"> * </span></span><br/>                           
 	       <input id="startWeeklyDate" type="text" class="form-control mt-sm calendar ${(activeTaskBo.isDuplicate > 0)?'cursor-none' : ''}" required name="activeTaskLifetimeStart"  placeholder="Choose Date" value="${activeTaskBo.activeTaskLifetimeStart}" readonly="readonly"/>
 	       <span class='help-block with-errors red-txt'></span>
 	       </span>
@@ -364,7 +357,7 @@
              <div class=" resetDate dis_inlinetop p-none">
                <div>
                    <span class="form-group m-none dis-inline vertical-align-middle pr-md">
-                             <span class="gray-xs-f">Start date (pick a date) <span class="requiredStar">*</span></span><br/>
+                             <span class="gray-xs-f">Start date <span class="requiredStar">*</span></span><br/>
                 <span class="pr-md">Anchor Date</span>
                 <span>
 	                 <select class="signDropDown selectpicker sign-box ${(activeTaskBo.isDuplicate > 0)?'cursor-none' : ''}" title="Select" name="activeTaskFrequenciesBo.xDaysSign" id="weeklyXSign">
@@ -426,7 +419,7 @@
 	 </div> 
 	</form:form>
 	<!-- Monthly Section-->   
-	<form:form action="/fdahpStudyDesigner/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="monthlyFormId" id="monthlyFormId" method="post" role="form"> 
+	<form:form action="/studybuilder/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="monthlyFormId" id="monthlyFormId" method="post" role="form"> 
 	 <input type="hidden" name="frequency" id="monthlyfrequencyId" value="${activeTaskBo.frequency}">
 	 <input type="hidden" name="previousFrequency" id="previousFrequency" value="${activeTaskBo.frequency}">
 	 <input type="hidden" name="id" id="id" class="activeTaskIdClass" value="${activeTaskBo.id}">
@@ -443,7 +436,6 @@
 	       </span>
 	       </span>
 	       <span class="form-group m-none dis-inline vertical-align-middle pr-md">
-<!-- 	       <span class="gray-xs-f">&nbsp;</span><br/> -->
 	       <input id="selectMonthlyTime" type="text" class="form-control mt-sm clock ${(activeTaskBo.isDuplicate > 0)?'cursor-none' : ''}" required onclick="timep(this.id)"  placeholder="Time" name="activeTaskFrequenciesBo.frequencyTime" value="${activeTaskBo.activeTaskFrequenciesBo.frequencyTime}"/>
 	       <span class='help-block with-errors red-txt'></span>
 	       </span>
@@ -452,7 +444,7 @@
 	    <div class="mt-xs"> 
 	       <div class="monthlyStartCls  col-md-3 pl-none">                       
 	       <span class="form-group m-none dis-inline vertical-align-middle pr-md">
-	       <span class="gray-xs-f">Start date<span class="requiredStar"> * </span></span><br/>      
+	       <span class="gray-xs-f">Start date <span class="requiredStar"> * </span></span><br/>      
 	       <input id="pickStartDate" type="text" class="form-control mt-sm calendar ${(activeTaskBo.isDuplicate > 0)?'cursor-none' : ''}"  placeholder="Choose Start Date" required name="activeTaskLifetimeStart" value="${activeTaskBo.activeTaskLifetimeStart}" readonly="readonly"/>
 	       <span class='help-block with-errors red-txt'></span>
 	       </span>
@@ -462,7 +454,7 @@
 		          <div class="dis_inlinetop resetDate">
 		              <div>
 		                   <span class="form-group m-none dis-inline vertical-align-middle pr-md">
-		                             <span class="gray-xs-f">Start date (pick a date) <span class="requiredStar">*</span></span><br/>
+		                             <span class="gray-xs-f">Start date <span class="requiredStar">*</span></span><br/>
 		                <span class="pr-md">Anchor Date</span>
 		                <span>
 			                 <select class="signDropDown selectpicker sign-box ${(activeTaskBo.isDuplicate > 0)?'cursor-none' : ''}" title="Select" name="activeTaskFrequenciesBo.xDaysSign" id="monthlyXSign">
@@ -526,7 +518,7 @@
 	 </div> 
 	</form:form>
 	<!-- Manually Section-->    
-	<form:form action="/fdahpStudyDesigner/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="customFormId" id="customFormId" method="post" role="form">
+	<form:form action="/studybuilder/adminStudies/saveOrUpdateActiveTaskSchedule.do?_S=${param._S}" name="customFormId" id="customFormId" method="post" role="form">
 	<input type="hidden" name="id" id="id" value="${activeTaskBo.id}">
 	   <input type="hidden" name="studyId" id="studyId" value="${not empty activeTaskBo.studyId ? activeTaskBo.studyId : studyBo.id}">
 	   <input type="hidden" name="frequency" id="customfrequencyId" value="${activeTaskBo.frequency}">
@@ -554,7 +546,6 @@
 	         <span class='help-block with-errors red-txt'></span>
 	        </span>
 	        <span class="addBtnDis addbtn mr-sm align-span-center" onclick='addDate();'>+</span>
-	        <!-- <span id="delete" class="sprites_icon delete vertical-align-middle remBtnDis hide align-span-center" onclick="removeDate(this);"></span> -->
 	     </div>
 	      </c:if>
 	      <c:if test="${fn:length(activeTaskBo.activeTaskCustomScheduleBo) gt 0}">
@@ -641,9 +632,7 @@
 						placeholder="Time" required /> <span
 						class='help-block with-errors red-txt'></span>
 					</span> <span class="addbtn addBtnDis dis-inline vertical-align-middle "
-						onclick="addDateAnchor();">+</span> <!-- <span id="deleteAncchor"
-						class="sprites_icon delete vertical-align-middle remBtnDis hide align-span-center"
-						onclick="removeDateAnchor(this);"></span> -->
+						onclick="addDateAnchor();">+</span>
 				</div>
 			</c:if>
 			<c:if
@@ -723,7 +712,6 @@
 	    </div>
 	 </div>
 	</form:form> 
-<!-- </div> -->
 <script type="text/javascript">
 var count = 0;
 var customCount = 0;
@@ -738,13 +726,6 @@ if(scheduletype != '' && scheduletype != null && typeof scheduletype != 'undefin
 	scheduletype = $('input[name="scheduleType"]:checked').val();
 }
 var customAnchorCount = 0;
-//customAnchorCount = '${customCount}';
-
-/* <c:if test="${activeTaskBo.isDuplicate > 0}">
-$('span.addBtnDis').remove();
-$('span.remBtnDis').remove();
-</c:if> */
-
 $(document).ready(function() {
 	
 		$(".remBtnDis").addClass("hide");
@@ -807,14 +788,10 @@ $(document).ready(function() {
 				 $(".dailyanchorDiv").find('input:text').attr('required',true);
 			 }
 			 if(schedule_opts == 'Weekly'){
-				   /* $("#weekDaysId").hide();
-				   $("#weekDaysId").find('input:text').removeAttr('required',true); */
 				   $(".weeklyanchorDiv").show();
 				   $(".weeklyanchorDiv").find('input:text').attr('required',true);
 			 }
 			 if(schedule_opts == 'Monthly'){
-				  /*  $("#monthlyDateId").hide();
-				   $("#monthlyDateId").find('input:text').removeAttr('required',true); */
 				   $(".monthlyanchorDiv").show();
 				   $(".monthlyanchorDiv").find('input:text').attr('required',true);
 			 }
@@ -865,15 +842,11 @@ $(document).ready(function() {
 			
 			$('.weeklyStartCls').show();
 			$('.weeklyStartCls').find('input:text,select').attr('required',true);
-			/* $("#weekDaysId").show();
-			$("#weekDaysId").find('input:text').attr('required',true); */
 			$(".weeklyanchorDiv").hide();
 			$(".weeklyanchorDiv").find('input:text').removeAttr('required',true);
 			
 			$('.monthlyStartCls').show();
 			$('.monthlyStartCls').find('input:text').attr('required',true);
-			/* $("#monthlyDateId").show();
-			$("#monthlyDateId").find('input:text').attr('required',true); */
 			$(".monthlyanchorDiv").hide();
 			$(".monthlyanchorDiv").find('input:text').removeAttr('required',true);
 			
@@ -930,9 +903,7 @@ $(document).ready(function() {
 	}else{
 		$('.manuallyContainer').find(".remBtnDis").addClass("hide");
 	}
-	//var previousFrequency = $("previousFrequency").val();
 	$(".schedule").change(function() {
-		//alert("on change");
         $(".all").addClass("dis-none");
         var schedule_opts = $(this).attr('frequencytype');
         var val = $(this).val();
@@ -1036,14 +1007,10 @@ $(document).ready(function() {
 				 $(".dailyanchorDiv").find('input:text').attr('required',true);
 			 }
 			 if(val == 'Weekly'){
-				 /* $("#weekDaysId").hide();
-				 $("#weekDaysId").find('input:text').removeAttr('required',true); */
 				 $(".weeklyanchorDiv").show();
 				 $(".weeklyanchorDiv").find('input:text').attr('required',true);
 			 }
 			 if(val == 'Monthly'){
-				 /* $("#monthlyDateId").hide();
-				 $("#monthlyDateId").find('input:text').removeAttr('required',true); */
 				 $(".monthlyanchorDiv").show();
 				 $(".monthlyanchorDiv").find('input:text').attr('required',true);
 			 }
@@ -1077,15 +1044,11 @@ $(document).ready(function() {
 			
 			$('.weeklyStartCls').show();
 			$('.weeklyStartCls').find('input:text,select').attr('required',true);
-			/* $("#weekDaysId").show();
-			$("#weekDaysId").find('input:text').attr('required',true); */
 			$(".weeklyanchorDiv").hide();
 			$(".weeklyanchorDiv").find('input:text').removeAttr('required',true);
 			
 			$('.monthlyStartCls').show();
 			$('.monthlyStartCls').find('input:text').attr('required',true);
-			/* $("#monthlyDateId").show();
-			$("#monthlyDateId").find('input:text').attr('required',true); */
 			$(".monthlyanchorDiv").hide();
 			$(".monthlyanchorDiv").find('input:text').removeAttr('required',true);
 			
@@ -1101,8 +1064,6 @@ $(document).ready(function() {
 			
 		} 
 	//AnchorDate type end
-        
-        
     });
     if(frequencey != null && frequencey != "" && typeof frequencey != 'undefined'){
     	$(".all").addClass("dis-none");
@@ -1236,7 +1197,6 @@ $(document).ready(function() {
     
     $('#startDate').not('.cursor-none, :disabled').datetimepicker({
         format: 'MM/DD/YYYY',
-       // minDate: new Date(),
        useCurrent :false,
     }).on("dp.change", function (e) {
     	var startDate = $("#startDate").val();
@@ -1258,12 +1218,10 @@ $(document).ready(function() {
     });
     $('#startDateMonthly').not('.cursor-none, :disabled').datetimepicker({
         format: 'MM/DD/YYYY',
-       // minDate: new Date(),
        useCurrent :false,
     }).on("dp.show", function (e) {
         $('#startDateMonthly').data("DateTimePicker").minDate(serverDate());
     }).on("dp.change",function(e){
-    	//$('#pickStartDate').data("DateTimePicker").minDate(e.date);
     	if(e.date._d != $('#pickStartDate').data("DateTimePicker").date()) {
     		$('#pickStartDate').val('');
     	}
@@ -1278,7 +1236,6 @@ $(document).ready(function() {
 	    	}
 	    }
     	 $('#pickStartDate').data("DateTimePicker").enabledDates(dateArr);
-    	//$('#pickStartDate').data("DateTimePicker").enabledDates([ moment(e.date), new Date(2020, 4 - 1, 3), "4/4/2014 00:53" ]);
     });
     
     $(".clock").not('.cursor-none').datetimepicker({
@@ -1307,7 +1264,6 @@ $(document).ready(function() {
     $('#pickStartDate').not('.cursor-none, :disabled').datetimepicker({
         format: 'MM/DD/YYYY',
         
-        //minDate: new Date(),
         useCurrent :false,
         ignoreReadonly : true
     }).on("dp.change",function(e){
@@ -1316,10 +1272,6 @@ $(document).ready(function() {
     	$('#pickStartDate').attr("readonly",true);
     	if((pickStartDate != null && pickStartDate != '' && typeof pickStartDate != 'undefined') && (months != null && months != '' && typeof months != 'undefined')){
     		var dt = new Date(pickStartDate);
-//     		var monthCount = Number(months)*30;
-//     		console.log(monthCount)
-//             dt.setDate(dt.getDate() + Number(monthCount));	
-//             endDate = formatDate(dt);
 			endDate = moment(moment(dt).add(Number(months), 'M')).format("MM/DD/YYYY");
             $("#studyMonthlyLifetimeEnd").val(endDate);
             $("#monthEndDate").text(endDate);
@@ -1330,7 +1282,6 @@ $(document).ready(function() {
     });
     $('#startWeeklyDate').not('.cursor-none, :disabled').datetimepicker({
         format: 'MM/DD/YYYY',
-       // minDate: new Date(),
        useCurrent :false,
        ignoreReadonly : true
     }).on("dp.change", function (e) {
@@ -1430,9 +1381,6 @@ $(document).ready(function() {
     	if((pickStartDate != null && pickStartDate != '' && typeof pickStartDate != 'undefined') && (months != null && months != '' && typeof months != 'undefined')){
     		var dt = new Date(pickStartDate);
     		var monthCount = Number(months)*30;
-//     		console.log(monthCount)
-//             dt.setDate(dt.getDate() + Number(monthCount));	
-//             endDate = formatDate(dt);
 			endDate = moment(moment(dt).add(Number(months), 'M')).format("MM/DD/YYYY");
             $("#studyMonthlyLifetimeEnd").val(endDate);
             $("#monthEndDate").text(endDate).trigger('contentchanged');
@@ -1525,9 +1473,6 @@ $(document).ready(function() {
 	   	var day = date.getDate() >= 10 ? date.getDate() : ('0' + date.getDate());
 	   	var month = (date.getMonth()+1) >= 10 ? (date.getMonth()+1) : ('0' + (date.getMonth()+1));
 	   	var today = moment(serverDate()).format("MM/DD/YYYY");// month + '/' +  day + '/' + date.getFullYear();
-// 	   	if($(this).is('#startDate')) {
-// 			$(document).find('.dailyClock').val('');
-// 		}
 		$('.time-opts').each(function(){
 			var id = $(this).attr("id");
 			var timeId = '#time'+id;
@@ -1546,7 +1491,6 @@ $(document).ready(function() {
 		   	}
 		});
 	});
-// 	updateLogoutCsrf();
 	$('#anchorDateId').change(function(){ 
         var frequency_text = $('input[name="frequency"]:checked').val();
     	var element = $(this).find('option:selected').text(); 
@@ -1859,8 +1803,6 @@ function saveActiveTask(item, actType, callback){
 				activeTaskFrequencey.yDaysSign=true;
 			}
 			activeTaskFrequencey.frequencyDate=null;
-			//activeTask.activeTaskLifetimeStart=null;
-			//activeTask.activeTaskLifetimeEnd=null;
 		}else{
 			activeTask.anchorDateId=null;
 			activeTaskFrequencey.timePeriodFromDays=null;
@@ -1954,10 +1896,6 @@ function saveActiveTask(item, actType, callback){
 		repeat_active_task = $("#days").val();
 		study_lifetime_end = $("#endDateId").text();
 		
-// 		var fetalCickDuration = $('#inputClockId').val();
-// 		if(fetalCickDuration){
-// 			activeTask.fetalCickDuration = fetalCickDuration;
-// 		}
 		var dailyXSign = $('#dailyXSign').val();
 		var dailyXSignVal = $('#dailyxdaysId').val(); 
 		//1st record dailyxsign need to store
@@ -2016,13 +1954,6 @@ function saveActiveTask(item, actType, callback){
 		study_lifetime_end = $("#weekEndDate").text();
 		var weeklyXSign = $('#weeklyXSign').val();
 		var weeklyXSignVal = $('#weeklyxdaysId').val();
-		
-		/* $("#weekDaysId").hide();			
-		$("#startDateWeekly").removeAttr('required');
-		$("#startDateWeekly").parent().parent().removeClass("has-error has-danger");
-		$("#startDateWeekly").next().children().remove();
-		$(".weeklyRegular").hide();			
-		$(".weeklyRegular").removeAttr('required'); */
 		
 		if(dayOftheweek != null && dayOftheweek != '' && typeof dayOftheweek != 'undefined'){
 			activeTask.dayOfTheWeek=dayOftheweek;
@@ -2142,75 +2073,9 @@ function saveActiveTask(item, actType, callback){
 			console.log("inside schedule");
 			var activetaskType = $('#targetOptionId').val();
 			console.log("activetaskType::"+activetaskType);
-// 			if((activetaskType && parseInt(activetaskType) == 1) && (frequency_text == 'One time' || frequency_text == 'Daily' || frequency_text == 'Manually Schedule')){
-// 				if(frequency_text == 'One time')
-// 		    		messageText = "Are you sure the activity lifetime has been set to be longer than the fetal kick record duration time?";
-// 		    	if(frequency_text == 'Daily' || frequency_text == 'Manually Schedule')
-// 		    		messageText = "Are you sure the lifetime of each run has been set to be longer than the fetal kick record duration time?";
-// 		    	bootbox.confirm({
-// 					closeButton: false,
-// 					message : messageText,	
-// 				    buttons: {
-// 				        'cancel': {
-// 				            label: 'No',
-// 				        },
-// 				        'confirm': {
-// 				            label: 'Yes',
-// 				        },
-// 				    },
-// 				    callback: function(result) {
-// 				        if (result) {
-// 				        	$("body").addClass("loading");
-// 				    		$.ajax({ 
-// 				    	        url: "/fdahpStudyDesigner/adminStudies/saveActiveTaskSchedule.do?_S=${param._S}",
-// 				    	        type: "POST",
-// 				    	        datatype: "json",
-// 				    	        data: {activeTaskScheduleInfo:data},
-// 				    	        beforeSend: function(xhr, settings){
-// 				    	            xhr.setRequestHeader("X-CSRF-TOKEN", "${_csrf.token}");
-// 				    	        },
-// 				    	        success:function(data){
-// 				    	      	var jsonobject = eval(data);			                       
-// 				    				var message = jsonobject.message;
-// 				    				if(message == "SUCCESS"){
-// 				    					var activeTaskId = jsonobject.activeTaskId;
-// 				    					var activeTaskFrequenceId = jsonobject.activeTaskFrequenceId;
-// 				    					$("#activeTaskId, #taskId,#taskContentId,.activeTaskIdClass").val(activeTaskId);
-// 				    					$("#previousFrequency").val(frequency_text);
-// 				    					if(frequency_text == 'One time'){
-// 				    						$("#oneTimeFreId").val(activeTaskFrequenceId);
-// 				    					}else if(frequency_text == 'Weekly'){
-// 				    						$("#weeklyFreId").val(activeTaskFrequenceId);
-// 				    					}else if(frequency_text == 'Monthly'){
-// 				    						$("#monthFreId").val(activeTaskFrequenceId);
-// 				    					}
-// 				    					frequencey = frequency_text;
-// 				    				 	if (callback)
-// 				    						callback(true);
-// 				    				}else{
-// 				    					if (callback)
-// 				      						callback(false);
-// 				    				}
-// 				    	        },
-// 				    				error: function(xhr, status, error) {
-// 				    					$("body").removeClass("loading");
-// 				    					if (callback)
-// 				    						callback(false);
-// 				    			  },
-// 				    			complete : function() {
-// 				    				$(item).prop('disabled', false);
-// 				    			},
-// 				    			global : false
-// 				    	 	});
-// 				        }else{
-// 				        	$("#doneId").attr("disabled",false);
-// 				        }
-// 				    }
-// 			   });
-// 			}else{
 				$("body").addClass("loading");
 				$.ajax({ 
-			        url: "/fdahpStudyDesigner/adminStudies/saveActiveTaskSchedule.do?_S=${param._S}",
+			        url: "/studybuilder/adminStudies/saveActiveTaskSchedule.do?_S=${param._S}",
 			        type: "POST",
 			        datatype: "json",
 			        data: {activeTaskScheduleInfo:data},
@@ -2220,7 +2085,6 @@ function saveActiveTask(item, actType, callback){
 			        success:function(data){
 			      	var jsonobject = eval(data);			                       
 						var message = jsonobject.message;
-						//var errorMessage = jsonobject.errorMessage;
 						if(message == "SUCCESS"){
 							var activeTaskId = jsonobject.activeTaskId;
 							var activeTaskFrequenceId = jsonobject.activeTaskFrequenceId;
@@ -2234,18 +2098,14 @@ function saveActiveTask(item, actType, callback){
 								$("#monthFreId").val(activeTaskFrequenceId);
 							}
 							frequencey = frequency_text;
-							//alert("activeTaskId"+activeTaskId);
-//		 					showSucMsg("Active task saved successfully");
 						 	if (callback)
 								callback(true);
 						}else{
-							//showErrMsg(errorMessage);
 							if (callback)
 		  						callback(false);
 						}
 			        },
 						error: function(xhr, status, error) {
-//						  	showErrMsg("Something went Wrong");
 							$("body").removeClass("loading");
 							if (callback)
 								callback(false);
@@ -2255,11 +2115,10 @@ function saveActiveTask(item, actType, callback){
 					},
 					global : false
 			 	});	
-			//}
 		}else{
 			$("body").addClass("loading");
 			$.ajax({ 
-		        url: "/fdahpStudyDesigner/adminStudies/saveActiveTaskSchedule.do?_S=${param._S}",
+		        url: "/studybuilder/adminStudies/saveActiveTaskSchedule.do?_S=${param._S}",
 		        type: "POST",
 		        datatype: "json",
 		        data: {activeTaskScheduleInfo:data},
@@ -2269,7 +2128,6 @@ function saveActiveTask(item, actType, callback){
 		        success:function(data){
 		      	var jsonobject = eval(data);			                       
 					var message = jsonobject.message;
-					//var errorMessage = jsonobject.errorMessage;
 					if(message == "SUCCESS"){
 						var activeTaskId = jsonobject.activeTaskId;
 						var activeTaskFrequenceId = jsonobject.activeTaskFrequenceId;
@@ -2283,18 +2141,14 @@ function saveActiveTask(item, actType, callback){
 							$("#monthFreId").val(activeTaskFrequenceId);
 						}
 						frequencey = frequency_text;
-						//alert("activeTaskId"+activeTaskId);
-//	 					showSucMsg("Active task saved successfully");
 					 	if (callback)
 							callback(true);
 					}else{
-						//showErrMsg(errorMessage);
 						if (callback)
 	  						callback(false);
 					}
 		        },
 					error: function(xhr, status, error) {
-//					  	showErrMsg("Something went Wrong");
 						$("body").removeClass("loading");
 						if (callback)
 							callback(false);
@@ -2529,7 +2383,6 @@ function validateTime(dateRef, timeRef) {
 			  dt = moment(dt, "MM/DD/YYYY").toDate();
 			  if(dt < serverDate()) {
 				  $(this).parent().addClass('has-error has-danger');
-// 				   .find('.help-block.with-errors').html('<ul class="list-unstyled"><li>Please select a time that has not already passed for the current date.</li></ul>');
 				  $(this).data("DateTimePicker").clear();
 			  } else {
 				  $(this).parent().removeClass('has-error has-danger').find('.help-block.with-errors').html('');
@@ -2542,11 +2395,9 @@ function validateTime(dateRef, timeRef) {
 					  if(dt < serverDateTime()) {
 					   $(this).data("DateTimePicker").clear();
  					   $(this).parent().addClass('has-error has-danger');
-// 					   .find('.help-block.with-errors').html('<ul class="list-unstyled"><li>Please select a time that has not already passed for the current date.</li></ul>');
 					   if(valid)
 						   valid = false;
 					  } else {
-// 					   $(this).parent().removeClass('has-error has-danger').find('.help-block.with-errors').html('');
 					  }
 				  }
 			  });  
@@ -2576,11 +2427,9 @@ function validateCustTime(dateRef, timeRef) {
 					  if(dt < serverDateTime()) {
 					   $(this).data("DateTimePicker").clear();
 					   $(this).parent().addClass('has-error has-danger');
-//					   .find('.help-block.with-errors').html('<ul class="list-unstyled"><li>Please select a time that has not already passed for the current date.</li></ul>');
 					   if(valid)
 						   valid = false;
 					  } else {
-//					   $(this).parent().removeClass('has-error has-danger').find('.help-block.with-errors').html('');
 					  }
 				  }
 			  });  
@@ -2635,7 +2484,6 @@ function validateCustTime(dateRef, timeRef) {
 		return valid;
 	}
 	function addDateAnchor(){
-		//customAnchorCount = parseInt(customAnchorCount) +1;
 		customAnchorCount = $('.manually-anchor-option').length;
 		var newDateCon = "<div class='manually-anchor-option mb-md form-group' id='"+customAnchorCount+"'>"
 					                  +"<span class='mb-sm pr-md'><span class='light-txt opacity06'> Anchor Date </span></span>"
@@ -2676,7 +2524,6 @@ function validateCustTime(dateRef, timeRef) {
 			$('.manuallyAnchorContainer').find(".remBtnDis").addClass("hide");
 		}
 	 timep('manualTime'+customAnchorCount);
-	 //$('#manualTime'+customAnchorCount).val("");
 	 $('#'+customAnchorCount).find('input:first').focus();
 	 $('.selectpicker').selectpicker('refresh');
 	}
@@ -2689,7 +2536,6 @@ function validateCustTime(dateRef, timeRef) {
 			}else{
 				$('.manuallyAnchorContainer').find(".remBtnDis").addClass("hide");
 			}
-			//$(document).find('.cusTime').trigger('dp.change');
 	}
 	function setAnchorDropdown(frequency_text,anchorType){
 	    if(anchorType == 'Enrollment Date'){
@@ -2766,17 +2612,6 @@ $(document).ready(function(){
 		var yday = $("#ydays"+parent_id).val();
 		var ysign = $("#ySign"+parent_id).val() === "0" ? "+" : "-";
 		var ydayValue = parseInt(ysign+""+yday);
-		    
-		    
-		//var siblings_length = $(".manuallyAnchorContainer > div").length;
-		//
-		//for(i= parseInt(parent_id)+1  ; i<= siblings_length; i++){
-//		    $("#"+i).remove();
-		//}
-
-		    
-		//$("#"+parent_id).next().remove();
-
 		  
 		if(parent_id === "0"){
 		 
@@ -2785,13 +2620,11 @@ $(document).ready(function(){
 		    $(this).addClass("red-border");
 		    $("#ydays"+parent_id).addClass("red-border");
 		    $("#ydays"+parent_id).parent().addClass('has-error has-danger').find(".help-block").empty().append('<ul class="list-unstyled"><li>Y days should be greater than X days.</li></ul>');
-		    //$("#addbtn"+parent_id).addClass("not-allowed");
 		    $(".addbtn").addClass("not-allowed");
 		  }else{				
 			$(this).removeClass("red-border");
 		    $("#ydays"+parent_id).removeClass("red-border");
 		    $("#ydays"+parent_id).parent().removeClass('has-error has-danger').find(".help-block").html("");
-		    //$("#addbtn"+parent_id).removeClass("not-allowed");
 		    $(".addbtn").removeClass("not-allowed");
 			}   
 		}
@@ -2808,52 +2641,28 @@ $(document).ready(function(){
 			  $(this).addClass("red-border");
 			  $("#ydays"+pre_parent).addClass("red-border");
 			  $(this).parent().addClass('has-error has-danger').find(".help-block").empty().append('<ul class="list-unstyled"><li>Child X days should be greater than parent Y days.</li></ul>');
-			  //$("#addbtn"+parent_id).addClass("not-allowed");
 			  $(".addbtn").addClass("not-allowed");
 		  }else{
 			  $(this).removeClass("red-border");
 			  $("#ydays"+pre_parent).removeClass("red-border");
 			  $(this).parent().removeClass('has-error has-danger').find(".help-block").html("");
-			  //$("#addbtn"+parent_id).addClass("not-allowed");
 			  $(".addbtn").addClass("not-allowed");
 			  if(ydayValue !== ""){
 				  if(xdayValue > ydayValue){
 					  $(this).addClass("red-border");
 					  $("#ydays"+parent_id).addClass("red-border");
 					  $("#ydays"+parent_id).parent().addClass('has-error has-danger').find(".help-block").empty().append('<ul class="list-unstyled"><li>Y days should be greater than X days.</li></ul>');
-					  //$("#addbtn"+parent_id).addClass("not-allowed");
 					  $(".addbtn").addClass("not-allowed");
 				  }else{
 					  $(this).removeClass("red-border");
 					  $("#ydays"+parent_id).removeClass("red-border");
 					  $("#ydays"+parent_id).parent().removeClass('has-error has-danger').find(".help-block").html("");
-					  //$("#addbtn"+parent_id).removeClass("not-allowed");
 					  $(".addbtn").removeClass("not-allowed");
 				  }
 			  }		
 		  }
-		  		  
 		    
-		  /* if(xdayValue < pydayValue){
-			 $("xdays"+parent_id).addClass("red-border");
-		     $("#ydays"+pre_parent).addClass("red-border");
-		  }else if(ydayValue !== ""){
-		      if(xdayValue > ydayValue){
-		    	  $(this).addClass("red-border");
-				  $("#ydays"+parent_id).addClass("red-border");
-				  $("#addbtn"+parent_id).addClass("not-allowed");
-		       }else{
-		    	   $(this).removeClass("red-border");
-				   $("#ydays"+parent_id).removeClass("red-border");
-				   $("#addbtn"+parent_id).removeClass("not-allowed");
-		       }    
-	     } */
-	     
-	     
-		  	
 		}   
-		
-		
 
 		});
 
@@ -2882,13 +2691,11 @@ $(document).ready(function(){
 			    $(this).parent().parent().siblings().removeClass("current");
 				$(this).parent().parent().addClass("current");
 				$(".current").nextAll().remove();	
-				//$("#addbtn"+parent_id).addClass("not-allowed");
 				$(".addbtn").addClass("not-allowed");
 			}else{
 				$(this).removeClass("red-border");
 			    $("#xdays"+parent_id).removeClass("red-border");
 			    $("#ydays"+parent_id).parent().removeClass('has-error has-danger').find(".help-block").html("");
-			    //$("#addbtn"+parent_id).removeClass("not-allowed");
 			    $(".addbtn").removeClass("not-allowed");
 			}	
 			
@@ -2920,13 +2727,11 @@ $(document).ready(function(){
 			    $("#xdays"+parent_id).addClass("red-border");
 			    $("#ydays"+parent_id).addClass("red-border");
 			    $("#ydays"+parent_id).parent().addClass('has-error has-danger').find(".help-block").empty().append('<ul class="list-unstyled"><li>Y days should be greater than X days.</li></ul>');
-			    //$("#addbtn"+parent_id).addClass("not-allowed");
 			    $(".addbtn").addClass("not-allowed");
 			}else{				
 			    $("#xdays"+parent_id).removeClass("red-border");			    
 			    $("#ydays"+parent_id).removeClass("red-border");
 			    $("#ydays"+parent_id).parent().removeClass('has-error has-danger').find(".help-block").html("");
-			    //$("#addbtn"+parent_id).removeClass("not-allowed");
 			    $(".addbtn").removeClass("not-allowed");
 			}	
 			
@@ -2941,13 +2746,11 @@ $(document).ready(function(){
 					  $(this).addClass("red-border");
 					  $("#ydays"+pre_parent).addClass("red-border");
 					  $("#xdays"+parent_id).parent().addClass('has-error has-danger').find(".help-block").empty().append('<ul class="list-unstyled"><li>Child X days should be greater than parent Y days.</li></ul>');
-					  //$("#addbtn"+parent_id).addClass("not-allowed");
 					  $(".addbtn").addClass("not-allowed");
 				  }else{
 					  $(this).removeClass("red-border");
 					  $("#ydays"+pre_parent).removeClass("red-border");
 					  $("#xdays"+parent_id).parent().removeClass('has-error has-danger').find(".help-block").html("");
-					  //$("#addbtn"+parent_id).addClass("not-allowed");
 					  $(".addbtn").addClass("not-allowed");
 				  }	  
 			}
@@ -2955,21 +2758,7 @@ $(document).ready(function(){
 			$(this).parent().parent().parent().siblings().removeClass("current");
 			$(this).parent().parent().parent().addClass("current");
 			
-			/* $("#"+parent_id).siblings().removeClass("current");
-			$("#"+parent_id).parent().parent().addClass("current"); */
-			
 			$(".current").nextAll().remove();
-			
-			
-			/* var siblings_length = $(".manuallyAnchorContainer > div").length;			
-			for(i= 0; i<= siblings_length; i++){
-				
-				if(i !== parseInt(parent_id)){
-					$("#"+i).remove();
-				}			
-		    	
-		    } */
-					
 			
 		});
 });

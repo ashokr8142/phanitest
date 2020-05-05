@@ -26,9 +26,6 @@
                          <button type="button" class="btn btn-default gray-btn cancelBut">Cancel</button>
                      </div>
                     
-                     <!-- <div class="dis-line form-group mb-none mr-sm">
-                         <button type="button" class="btn btn-default gray-btn">Save</button>
-                     </div> -->
 					<c:if test="${empty permission}">
                      <div class="dis-line form-group mb-none ml-sm">
                       <span class="tool-tip" id="markAsTooltipId"data-toggle="tooltip" data-placement="bottom" <c:if test="${!markAsComplete}"> title="${activityMsg}" </c:if> >
@@ -48,10 +45,10 @@
                     <table id="questionnaire_list" class="display bor-none dragtbl" cellspacing="0" width="100%">
                          <thead>
                             <tr>
-                            	<th style="display: none;"></th>
-                                <th>TITLE<span class="sort"></span></th>
-                                <th>FREQUENCY<span class="sort"></span></th>                                
-                                <th>
+                            	<th style="display: none;" id=""></th>
+                                <th id="">TITLE<span class="sort" ></span></th>
+                                <th id="">Schedule Type<span class="sort" ></span></th>                                
+                                <th id="">
                                 <c:if test="${empty permission}">
                                     <div class="dis-line form-group mb-none">
                                          <button type="button" class="btn btn-primary blue-btn" onclick="addQuestionnaires();">Add Questionnaire</button>
@@ -85,7 +82,7 @@
             
         </div>
         <!-- End right Content here -->
-        <form:form action="/fdahpStudyDesigner/adminStudies/viewQuestionnaire.do?_S=${param._S}" name="questionnaireInfoForm" id="questionnaireInfoForm" method="post">
+        <form:form action="/studybuilder/adminStudies/viewQuestionnaire.do?_S=${param._S}" name="questionnaireInfoForm" id="questionnaireInfoForm" method="post">
 			<input type="hidden" name="questionnaireId" id="questionnaireId" value="">
 			<input type="hidden" name="actionType" id="actionType"> 
 			<input type="hidden" name="studyId" id="studyId" value="${studyId}" />
@@ -103,6 +100,9 @@ $(document).ready(function(){
                     { "bSortable": true },
                     { "bSortable": true }
                    ],
+                   language: {
+                    	"zeroRecords": "You haven't created any content yet.",
+   			    },
                    "order": [[ 0, "desc" ]],
                  "info" : false, 
                  "lengthChange": false, 
@@ -139,7 +139,7 @@ $(document).ready(function(){
 		if(questionnaryId != null && questionnaryId != '' && typeof questionnaryId !='undefined'){
 			$("#questionnaireId").val(questionnaryId);
 			$("#actionType").val('edit');
-			document.questionnaireInfoForm.action="/fdahpStudyDesigner/adminStudies/copyQuestionnaire.do?_S=${param._S}";	 
+			document.questionnaireInfoForm.action="/studybuilder/adminStudies/copyQuestionnaire.do?_S=${param._S}";	 
 			document.questionnaireInfoForm.submit();
 	    }
   }
@@ -164,7 +164,7 @@ $(document).ready(function(){
 		    	if(result){
 					if(questionnaireId != null && questionnaireId != '' && typeof questionnaireId !='undefined'){
 						$.ajax({
-			    			url: "/fdahpStudyDesigner/adminStudies/deleteQuestionnaire.do?_S=${param._S}",
+			    			url: "/studybuilder/adminStudies/deleteQuestionnaire.do?_S=${param._S}",
 			    			type: "POST",
 			    			datatype: "json",
 			    			data:{
@@ -255,7 +255,7 @@ $(document).ready(function(){
 	  $('[data-toggle="tooltip"]').tooltip();
   }
   function markAsCompleted(){
-		document.questionnaireInfoForm.action="/fdahpStudyDesigner/adminStudies/questionnaireMarkAsCompleted.do?_S=${param._S}";	 
+		document.questionnaireInfoForm.action="/studybuilder/adminStudies/questionnaireMarkAsCompleted.do?_S=${param._S}";	 
 		document.questionnaireInfoForm.submit();
 	}
 </script>     

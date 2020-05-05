@@ -51,10 +51,10 @@
          <table id="consent_list" class="display bor-none" cellspacing="0" width="100%">
             <thead>
                <tr>
-                  <th><span class="marL10">#</span></th>
-                  <th>Consent Title</th>
-                  <th>visual step</th>
-                  <th>
+                  <th id=""><span class="marL10">#</span></th>
+                  <th id="">Consent Title</th>
+                  <th id="">visual step</th>
+                  <th id="">
                   	 <div class="dis-line form-group mb-none">
                   	 <c:if test="${empty permission}">
                         <button type="button" class="btn btn-primary blue-btn" onclick="addConsentPage();">Add Consent Section</button>
@@ -83,12 +83,12 @@
    <!--  End body tab section -->
 </div>
 <!-- End right Content here -->
-<form:form action="/fdahpStudyDesigner/adminStudies/consentInfo.do?_S=${param._S}" name="consentInfoForm" id="consentInfoForm" method="post">
+<form:form action="/studybuilder/adminStudies/consentInfo.do?_S=${param._S}" name="consentInfoForm" id="consentInfoForm" method="post">
 <input type="hidden" name="consentInfoId" id="consentInfoId" value="">
 <input type="hidden" name="actionType" id="actionType">
 <input type="hidden" name="studyId" id="studyId" value="${studyId}" />
 </form:form>
-<form:form action="/fdahpStudyDesigner/adminStudies/consentMarkAsCompleted.do?_S=${param._S}" name="comprehensionInfoForm" id="comprehensionInfoForm" method="post">
+<form:form action="/studybuilder/adminStudies/consentMarkAsCompleted.do?_S=${param._S}" name="comprehensionInfoForm" id="comprehensionInfoForm" method="post">
 <input type="hidden" name="studyId" id="studyId" value="${studyId}" />
 </form:form>
 <script type="text/javascript">
@@ -111,6 +111,9 @@ $(document).ready(function(){
 	    "info": false,
 	    "filter": false,
 	     rowReorder: reorder,
+	     language: {
+         	"zeroRecords": "You haven't created any content yet.",
+	    },
          "columnDefs": [ { orderable: false, targets: [0,1,2] } ],
 	     "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 	    	 if(viewPermission != 'view'){
@@ -146,7 +149,7 @@ $(document).ready(function(){
 	    if(oldOrderNumber !== undefined && oldOrderNumber != null && oldOrderNumber != "" 
 			&& newOrderNumber !== undefined && newOrderNumber != null && newOrderNumber != ""){
 	    	$.ajax({
-				url: "/fdahpStudyDesigner/adminStudies/reOrderConsentInfo.do?_S=${param._S}",
+				url: "/studybuilder/adminStudies/reOrderConsentInfo.do?_S=${param._S}",
 				type: "POST",
 				datatype: "json",
 				data:{
@@ -193,7 +196,7 @@ function deleteConsentInfo(consentInfoId){
 			var studyId = $("#studyId").val();
 	    	if(consentInfoId != '' && consentInfoId != null && typeof consentInfoId!= 'undefined'){
 	    		$.ajax({
-	    			url: "/fdahpStudyDesigner/adminStudies/deleteConsentInfo.do?_S=${param._S}",
+	    			url: "/studybuilder/adminStudies/deleteConsentInfo.do?_S=${param._S}",
 	    			type: "POST",
 	    			datatype: "json",
 	    			data:{
@@ -230,7 +233,7 @@ function deleteConsentInfo(consentInfoId){
 }
 function reloadData(studyId){
 	$.ajax({
-		url: "/fdahpStudyDesigner/adminStudies/reloadConsentListPage.do?_S=${param._S}",
+		url: "/studybuilder/adminStudies/reloadConsentListPage.do?_S=${param._S}",
 	    type: "POST",
 	    datatype: "json",
 	    data: {
