@@ -12,5 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-display_name = "heroes-hat-unc-dev"
-parent       = "organizations/"
+variable "name" {
+  type = string
+}
+
+variable "folder_id" {
+  type = string
+}
+
+variable "billing_account" {
+  type = string
+}
+
+variable "apis" {
+  type    = list(string)
+  default = []
+}
+
+variable "enable_lien" {
+  type    = bool
+  default = true
+}

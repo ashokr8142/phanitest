@@ -12,13 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name            = "heroes-hat-unc-dev-networks"
-org_id          = ""
+name            = "heroes-hat-unc-dev-data"
+folder_id       = "455887492777"
 billing_account = "00936C-CC8624-429851"
 apis = [
   "compute.googleapis.com",
-  "container.googleapis.com",
-  "iap.googleapis.com",
   "servicenetworking.googleapis.com",
-  "sqladmin.googleapis.com",
 ]
