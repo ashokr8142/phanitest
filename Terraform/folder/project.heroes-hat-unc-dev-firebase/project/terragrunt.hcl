@@ -12,10 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "display_name" {
-  type = string
-}
-
-variable "parent" {
-  type = string
+include {
+  path = find_in_parent_folders()
 }
