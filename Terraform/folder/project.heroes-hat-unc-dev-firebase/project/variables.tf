@@ -12,17 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include {
-  path = find_in_parent_folders()
+variable "name" {
+  type = string
 }
 
-dependency "parent_folder" {
-  config_path = "../../folder"
-  mock_outputs = {
-    name = "mock-folder"
-  }
+variable "folder_id" {
+  type    = string
 }
 
-inputs = {
-  folder_id = dependency.parent_folder.outputs.name
+variable "billing_account" {
+  type = string
+}
+
+variable "apis" {
+  type    = list(string)
+  default = []
+}
+
+variable "enable_lien" {
+  type    = bool
+  default = true
 }
