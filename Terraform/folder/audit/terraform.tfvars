@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-org_id       = ""
+folder_id    = "455887492777"
 project_id   = "heroes-hat-unc-dev-audit"
 dataset_name = "1yr_org_audit_logs"
-bucket_name  = "7yr-org-audit-logs-08679"
+bucket_name  = "7yr-org-audit-logs-heroes-health-unc-dev"
 auditors     = "group:heroes-health-auditors@gcp.unc.edu"
