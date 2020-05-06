@@ -70,8 +70,7 @@ locals {
     "roles/resourcemanager.projectCreator",
   ]
   cloudbuild_devops_roles = [
-    "roles/secretmanager.secretAccessor",
-    "roles/secretmanager.viewer",
+    "roles/secretmanager.admin",
     "roles/serviceusage.serviceUsageViewer",
   ]
 }
