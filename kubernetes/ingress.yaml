@@ -4,7 +4,7 @@ metadata:
   name: heroes-hat-dev
   annotations:
     kubernetes.io/ingress.global-static-ip-name: my-studies-ingress-ip
-    networking.gke.io/managed-certificates: heroes-hat-cert
+    networking.gke.io/managed-certificates: heroes-health-cert
 spec:
   rules:
     - http:
