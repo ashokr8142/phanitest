@@ -22,18 +22,18 @@ steps:
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
     entrypoint: terragrunt
     args: ["init"]
-    dir: "${_TERRAFORM_ROOT}/org"
+    dir: "${_TERRAFORM_ROOT}/folder"
 
   # org/
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
     entrypoint: terragrunt
     args: ["plan-all", "--terragrunt-non-interactive"]
-    dir: "${_TERRAFORM_ROOT}/org"
+    dir: "${_TERRAFORM_ROOT}/folder"
 
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
     entrypoint: terragrunt
     args: ["apply-all", "--terragrunt-non-interactive"]
-    dir: "${_TERRAFORM_ROOT}/org"
+    dir: "${_TERRAFORM_ROOT}/folder"
 
 substitutions:
     _TERRAFORM_ROOT: "."
