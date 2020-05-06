@@ -44,7 +44,7 @@ module "project" {
 
 # Temporary owner permissions for Googlers to debug.
 resource "google_project_iam_member" "owners" {
-  project  = module.project.project_id
-  role     = "roles/owner"
-  member   = "group:heroes-health-googlers@gcp.unc.edu"
+  project = module.project.project_id
+  role    = "roles/owner"
+  member  = "group:heroes-health-googlers@gcp.unc.edu"
 }
