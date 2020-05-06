@@ -290,10 +290,6 @@ public class Mail {
     this.fromEmailPass = fromEmailPassword;
   }
 
-  public static String getSmtpHostName() {
-    return SMTP_HOST_NAME;
-  }
-
   public static String getSmtpPort() {
     return SMTP_PORT;
   }
