@@ -17,5 +17,6 @@ region           = "us-east1"
 zone             = "us-east1-b"
 gke_network_name = "heroes-hat-unc-dev-apps-network"
 bastion_users = [
-  "group:roachjm@unc.edu",
+  "group:heroes-health-devops-owners@gcp.unc.edu",
+  "group:heroes-health-googlers@gcp.unc.edu",
 ]
