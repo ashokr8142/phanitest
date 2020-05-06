@@ -3,9 +3,9 @@
 set -e
 
 # TODO: Change these to env variables.
-SECRET_PROJECT=heroes-hat-dev-devops
-DATA_PROJECT=heroes-hat-dev-data
-SQL_IMPORT_BUCKET=heroes-hat-dev-data-sql-import
+SECRET_PROJECT=heroes-hat-unc-dev-devops
+DATA_PROJECT=heroes-hat-unc-dev-data
+SQL_IMPORT_BUCKET=heroes-hat-unc-dev-data-sql-import
 TMPFILE=$(mktemp)
 ORG_NAME=DummyOrgName
 
