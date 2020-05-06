@@ -63,7 +63,7 @@ locals {
   cloudbuild_sa_editor_roles = [
     "roles/compute.xpnAdmin",
     "roles/logging.configWriter",
-    "roles/resourcemanager.folderAdmin",
+    "roles/resourcemanager.folderIamAdmin",
     "roles/resourcemanager.projectCreator",
   ]
   cloudbuild_devops_roles = [
