@@ -8,12 +8,15 @@ const admin = require('firebase-admin');
 const client = new firestore.v1.FirestoreAdminClient();
 admin.initializeApp();
 
+BUCKET_NAME = functions.config().firestore_raw.bucket_name;
+SCHEDULE_TIME = functions.config().firestore_raw.schedule_time;
+
 exports.scheduledFirestoreExport = functions.pubsub.schedule(
-  'every day 02:00').onRun(
+  SCHEDULE_TIME).onRun(
     async context => {
   // Get all colletion ids under root.
   const collections = await admin.firestore().listCollections();
-  const collectionIds = collections.map(c => c.path);
+  var collectionIds = collections.map(c => c.path);
 
   /* eslint-disable no-await-in-loop */
   for (const collection of collections) {
@@ -26,7 +29,7 @@ exports.scheduledFirestoreExport = functions.pubsub.schedule(
 
   const projectId = process.env.GCP_PROJECT || process.env.GCLOUD_PROJECT;
   const databaseName = client.databasePath(projectId, '(default)');
-  const outputBucketPath = 'gs://heroes-hat-firestore-raw'
+  const outputBucketPath = `gs://${BUCKET_NAME}`
 
   return client.exportDocuments({
     name: databaseName,

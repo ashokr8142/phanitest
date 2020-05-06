@@ -6,7 +6,7 @@ const storage = new Storage();
 const {BigQuery} = require('@google-cloud/bigquery');
 const bigquery = new BigQuery();
 
-BUCKET_NAME = 'heroes-hat-firestore-raw';
+BUCKET_NAME = functions.config().firestore_raw.bucket_name;
 
 exports.bigqueryExportFromRawData = functions.storage.bucket(
   BUCKET_NAME).object().onFinalize(async (object) => {
@@ -26,7 +26,7 @@ async function loadBackup(filePath, fileName) {
     return;
   }
   const tableId = matches[1].replace("-RESPONSES", "").replace(/\W/g, "");
-  const datasetId = 'firestoreRawData';
+  const datasetId = functions.config().bigquery_export.bq_dataset_id;
 
   const metadata = {
     sourceFormat: 'DATASTORE_BACKUP',

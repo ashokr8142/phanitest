@@ -5,14 +5,11 @@ const pubSubClient = new PubSub();
 
 admin.initializeApp();
 
-const globalTopicName = 'projects/heroes-hat-dev/topics/surveyWriteTrigger';
+const globalTopicName = functions.config().real_time_triggers.pubsub_topic;
 
 // Special value to ignore when calculating score (means participant did not
 // want to answer).
 const ignoreValue = -999;
-
-// Specific activities ids.
-const activityPHQDep = 'PHQDep';
 
 exports.surveyWriteTrigger = functions.firestore
   .document('{studyResponses}/{studyId}/Activities/{activityUid}')
@@ -34,10 +31,6 @@ exports.surveyWriteTrigger = functions.firestore
   });
 
 const getActivityHandler = (activityId) => {
-  // All activities publish to common topic.
-  if (activityId === activityPHQDep) {
-    return publishResponseValuesSum;
-  }
   // For now we push raw data for any other study.
   return publishToGlobalTopic;
 }
