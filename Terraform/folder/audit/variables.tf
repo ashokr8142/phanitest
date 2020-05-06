@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "org_id" {
+variable "folder_id" {
   type = string
 }
 
