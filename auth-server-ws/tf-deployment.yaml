@@ -48,11 +48,11 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/secrets/gcloud_key/key.json"
             - name: SMTP_HOSTNAME
-              value: "smtp.gmail.com"
+              value: "smtp-relay.gmail.com"
             - name: SMTP_USE_IP_WHITELIST
-              value: "false"
+              value: "true"
             - name: FROM_EMAIL_DOMAIN
-              value: ""
+              value: "unc"
           ports:
           - containerPort: 8080
           readinessProbe:
