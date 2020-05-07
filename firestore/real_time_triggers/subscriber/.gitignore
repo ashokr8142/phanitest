@@ -1,0 +1,5 @@
+# Venv artifacts
+*.py[cod]
+venv/
+__pycache__/
+cloud_sql_proxy
