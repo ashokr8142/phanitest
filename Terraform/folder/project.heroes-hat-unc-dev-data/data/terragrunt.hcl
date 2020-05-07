@@ -44,7 +44,6 @@ dependency "apps" {
   }
 }
 
-
 inputs = {
   network = dependency.network.outputs.private_network.id
   consent_documents_iam_members = [{
