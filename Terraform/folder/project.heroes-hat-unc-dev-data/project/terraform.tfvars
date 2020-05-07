@@ -16,6 +16,7 @@ name            = "heroes-hat-unc-dev-data"
 folder_id       = "455887492777"
 billing_account = "00936C-CC8624-429851"
 apis = [
+  "bigquery.googleapis.com",
   "compute.googleapis.com",
   "servicenetworking.googleapis.com",
 ]
