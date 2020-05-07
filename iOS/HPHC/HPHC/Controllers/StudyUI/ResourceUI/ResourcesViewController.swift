@@ -135,14 +135,15 @@ class ResourcesViewController: UIViewController {
   }
 
   func checkIfResourcePresent() {
-    if DBHandler.isResourcesEmpty((Study.currentStudy?.studyId)!) {
+    // Always fetch fresh resources.
+    //if DBHandler.isResourcesEmpty((Study.currentStudy?.studyId)!) {
       WCPServices().getResourcesForStudy(
         studyId: (Study.currentStudy?.studyId)!,
         delegate: self
       )
-    } else {
-      self.loadResourceFromDatabase()
-    }
+    //} else {
+    //  self.loadResourceFromDatabase()
+    //}
   }
 
   func loadResourceFromDatabase() {
