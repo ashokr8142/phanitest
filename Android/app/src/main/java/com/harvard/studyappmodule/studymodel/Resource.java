@@ -23,6 +23,7 @@ public class Resource extends RealmObject {
   private String audience; // all or limited
   private Configuration configuration;
   private String resourcesId;
+  private String resourceType;
   private String notificationText;
   private ResourceAvailability availability;
 
@@ -41,6 +42,10 @@ public class Resource extends RealmObject {
   public void setResourcesId(String resourcesId) {
     this.resourcesId = resourcesId;
   }
+
+  public String getResourceType() { return resourceType; }
+
+  public void setResourceType(String resourceType) { this.resourceType = resourceType; }
 
   public ResourceAvailability getAvailability() {
     return availability;
