@@ -101,8 +101,6 @@ module "my_studies_firestore_data_bucket" {
       with_state = "ANY"
     }
   }]
-  iam_members = var.firestore_data_bucket_iam_members
-
 }
 
 module "my_studies_firestore_data_bigquery" {
