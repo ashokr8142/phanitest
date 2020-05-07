@@ -125,6 +125,30 @@
 
 
                     <RelativeLayout
+                        android:id="@+id/myDashboardButtonLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/myDashboardButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/dashboard_blue_active" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/myDashboardButtonLabel"
+                            style="@style/TextType4"
+                            android:layout_below="@id/myDashboardButton"
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/dashboard_label"
+                            android:textColor="@color/colorPrimaryBlack" />
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
                         android:id="@+id/mResourcesButtonLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
