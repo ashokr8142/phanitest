@@ -897,6 +897,7 @@ public class FdahpStudyDesignerUtil {
   public static boolean isNotEmpty(String str) {
     logger.info("FdahpStudyDesignerUtil - isNotEmpty() :: Starts");
     boolean flag = !isEmpty(str);
+
     logger.info("FdahpStudyDesignerUtil - isNotEmpty() :: Ends");
     return flag;
   }
