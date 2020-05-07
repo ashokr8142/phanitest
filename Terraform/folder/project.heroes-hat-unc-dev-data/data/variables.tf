@@ -51,11 +51,3 @@ variable "fda_resources_iam_members" {
   }))
   default = []
 }
-
-variable "firestore_data_bucket_iam_members" {
-  type = list(object({
-    role   = string
-    member = string
-  }))
-  default = []
-}
