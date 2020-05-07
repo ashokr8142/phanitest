@@ -167,9 +167,9 @@ public class SurveyResourcesFragment<T> extends Fragment implements ApiCall.OnAs
   private boolean doShowResource(Resource resource) {
     switch (mResourceFragmentType) {
       case REPORT:
-        return resource.getTitle().contains("Summary report");
+        return resource.getResourceType().equals("report");
       case RESOURCE:
-        return !resource.getTitle().contains("Summary report");
+        return resource.getResourceType().equals("resources");
       default:
         return true;
     }
