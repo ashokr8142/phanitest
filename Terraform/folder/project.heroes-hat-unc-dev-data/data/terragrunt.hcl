@@ -44,19 +44,6 @@ dependency "apps" {
   }
 }
 
-dependency "firebase" {
-  config_path = "../../project.heroes-hat-unc-dev-firebase/firebase"
-
-  mock_outputs = {
-    cloud_functions_service_accounts = {
-      raw-data-export = {
-        email = "raw-data-export-cloud-function@mock-project.iam.gserviceaccount.com"
-      }
-    }
-  }
-}
-
-
 inputs = {
   network = dependency.network.outputs.private_network.id
   consent_documents_iam_members = [{
