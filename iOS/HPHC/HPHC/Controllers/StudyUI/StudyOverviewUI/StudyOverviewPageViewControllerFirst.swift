@@ -74,12 +74,14 @@ class StudyOverviewViewControllerFirst: UIViewController {
     } else if DeviceType.IS_IPHONE_5 {
       fontSize = 14.0
     }
+    
+    let modifiedFont = String(format:"<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(fontSize)\">%@</span>", overviewSectionDetail.text ?? "")
 
     let attrStr = try! NSAttributedString(
-      data: (overviewSectionDetail.text?.data(
+      data: (modifiedFont.data(
         using: String.Encoding.unicode,
         allowLossyConversion: true
-      )!)!,
+        )!),
       options: [
         NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString
           .DocumentType
@@ -91,6 +93,7 @@ class StudyOverviewViewControllerFirst: UIViewController {
     let attributedText: NSMutableAttributedString = NSMutableAttributedString(
       attributedString: attrStr
     )
+    /*
     attributedText.addAttributes(
       [
         NSAttributedString.Key.font: UIFont(
@@ -100,6 +103,7 @@ class StudyOverviewViewControllerFirst: UIViewController {
       ],
       range: (attrStr.string as NSString).range(of: attrStr.string)
     )
+    */
     attributedText.addAttribute(
       NSAttributedString.Key.foregroundColor,
       value: UIColor.black,
