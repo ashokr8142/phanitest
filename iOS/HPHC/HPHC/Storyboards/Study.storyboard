@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cD3-IQ-4Md">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cD3-IQ-4Md">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -516,7 +516,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightIconGrey" translatesAutoresizingMaskIntoConstraints="NO" id="QQd-sp-B0v">
-                                                    <rect key="frame" x="337" y="25.333333333333332" width="8" height="14.333333333333332"/>
+                                                    <rect key="frame" x="337" y="25.333333333333332" width="8" height="14.333333333333339"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="daA-4d-B2q">
                                                     <rect key="frame" x="24" y="60" width="326" height="1"/>
@@ -633,7 +633,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="55" sectionHeaderHeight="1" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="CGF-M8-TqW">
-                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                                <rect key="frame" x="0.0" y="108" width="375" height="670"/>
                                 <color key="backgroundColor" red="0.84705882349999995" green="0.89019607840000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="welcomeCell" rowHeight="70" id="lRY-T3-IvM" customClass="StudyDashboardWelcomeTableViewCell" customModule="GCPMyStudies" customModuleProvider="target">
@@ -1003,10 +1003,10 @@
                                                                         <rect key="frame" x="0.0" y="0.0" width="125" height="110"/>
                                                                         <subviews>
                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="staticIcon1" translatesAutoresizingMaskIntoConstraints="NO" id="uJM-kf-5ax">
-                                                                                <rect key="frame" x="50.666666666666664" y="12" width="23.999999999999993" height="24"/>
+                                                                                <rect key="frame" x="38.666666666666664" y="12" width="47.999999999999993" height="48"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL HOURS OF SLEEP" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="ivQ-Fp-sFD">
-                                                                                <rect key="frame" x="6.6666666666666643" y="39.666666666666664" width="112" height="24"/>
+                                                                                <rect key="frame" x="6.6666666666666643" y="63.666666666666657" width="112" height="24"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="112" id="6dT-ep-Wcb"/>
                                                                                     <constraint firstAttribute="height" constant="24" id="Pk2-Mi-miT"/>
@@ -1016,7 +1016,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="nom-xu-54M">
-                                                                                <rect key="frame" x="47" y="65.666666666666671" width="31" height="24"/>
+                                                                                <rect key="frame" x="47" y="89.666666666666671" width="31" height="24"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="24" id="WeD-uo-C5I"/>
                                                                                 </constraints>
@@ -1025,7 +1025,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOURS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djj-79-ioD">
-                                                                                <rect key="frame" x="8" y="91.666666666666671" width="109" height="10"/>
+                                                                                <rect key="frame" x="8" y="115.66666666666667" width="109" height="10"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="10" id="Ycr-W2-hFk"/>
                                                                                 </constraints>
@@ -1709,7 +1709,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="Bo9-MW-c6d" kind="relationship" relationship="viewControllers" id="ZpZ-IA-7s3"/>
-                        <segue destination="WeL-we-HZg" kind="relationship" relationship="viewControllers" id="ysa-xf-fht"/>
                         <segue destination="7GU-Nx-I7D" kind="relationship" relationship="viewControllers" id="Ujz-XY-bwE"/>
                     </connections>
                 </tabBarController>
@@ -1919,7 +1918,6 @@
             <point key="canvasLocation" x="2064.8000000000002" y="6661.3300492610842"/>
         </scene>
     </scenes>
-    <color key="tintColor" name="Accent"/>
     <resources>
         <image name="55V2.png" width="750" height="1334"/>
         <image name="activities_blue_active" width="26" height="26"/>
@@ -1947,4 +1945,5 @@
             <color red="0.71799999475479126" green="0.86699998378753662" blue="0.76899999380111694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
+    <color key="tintColor" name="Accent"/>
 </document>
