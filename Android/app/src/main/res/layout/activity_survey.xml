@@ -93,6 +93,8 @@
                     android:id="@+id/menulayout"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:baselineAligned="false"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
@@ -109,7 +111,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:background="@drawable/activities_grey"/>
+                            android:background="@drawable/activities_grey" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/mActivitiesButtonLabel"
@@ -117,30 +119,7 @@
                             android:layout_below="@id/mActivitiesButton"
                             android:layout_centerHorizontal="true"
                             android:text="@string/activities_label"
-                            android:textColor="@color/colorPrimaryBlack"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/myDashboardButtonLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <android.support.v7.widget.AppCompatImageView
-                            android:id="@+id/myDashboardButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:background="@drawable/dashboard_blue_active"/>
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/myDashboardButtonLabel"
-                            style="@style/TextType4"
-                            android:layout_below="@id/myDashboardButton"
-                            android:layout_centerHorizontal="true"
-                            android:text="@string/dashboard_label"
-                            android:textColor="@color/colorPrimary"/>
+                            android:textColor="@color/colorPrimaryBlack" />
 
                     </RelativeLayout>
 
@@ -156,7 +135,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:background="@drawable/resources_grey"/>
+                            android:background="@drawable/resources_grey" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/mResourcesButtonLabel"
@@ -164,7 +143,7 @@
                             android:layout_below="@id/mResourcesButton"
                             android:layout_centerHorizontal="true"
                             android:text="@string/resources_label"
-                            android:textColor="@color/colorPrimaryBlack"/>
+                            android:textColor="@color/colorPrimaryBlack" />
 
                     </RelativeLayout>
                 </LinearLayout>

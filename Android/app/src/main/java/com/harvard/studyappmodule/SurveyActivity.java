@@ -229,9 +229,9 @@ public class SurveyActivity extends AppCompatActivity
   }
 
   private void initializeXMLId() {
-    myDashboardButtonLayout = (RelativeLayout) findViewById(R.id.myDashboardButtonLayout);
-    myDashboardButton = (AppCompatImageView) findViewById(R.id.myDashboardButton);
-    myDashboardButtonLabel = (AppCompatTextView) findViewById(R.id.myDashboardButtonLabel);
+    //myDashboardButtonLayout = (RelativeLayout) findViewById(R.id.myDashboardButtonLayout);
+    //myDashboardButton = (AppCompatImageView) findViewById(R.id.myDashboardButton);
+    //myDashboardButtonLabel = (AppCompatTextView) findViewById(R.id.myDashboardButtonLabel);
     mActivitiesButtonLayout = (RelativeLayout) findViewById(R.id.mActivitiesButtonLayout);
     mActivitiesButton = (AppCompatImageView) findViewById(R.id.mActivitiesButton);
     mActivitiesButtonLabel = (AppCompatTextView) findViewById(R.id.mActivitiesButtonLabel);
@@ -471,7 +471,7 @@ public class SurveyActivity extends AppCompatActivity
   }
 
   private void bindEvents() {
-    myDashboardButtonLayout.setOnClickListener(this);
+    //myDashboardButtonLayout.setOnClickListener(this);
     mActivitiesButtonLayout.setOnClickListener(this);
     mResourcesButtonLayout.setOnClickListener(this);
   }
@@ -480,10 +480,10 @@ public class SurveyActivity extends AppCompatActivity
     menulayout.setVisibility(View.VISIBLE);
     mToolbar.setVisibility(View.GONE);
 
-    myDashboardButton.setBackgroundResource(R.drawable.dashboard_grey);
+    //myDashboardButton.setBackgroundResource(R.drawable.dashboard_grey);
     mActivitiesButton.setBackgroundResource(R.drawable.activities_blue_active);
     mResourcesButton.setBackgroundResource(R.drawable.resources_grey);
-    myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
+    //myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
     mActivitiesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
     mResourcesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
     getSupportFragmentManager()
@@ -493,10 +493,10 @@ public class SurveyActivity extends AppCompatActivity
   }
 
   private void openResources() {
-    myDashboardButton.setBackgroundResource(R.drawable.dashboard_grey);
+    //myDashboardButton.setBackgroundResource(R.drawable.dashboard_grey);
     mActivitiesButton.setBackgroundResource(R.drawable.activities_grey);
     mResourcesButton.setBackgroundResource(R.drawable.resources_blue_active);
-    myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
+    //myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
     mActivitiesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
     mResourcesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
     getSupportFragmentManager()
@@ -508,24 +508,24 @@ public class SurveyActivity extends AppCompatActivity
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.myDashboardButtonLayout:
-        myDashboardButton.setBackgroundResource(R.drawable.dashboard_blue_active);
-        mActivitiesButton.setBackgroundResource(R.drawable.activities_grey);
-        mResourcesButton.setBackgroundResource(R.drawable.resources_grey);
-        myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
-        mActivitiesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
-        mResourcesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
-        getSupportFragmentManager()
-            .beginTransaction()
-            .replace(R.id.frameLayoutContainer, mSurveyDashboardFragment, "fragment")
-            .commit();
-        break;
+      //case R.id.myDashboardButtonLayout:
+        //myDashboardButton.setBackgroundResource(R.drawable.dashboard_blue_active);
+        //mActivitiesButton.setBackgroundResource(R.drawable.activities_grey);
+        //mResourcesButton.setBackgroundResource(R.drawable.resources_grey);
+        //myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
+        //mActivitiesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
+        //mResourcesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
+        //getSupportFragmentManager()
+        //    .beginTransaction()
+        //    .replace(R.id.frameLayoutContainer, mSurveyDashboardFragment, "fragment")
+        //    .commit();
+        //break;
 
       case R.id.mActivitiesButtonLayout:
-        myDashboardButton.setBackgroundResource(R.drawable.dashboard_grey);
+        //myDashboardButton.setBackgroundResource(R.drawable.dashboard_grey);
         mActivitiesButton.setBackgroundResource(R.drawable.activities_blue_active);
         mResourcesButton.setBackgroundResource(R.drawable.resources_grey);
-        myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
+        //myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
         mActivitiesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
         mResourcesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
         getSupportFragmentManager()
@@ -535,10 +535,10 @@ public class SurveyActivity extends AppCompatActivity
         break;
 
       case R.id.mResourcesButtonLayout:
-        myDashboardButton.setBackgroundResource(R.drawable.dashboard_grey);
+        //myDashboardButton.setBackgroundResource(R.drawable.dashboard_grey);
         mActivitiesButton.setBackgroundResource(R.drawable.activities_grey);
         mResourcesButton.setBackgroundResource(R.drawable.resources_blue_active);
-        myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
+        //myDashboardButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
         mActivitiesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
         mResourcesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
         getSupportFragmentManager()
