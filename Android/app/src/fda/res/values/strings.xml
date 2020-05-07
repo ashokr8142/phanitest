@@ -16,7 +16,7 @@
     <string name="privacyurl">https://heroeshealth.unc.edu/about-the-app/privacy-policy/</string>
     <string name="view_consent">View Consent</string>
     <string name="visit_website">Visit Website</string>
-    <string name="join_study">Join Study</string>
+    <string name="join_study">Sign In</string>
     <string name="clientToken">clientToken</string>
 
     <!--must change strings-->
