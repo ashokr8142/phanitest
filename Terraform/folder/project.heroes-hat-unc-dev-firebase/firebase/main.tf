@@ -28,20 +28,3 @@ resource "google_firebase_project" "firebase" {
   provider = google-beta
   project  = var.project_id
 }
-
-# Create a separate service account for each cloud function.
-locals {
-  cloud_functions = [
-    "raw-data-export",
-    "big-query-export",
-    "real-time-triggers",
-  ]
-}
-
-resource "google_service_account" "cloud_functions_service_accounts" {
-  for_each = toset(local.cloud_functions)
-
-  account_id  = "${each.key}-cloud-function"
-  description = "Terraform-generated service account for use by the ${each.key} cloud function."
-  project     = var.project_id
-}
