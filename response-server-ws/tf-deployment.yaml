@@ -36,7 +36,7 @@ spec:
                   name: response-server-db-credentials
                   key: dbname
             - name: FIRESTORE_PROJECT_ID
-              value: "heroes-hat-unc-dev-resp-firebase"
+              value: "heroes-hat-unc-dev-firebase"
             - name: AUTH_SERVER_URL
               value: "auth-server-np:50000"
             - name: REGISTRATION_CLIENT_ID
