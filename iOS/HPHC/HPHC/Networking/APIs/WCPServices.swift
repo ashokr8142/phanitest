@@ -162,9 +162,14 @@ class WCPServices: NSObject {
   ///   - delegate: Class object to receive response
   func getResourcesForStudy(studyId: String, delegate: NMWebServiceDelegate) {
     self.delegate = delegate
-    let method = WCPMethods.resources.method
+    let method = WCPMethods.userResources.method
     let headerParams = [kStudyId: studyId]
-    self.sendRequestWith(method: method, params: headerParams, headers: nil)
+    let headers: [String: String] = [
+      "userId": User.currentUser.userId ?? "",
+      kUserAuthToken: User.currentUser.authToken ?? "",
+      "clientToken": User.currentUser.clientToken ?? "",
+    ]
+    self.sendRequestWith(method: method, params: headerParams, headers: headers)
   }
 
   /// Creates a request to receive `Study` information
@@ -603,6 +608,8 @@ extension WCPServices: NMWebServiceDelegate {
       self.handleStudyList(response: response as! [String: Any])
     case .eligibilityConsent:
       self.handleEligibilityConsentMetaData(response: response as! [String: Any])
+    case .userResources:
+      self.handleResourceForStudy(response: response as! [String: Any])
     case .resources:
       self.handleResourceForStudy(response: response as! [String: Any])
     case .consentDocument:

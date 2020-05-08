@@ -148,7 +148,7 @@ class SignUpViewController: UIViewController {
     termsAndCondition?.attributedText = attributedString
 
     termsAndCondition?.linkTextAttributes = convertToOptionalNSAttributedStringKeyDictionary(
-      [NSAttributedString.Key.foregroundColor.rawValue: Utilities.getUIColorFromHex(0x007CBA)]
+      [NSAttributedString.Key.foregroundColor.rawValue: Utilities.getUIColorFromHex(0x2F6942)]
     )
 
   }

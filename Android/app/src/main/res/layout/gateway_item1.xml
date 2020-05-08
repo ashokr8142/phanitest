@@ -8,17 +8,7 @@
         android:id="@+id/bgImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/welcome_bg_img1" />
-
-
-    <android.support.v7.widget.AppCompatImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@id/bgImg"
-        android:layout_alignTop="@+id/bgImg"
-        android:alpha=".6"
-        android:background="@android:color/black" />
+        android:background="@color/colorSecondaryStatBar"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,7 +29,7 @@
                 android:layout_marginTop="20dp"
                 android:alpha=".5"
                 android:text="@string/websitetxt"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/black" />
 
             <View
                 android:id="@+id/adjustContentCentral"
@@ -70,7 +60,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     android:text="@string/gateway_welcome"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/black" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/desc"
@@ -82,7 +72,7 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:text="@string/gateway_des"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/black" />
 
                 <RelativeLayout
                     android:id="@+id/watch_video"
@@ -110,7 +100,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/videoIcon"
                         android:text="@string/watch_video"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/black" />
                 </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>

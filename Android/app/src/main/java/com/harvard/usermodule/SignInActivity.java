@@ -131,7 +131,7 @@ public class SignInActivity extends AppCompatActivity implements ApiCall.OnAsync
   private void customTextView() {
     String html =
         getResources().getString(R.string.new_user)
-            + " <font color=\"#007cba\">"
+            + " <font color=\"#2f6942\">"
             + getResources().getString(R.string.side_menu_sign_up)
             + "</font>";
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -151,7 +151,7 @@ public class SignInActivity extends AppCompatActivity implements ApiCall.OnAsync
         0,
         spanTxt.length(),
         0);
-    spanTxt.append(getResources().getString(R.string.terms2));
+    spanTxt.append(" " + getResources().getString(R.string.terms2));
     spanTxt.setSpan(
         new ClickableSpan() {
           @Override

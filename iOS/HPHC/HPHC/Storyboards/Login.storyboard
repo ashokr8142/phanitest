@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QEr-gp-3T2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QEr-gp-3T2">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,6 +24,7 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HFj-v4-1Yb">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" name="AccentLight"/>
                                 <connections>
                                     <segue destination="iKt-1T-sAG" kind="embed" id="GV9-Il-8Jc"/>
                                 </connections>
@@ -46,11 +48,11 @@
                                     <constraint firstAttribute="height" constant="37" id="zxd-bn-cUg"/>
                                 </constraints>
                                 <color key="pageIndicatorTintColor" red="0.84705882352941175" green="0.8901960784313725" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="currentPageIndicatorTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="currentPageIndicatorTintColor" name="Accent"/>
                             </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G1v-Yc-O0B">
                                 <rect key="frame" x="120" y="540" width="135" height="42"/>
-                                <color key="backgroundColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.1843137255" green="0.41176470590000003" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                 <state key="normal" title="Get Started">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -186,7 +188,7 @@
                                         </label>
                                         <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AoM-7x-NKO">
                                             <rect key="frame" x="307" y="25" width="51" height="31"/>
-                                            <color key="onTintColor" red="0.0" green="0.48627450980392156" blue="0.72941176470588232" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="onTintColor" name="Accent"/>
                                         </switch>
                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r5s-LK-9jm">
                                             <rect key="frame" x="19" y="84" width="337" height="1"/>
@@ -327,7 +329,7 @@
                                 <rect key="frame" x="112.5" y="605" width="150" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Submit">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.1843137255" green="0.41176470590000003" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -390,28 +392,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcomeBg" translatesAutoresizingMaskIntoConstraints="NO" id="WSD-iA-wVk">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </imageView>
                             <view alpha="0.65000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTh-ai-aj2">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="AccentLight"/>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="overviewLogo" translatesAutoresizingMaskIntoConstraints="NO" id="bww-YG-caD">
-                                <rect key="frame" x="122" y="96" width="131" height="69"/>
+                                <rect key="frame" x="122" y="20" width="131" height="221"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Ciy-R8-Rn9">
                                 <rect key="frame" x="136" y="207.5" width="103" height="27"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="Mhn-wP-OGh">
                                 <rect key="frame" x="24" y="237" width="327.5" height="126"/>
                                 <string key="text">This is a one-stop app that houses several Studies being conducted by the FDA. Check out the list of available Studies and join the ones that are relevant to you. We look forward to having you on board!</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N7H-ey-5oY">
@@ -430,7 +428,7 @@
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIh-lT-4bl">
                                 <rect key="frame" x="111.5" y="532" width="152" height="43"/>
-                                <color key="backgroundColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="Accent"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                 <state key="normal" title="Get Started">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -456,20 +454,16 @@
                             <constraint firstItem="LTh-ai-aj2" firstAttribute="top" secondItem="ZuF-Og-5eT" secondAttribute="top" id="BMr-e4-hlL"/>
                             <constraint firstItem="bww-YG-caD" firstAttribute="width" secondItem="ZuF-Og-5eT" secondAttribute="width" multiplier="0.349333" id="DD5-C1-048"/>
                             <constraint firstItem="Ciy-R8-Rn9" firstAttribute="height" secondItem="ZuF-Og-5eT" secondAttribute="height" multiplier="0.0404798" id="Q9r-HC-jGi"/>
-                            <constraint firstItem="PwS-EA-BPG" firstAttribute="trailing" secondItem="WSD-iA-wVk" secondAttribute="trailing" id="StG-m3-LqW"/>
                             <constraint firstItem="LTh-ai-aj2" firstAttribute="leading" secondItem="PwS-EA-BPG" secondAttribute="leading" id="TrC-gW-LiD"/>
                             <constraint firstItem="Mhn-wP-OGh" firstAttribute="width" secondItem="ZuF-Og-5eT" secondAttribute="width" multiplier="0.873333" id="c0k-hK-OaT"/>
                             <constraint firstAttribute="bottom" secondItem="LTh-ai-aj2" secondAttribute="bottom" id="d9X-a9-nLL"/>
-                            <constraint firstItem="WSD-iA-wVk" firstAttribute="top" secondItem="ZuF-Og-5eT" secondAttribute="top" id="dbn-Kt-k1q"/>
                             <constraint firstItem="N7H-ey-5oY" firstAttribute="centerY" secondItem="ZuF-Og-5eT" secondAttribute="centerY" multiplier="1.28186" id="dvd-aV-aK9"/>
                             <constraint firstItem="Ciy-R8-Rn9" firstAttribute="centerX" secondItem="PwS-EA-BPG" secondAttribute="centerX" id="fBY-Au-y0h"/>
-                            <constraint firstItem="WSD-iA-wVk" firstAttribute="leading" secondItem="PwS-EA-BPG" secondAttribute="leading" id="k9D-zD-bSr"/>
                             <constraint firstItem="bww-YG-caD" firstAttribute="centerY" secondItem="ZuF-Og-5eT" secondAttribute="centerY" multiplier="0.391304" id="mmP-Uo-r4R"/>
                             <constraint firstItem="N7H-ey-5oY" firstAttribute="width" secondItem="ZuF-Og-5eT" secondAttribute="width" multiplier="0.384" id="njT-dd-Yh6"/>
                             <constraint firstItem="PwS-EA-BPG" firstAttribute="trailing" secondItem="LTh-ai-aj2" secondAttribute="trailing" id="pa1-3R-eWv"/>
                             <constraint firstItem="bww-YG-caD" firstAttribute="centerX" secondItem="PwS-EA-BPG" secondAttribute="centerX" id="qUW-ad-31X"/>
                             <constraint firstItem="vIh-lT-4bl" firstAttribute="centerX" secondItem="PwS-EA-BPG" secondAttribute="centerX" id="rZS-wv-6a7"/>
-                            <constraint firstAttribute="bottom" secondItem="WSD-iA-wVk" secondAttribute="bottom" id="wZA-ki-OtC"/>
                             <constraint firstItem="Mhn-wP-OGh" firstAttribute="centerX" secondItem="PwS-EA-BPG" secondAttribute="centerX" id="xwu-kL-EZb"/>
                             <constraint firstItem="Mhn-wP-OGh" firstAttribute="height" secondItem="ZuF-Og-5eT" secondAttribute="height" multiplier="126/667" id="y51-3N-fAr"/>
                             <constraint firstItem="Ciy-R8-Rn9" firstAttribute="centerY" secondItem="ZuF-Og-5eT" secondAttribute="centerY" multiplier="0.663163" id="yQa-7u-kmN"/>
@@ -483,7 +477,6 @@
                     <connections>
                         <outlet property="buttonGetStarted" destination="vIh-lT-4bl" id="g3V-wq-WIZ"/>
                         <outlet property="buttonWatchVideo" destination="N7H-ey-5oY" id="K5T-yj-KUP"/>
-                        <outlet property="imageViewBackgroundImage" destination="WSD-iA-wVk" id="W99-om-0wG"/>
                         <outlet property="labelDescriptionText" destination="Mhn-wP-OGh" id="055-u0-kQR"/>
                         <outlet property="labelTitleText" destination="Ciy-R8-Rn9" id="a96-so-SQF"/>
                     </connections>
@@ -506,7 +499,7 @@
                             </imageView>
                             <view alpha="0.55000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3m-lT-DyA">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="288"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="Accent"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Improving Health Research Outcomes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="LIE-7a-UoQ">
                                 <rect key="frame" x="50" y="174" width="275" height="66"/>
@@ -518,7 +511,7 @@
                                 <rect key="frame" x="120" y="541" width="135" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Get Started">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" name="Accent"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -698,7 +691,7 @@
                                 <rect key="frame" x="112.5" y="512" width="150" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Sign In">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" name="Accent"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -730,7 +723,7 @@
                                     <segue destination="0Vw-2B-bh0" kind="show" id="VqN-my-PFn"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kEu-ol-yfS" customClass="LinkTextView" customModule="GCPMyStudies" customModuleProvider="target">
+                            <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kEu-ol-yfS" customClass="LinkTextView" customModule="GCPMyStudies" customModuleProvider="target">
                                 <rect key="frame" x="10" y="425" width="355" height="74"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -758,16 +751,9 @@
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="Privacy Policy ">
+                                    <fragment content="Privacy Policy">
                                         <attributes>
                                             <color key="NSColor" red="0.0" green="0.48627450980392156" blue="0.72941176470588232" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=",">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -852,7 +838,7 @@
                                 <rect key="frame" x="112.5" y="302" width="150" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Submit">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" name="Accent"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -926,7 +912,7 @@
                                 <rect key="frame" x="112.5" y="455" width="150" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Continue">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" name="Accent"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -949,7 +935,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Resend Verification Code">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" name="Accent"/>
                                 </state>
                                 <connections>
                                     <action selector="resendEmailButtonAction:" destination="slw-Bf-fNL" eventType="touchUpInside" id="fMF-V7-YzR"/>
@@ -1041,7 +1027,7 @@
                                 <rect key="frame" x="112.5" y="473" width="150" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Next">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" name="Accent"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1112,7 +1098,7 @@
                                 <rect key="frame" x="112.5" y="453.5" width="150" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Continue">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.1843137255" green="0.41176470590000003" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1135,7 +1121,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Resend Verification Code">
-                                    <color key="titleColor" red="0.0" green="0.48627450979999998" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.1843137255" green="0.41176470590000003" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="resendEmailButtonAction:" destination="KuI-8R-b3A" eventType="touchUpInside" id="pm7-xO-RNj"/>
@@ -1211,17 +1197,23 @@
             <point key="canvasLocation" x="2870" y="1154"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="EeA-Hk-jBe"/>
-        <segue reference="Xbj-IV-jBd"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="backIcon" width="23" height="18"/>
         <image name="checked" width="18" height="18"/>
         <image name="notChecked" width="18" height="18"/>
-        <image name="overviewLogo" width="73.5" height="69"/>
+        <image name="overviewLogo" width="110.5" height="110.5"/>
         <image name="successBlueBig" width="122.5" height="120"/>
         <image name="watchVideo" width="119.5" height="27"/>
-        <image name="welcomeBg" width="375" height="667"/>
+        <namedColor name="Accent">
+            <color red="0.18400000035762787" green="0.41200000047683716" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="AccentLight">
+            <color red="0.71799999475479126" green="0.86699998378753662" blue="0.76899999380111694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="EeA-Hk-jBe"/>
+        <segue reference="Xbj-IV-jBd"/>
+    </inferredMetricsTieBreakers>
+    <color key="tintColor" name="Accent"/>
 </document>

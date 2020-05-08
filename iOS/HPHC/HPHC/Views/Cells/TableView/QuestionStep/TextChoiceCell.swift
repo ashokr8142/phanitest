@@ -27,15 +27,12 @@ class TextChoiceCell: UITableViewCell {
   @IBOutlet weak var checkmarkView: UIImageView!
   @IBOutlet weak var detailedTextLbl: UILabel!
 
+  var selectedColor:UIColor? = nil
+
   var didSelected: Bool = false {
     didSet {
       if didSelected {
-        self.titleLbl.textColor = #colorLiteral(
-          red: 0.2431372549,
-          green: 0.5411764706,
-          blue: 0.9921568627,
-          alpha: 1
-        )
+        self.titleLbl.textColor = selectedColor
         self.checkmarkView.isHidden = false
       } else {
         self.titleLbl.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
@@ -47,6 +44,13 @@ class TextChoiceCell: UITableViewCell {
   override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
     self.didSelected = selected
+  }
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    selectedColor = UIColor(named:"Accent")!
+    self.checkmarkView.tintColor = selectedColor
+    self.checkmarkView.image = checkmarkView.image?.withRenderingMode(.alwaysTemplate)
   }
 
 }

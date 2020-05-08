@@ -78,6 +78,11 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
+enum ResourceFragmentType {
+  REPORT,
+  RESOURCE
+}
+
 public class SurveyResourcesFragment<T> extends Fragment implements ApiCall.OnAsyncRequestComplete {
 
   private static final int STUDY_INFO = 10;
@@ -97,6 +102,7 @@ public class SurveyResourcesFragment<T> extends Fragment implements ApiCall.OnAs
   private Realm mRealm;
   private String mRegistrationServer = "false";
   private ArrayList<AnchorDateSchedulingDetails> mArrayList;
+  private ResourceFragmentType mResourceFragmentType = ResourceFragmentType.RESOURCE;
 
   @Override
   public void onAttach(Context context) {
@@ -125,6 +131,15 @@ public class SurveyResourcesFragment<T> extends Fragment implements ApiCall.OnAs
     HashMap<String, String> header = new HashMap<>();
     mStudyId = ((SurveyActivity) mContext).getStudyId();
     header.put("studyId", mStudyId);
+    header.put(
+        getString(R.string.clientToken),
+        SharedPreferenceHelper.readPreference(mContext, getString(R.string.clientToken), ""));
+    header.put(
+        "accessToken",
+        SharedPreferenceHelper.readPreference(mContext, getString(R.string.auth), ""));
+    header.put(
+        "userId",
+        SharedPreferenceHelper.readPreference(mContext, getString(R.string.userid), ""));
     String url = URLs.RESOURCE_LIST + "?studyId=" + mStudyId;
     GetResourceListEvent getResourceListEvent = new GetResourceListEvent();
     WCPConfigEvent wcpConfigEvent =
@@ -143,6 +158,21 @@ public class SurveyResourcesFragment<T> extends Fragment implements ApiCall.OnAs
     getResourceListEvent.setWcpConfigEvent(wcpConfigEvent);
     StudyModulePresenter studyModulePresenter = new StudyModulePresenter();
     studyModulePresenter.performGetResourceListEvent(getResourceListEvent);
+  }
+
+  public void setType(ResourceFragmentType type) {
+    mResourceFragmentType = type;
+  }
+
+  private boolean doShowResource(Resource resource) {
+    switch (mResourceFragmentType) {
+      case REPORT:
+        return resource.getResourceType().equals("report");
+      case RESOURCE:
+        return resource.getResourceType().equals("resources");
+      default:
+        return true;
+    }
   }
 
   private void callGetStudyInfoWebservice() {
@@ -201,7 +231,15 @@ public class SurveyResourcesFragment<T> extends Fragment implements ApiCall.OnAs
   }
 
   private void setTextForView() {
-    mTitle.setText(getResources().getString(R.string.resources));
+    switch (mResourceFragmentType) {
+      case REPORT:
+        mTitle.setText("REPORTS");
+        break;
+      case RESOURCE:
+      default:
+        mTitle.setText("RESOURCES");
+        break;
+    }
   }
 
   private void setFont() {
@@ -264,7 +302,7 @@ public class SurveyResourcesFragment<T> extends Fragment implements ApiCall.OnAs
           if (mResourceArrayList == null) {
             mResourceArrayList = new RealmList<>();
           }
-          addStaticVal();
+          addStaticValAndFilter();
 
           // primary key mStudyId
           mStudyResource.setmStudyId(mStudyId);
@@ -618,7 +656,7 @@ public class SurveyResourcesFragment<T> extends Fragment implements ApiCall.OnAs
         }
       }
     } else {
-      addStaticVal();
+      addStaticValAndFilter();
     }
     mStudyRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     mStudyRecyclerView.setNestedScrollingEnabled(false);
@@ -837,19 +875,25 @@ public class SurveyResourcesFragment<T> extends Fragment implements ApiCall.OnAs
         startCalender.getTime(), activityId, studyId, mContext, notificationTest, resourceId);
   }
 
-  private void addStaticVal() {
+  private void addStaticValAndFilter() {
     ArrayList<String> labelArray = new ArrayList<String>();
     ArrayList<Resource> mTempResourceArrayList = new ArrayList<>();
-    mTempResourceArrayList.addAll(mResourceArrayList);
+    for (int i = 0; i < mResourceArrayList.size(); i++) {
+      if (doShowResource(mResourceArrayList.get(i))) {
+        mTempResourceArrayList.add(mResourceArrayList.get(i));
+      }
+    }
     mResourceArrayList.clear();
-    labelArray.add(getResources().getString(R.string.about_study));
-    labelArray.add(getResources().getString(R.string.consent_pdf));
-    labelArray.add(getResources().getString(R.string.leave_study));
+    if (mResourceFragmentType == ResourceFragmentType.RESOURCE) {
+      labelArray.add(getResources().getString(R.string.about_study));
+      labelArray.add(getResources().getString(R.string.consent_pdf));
+      labelArray.add(getResources().getString(R.string.leave_study));
 
-    for (int i = 0; i < labelArray.size(); i++) {
-      Resource r = new Resource();
-      r.setTitle(labelArray.get(i));
-      mResourceArrayList.add(r);
+      for (int i = 0; i < labelArray.size(); i++) {
+        Resource r = new Resource();
+        r.setTitle(labelArray.get(i));
+        mResourceArrayList.add(r);
+      }
     }
     mResourceArrayList.addAll(mTempResourceArrayList);
 

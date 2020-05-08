@@ -81,7 +81,7 @@
     <string name="gateway_des2">Explore and participate in studies for which you are eligible and help generate more data, better insights and improved outcomes.</string>
     <string name="gateway_des3">All studies in this app have been approved by an Institutional Review Board, follow strict federal research guidelines, and securely store your responses to ensure your privacy is always protected.</string>
     <string name="new_user">New User?</string>
-    <string name="dashboard_label">Dashboard</string>
+    <string name="dashboard_label">Reports</string>
     <string name="activities_label">Activities</string>
     <string name="resources_label">Resources</string>
     <string name="study_activities">STUDY ACTIVITIES</string>

@@ -46,7 +46,7 @@ class StudyDashboardStatisticsTableViewCell: UITableViewCell {
   func displayData() {
 
     let stringDate = StudyDashboardStatisticsTableViewCell.formatter.string(from: todaysDate)
-    let color = Utilities.getUIColorFromHex(0x007CBA)
+    let color = kUiColorForAccent
 
     let attributedStartDate: NSMutableAttributedString = NSMutableAttributedString(
       string: stringDate
@@ -78,7 +78,7 @@ class StudyDashboardStatisticsTableViewCell: UITableViewCell {
       from: endDateOfWeek!
     )
 
-    let color = Utilities.getUIColorFromHex(0x007CBA)
+    let color = kUiColorForAccent
 
     let attributedStartDate: NSMutableAttributedString = NSMutableAttributedString(
       string: stringStartDate
@@ -118,7 +118,7 @@ class StudyDashboardStatisticsTableViewCell: UITableViewCell {
       buttonWeek?.setTitleColor(kGreyColor, for: UIControl.State.normal)
       buttonMonth?.setTitleColor(kGreyColor, for: UIControl.State.normal)
 
-      buttonDay?.backgroundColor = kDarkBlueColor
+      buttonDay?.backgroundColor = kUiColorForAccent
       buttonWeek?.backgroundColor = UIColor.white
       buttonMonth?.backgroundColor = UIColor.white
 
@@ -126,7 +126,7 @@ class StudyDashboardStatisticsTableViewCell: UITableViewCell {
       todaysDate = Date()
 
       let stringDate = StudyDashboardStatisticsTableViewCell.formatter.string(from: Date())
-      let color = Utilities.getUIColorFromHex(0x007CBA)
+      let color = kUiColorForAccent
 
       let attributedStartDate: NSMutableAttributedString = NSMutableAttributedString(
         string: stringDate
@@ -149,7 +149,7 @@ class StudyDashboardStatisticsTableViewCell: UITableViewCell {
       buttonDay?.setTitleColor(kGreyColor, for: UIControl.State.normal)
       buttonMonth?.setTitleColor(kGreyColor, for: UIControl.State.normal)
 
-      buttonWeek?.backgroundColor = kDarkBlueColor
+      buttonWeek?.backgroundColor = kUiColorForAccent
       buttonDay?.backgroundColor = UIColor.white
       buttonMonth?.backgroundColor = UIColor.white
 
@@ -174,7 +174,7 @@ class StudyDashboardStatisticsTableViewCell: UITableViewCell {
       buttonDay?.setTitleColor(kGreyColor, for: UIControl.State.normal)
       buttonWeek?.setTitleColor(kGreyColor, for: UIControl.State.normal)
 
-      buttonMonth?.backgroundColor = kDarkBlueColor
+      buttonMonth?.backgroundColor = kUiColorForAccent
       buttonDay?.backgroundColor = UIColor.white
       buttonWeek?.backgroundColor = UIColor.white
 
@@ -205,7 +205,7 @@ class StudyDashboardStatisticsTableViewCell: UITableViewCell {
       let stringDate = StudyDashboardStatisticsTableViewCell.formatter.string(
         from: todaysDate
       )
-      let color = Utilities.getUIColorFromHex(0x007CBA)
+      let color = kUiColorForAccent
 
       let attributedStartDate: NSMutableAttributedString = NSMutableAttributedString(
         string: stringDate
@@ -269,7 +269,7 @@ class StudyDashboardStatisticsTableViewCell: UITableViewCell {
       let stringDate = StudyDashboardStatisticsTableViewCell.formatter.string(
         from: todaysDate
       )
-      let color = Utilities.getUIColorFromHex(0x007CBA)
+      let color = kUiColorForAccent
 
       let attributedStartDate: NSMutableAttributedString = NSMutableAttributedString(
         string: stringDate
@@ -295,7 +295,7 @@ class StudyDashboardStatisticsTableViewCell: UITableViewCell {
         from: endDateOfWeek!
       )
 
-      let color = Utilities.getUIColorFromHex(0x007CBA)
+      let color = kUiColorForAccent
 
       let attributedStartDate: NSMutableAttributedString = NSMutableAttributedString(
         string: stringStartDate

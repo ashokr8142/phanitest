@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.27.1'
+        classpath 'io.fabric.tools:gradle:1.28.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -36,6 +36,10 @@ android {
         buildConfigField("String", "BASE_URL_REGISTRATION_ENROLLMENT_SERVER", apikeyProperties['BASE_URL_REGISTRATION_ENROLLMENT_SERVER'])
         buildConfigField("String", "BASE_URL_AUTH_SERVER", apikeyProperties['BASE_URL_AUTH_SERVER'])
         buildConfigField("String", "BASE_URL_RESPONSE_SERVER", apikeyProperties['BASE_URL_RESPONSE_SERVER'])
+        buildConfigField("String", "APP_TYPE", apikeyProperties['APP_TYPE'])
+        buildConfigField("String", "APP_ID", apikeyProperties['APP_ID'])
+        buildConfigField("String", "ORG_ID", apikeyProperties['ORG_ID'])
+        buildConfigField("String", "STUDY_ID", apikeyProperties['STUDY_ID'])
     }
     buildTypes {
         release {
@@ -69,9 +73,9 @@ android {
     productFlavors {
         fda {
             dimension 'version'
-            applicationId "com.harvard.fda"
-            versionCode 11
-            versionName "1.0"
+            applicationId "edu.unc.heroeshealth"
+            versionCode 1
+            versionName "1.0.0"
         }
     }
 }

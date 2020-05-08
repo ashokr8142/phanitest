@@ -90,7 +90,7 @@ class SignInViewController: UIViewController {
 
       mutableAttributedTitle.addAttribute(
         NSAttributedString.Key.foregroundColor,
-        value: #colorLiteral(red: 0, green: 0.4862745098, blue: 0.7294117647, alpha: 1),
+        value: #colorLiteral(red: 0.2309566438, green: 0.4797102213, blue: 0.3276610374, alpha: 1),
         range: NSRange(location: 10, length: 7)
       )
 
@@ -277,7 +277,7 @@ class SignInViewController: UIViewController {
     termsAndCondition?.attributedText = attributedString
 
     termsAndCondition?.linkTextAttributes = convertToOptionalNSAttributedStringKeyDictionary(
-      [NSAttributedString.Key.foregroundColor.rawValue: Utilities.getUIColorFromHex(0x007CBA)]
+      [NSAttributedString.Key.foregroundColor.rawValue: kUiColorForAccent]
     )
 
   }

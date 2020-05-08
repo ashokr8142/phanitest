@@ -76,6 +76,7 @@ public class SurveyActivity extends AppCompatActivity
   private SurveyDashboardFragment mSurveyDashboardFragment;
   private SurveyActivitiesFragment mSurveyActivitiesFragment;
   private SurveyResourcesFragment mSurveyResourcesFragment;
+  private SurveyResourcesFragment mSurveyReportsFragment;
 
   private final int LOGOUT_REPSONSECODE = 100;
 
@@ -116,6 +117,9 @@ public class SurveyActivity extends AppCompatActivity
     mSurveyDashboardFragment = new SurveyDashboardFragment();
     mSurveyActivitiesFragment = new SurveyActivitiesFragment();
     mSurveyResourcesFragment = new SurveyResourcesFragment();
+    mSurveyResourcesFragment.setType(ResourceFragmentType.RESOURCE);
+    mSurveyReportsFragment = new SurveyResourcesFragment();
+    mSurveyReportsFragment.setType(ResourceFragmentType.REPORT);
 
     studyId = getIntent().getStringExtra("studyId");
     mActivityId = "";
@@ -517,7 +521,7 @@ public class SurveyActivity extends AppCompatActivity
         mResourcesButtonLabel.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
         getSupportFragmentManager()
             .beginTransaction()
-            .replace(R.id.frameLayoutContainer, mSurveyDashboardFragment, "fragment")
+            .replace(R.id.frameLayoutContainer, mSurveyReportsFragment, "fragment")
             .commit();
         break;
 
