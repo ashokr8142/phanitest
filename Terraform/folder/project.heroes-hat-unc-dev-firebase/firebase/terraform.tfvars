@@ -15,6 +15,6 @@
 project_id       = "heroes-hat-unc-dev-firebase"
 storage_location = "us-east1"
 firestore_data_bucket_iam_members = [{
-    role   = "roles/storage.admin"
-    member = "serviceAccount:heroes-hat-unc-dev-firebase@appspot.gserviceaccount.com"
+  role   = "roles/storage.admin"
+  member = "serviceAccount:heroes-hat-unc-dev-firebase@appspot.gserviceaccount.com"
 }]
