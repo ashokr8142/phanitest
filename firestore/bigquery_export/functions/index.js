@@ -4,7 +4,8 @@ const path = require('path');
 const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 const {BigQuery} = require('@google-cloud/bigquery');
-const bigquery = new BigQuery();
+const projectId = functions.config().bigquery_export.bq_project_id;
+const bigquery = new BigQuery({projectId: projectId});
 
 BUCKET_NAME = functions.config().firestore_raw.bucket_name;
 
@@ -34,7 +35,7 @@ async function loadBackup(filePath, fileName) {
   };
 
   console.info(
-    `loading dataset = ${datasetId} table = ${tableId} filePath = ${filePath}`);
+    `loading dataset = ${projectId}:${datasetId} table = ${tableId} filePath = ${filePath}`);
   const [job] = await bigquery
     .dataset(datasetId)
     .table(tableId)
