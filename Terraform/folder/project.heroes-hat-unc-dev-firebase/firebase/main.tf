@@ -30,10 +30,10 @@ resource "google_firebase_project" "firebase" {
 }
 
 resource "google_firebase_project_location" "basic" {
-    provider = google-beta
-    project = google_firebase_project.firebase.project
+  provider = google-beta
+  project  = google_firebase_project.firebase.project
 
-    location_id = "us-east1"
+  location_id = "us-east1"
 }
 
 
