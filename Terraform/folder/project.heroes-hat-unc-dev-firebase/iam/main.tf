@@ -27,3 +27,10 @@ resource "google_project_iam_member" "datastore_users" {
   role     = "roles/datastore.user"
   member   = each.key
 }
+
+resource "google_project_iam_member" "datastore_import_export_admins" {
+  for_each = toset(var.datastore_import_export_admins)
+  project  = var.project_id
+  role     = "roles/datastore.importExportAdmin"
+  member   = each.key
+}

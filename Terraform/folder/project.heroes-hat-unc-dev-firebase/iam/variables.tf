@@ -20,3 +20,8 @@ variable "datastore_users" {
   description = "Clients who have access to the firestore in this project"
   type        = list(string)
 }
+
+variable "datastore_import_export_admins" {
+  description = "Clients who have importExportAdmins access to the firestore in this project"
+  type        = list(string)
+}
