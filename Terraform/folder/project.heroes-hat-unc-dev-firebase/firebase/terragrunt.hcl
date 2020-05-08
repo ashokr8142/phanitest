@@ -20,10 +20,3 @@ dependency "project" {
   config_path  = "../project"
   skip_outputs = true
 }
-
-inputs = {
-firestore_data_bucket_iam_members = [{
-    role   = "roles/storage.admin"
-    member = "serviceAccount:heroes-hat-unc-dev-firebase@appspot.gserviceaccount.com"
-}]
-}
