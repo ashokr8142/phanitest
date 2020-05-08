@@ -87,9 +87,10 @@ module "my_studies_firestore_data_bucket" {
   source  = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
   version = "~> 1.4"
 
-  name       = "heroes-hat-unc-dev-my-studies-firestore-data"
-  project_id = var.project_id
-  location   = var.storage_location
+  name        = "heroes-hat-unc-dev-my-studies-firestore-data"
+  project_id  = var.project_id
+  location    = var.storage_location
+  iam_members = var.firestore_data_bucket_iam_members
 
   # TTL 7 days.
   lifecycle_rules = [{
