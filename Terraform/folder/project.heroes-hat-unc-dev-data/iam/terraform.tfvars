@@ -13,3 +13,9 @@
 # limitations under the License.
 
 project_id = "heroes-hat-unc-dev-data"
+bigquery_job_users = [
+  "serviceAccount:heroes-hat-unc-dev-firebase@appspot.gserviceaccount.com"
+]
+bigquery_data_editors = [
+  "serviceAccount:heroes-hat-unc-dev-firebase@appspot.gserviceaccount.com"
+]
