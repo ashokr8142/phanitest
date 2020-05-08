@@ -1,42 +1,35 @@
 {
   "project_info": {
-    "project_number": "413422181706",
-    "firebase_url": "https://heroes-hat-dev.firebaseio.com",
-    "project_id": "heroes-hat-dev",
-    "storage_bucket": "heroes-hat-dev.appspot.com"
+    "project_number": "970678211686",
+    "firebase_url": "https://heroes-hat-unc-dev-firebase.firebaseio.com",
+    "project_id": "heroes-hat-unc-dev-firebase",
+    "storage_bucket": "heroes-hat-unc-dev-firebase.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:413422181706:android:af6cfe8de05e53dce8f5b3",
+        "mobilesdk_app_id": "1:970678211686:android:437723d5422889873609a7",
         "android_client_info": {
-          "package_name": "com.alphabet.HeroesHealth"
+          "package_name": "edu.unc.heroeshealth"
         }
       },
       "oauth_client": [
         {
-          "client_id": "413422181706-c9r0uv1t2du10ttjf748mh6490g2ir5u.apps.googleusercontent.com",
+          "client_id": "970678211686-fii42sp96be00r4fg4kggr69f0f0fn9m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBIoWJwXL-x_Kp3icL2SbBRygB6aZ9pJPg"
+          "current_key": "AIzaSyBuK91GjkYoVPDR56pf6K6Zr3uJHSG30yI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "413422181706-c9r0uv1t2du10ttjf748mh6490g2ir5u.apps.googleusercontent.com",
+              "client_id": "970678211686-fii42sp96be00r4fg4kggr69f0f0fn9m.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "413422181706-hkv9icg4bigdmmdhisjj74fab1iqn8a3.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.google.HeroesHealth.dev"
-              }
             }
           ]
         }

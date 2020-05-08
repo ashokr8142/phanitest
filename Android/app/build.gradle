@@ -73,9 +73,9 @@ android {
     productFlavors {
         fda {
             dimension 'version'
-            applicationId "com.alphabet.HeroesHealth"
-            versionCode 8
-            versionName "1.0.6"
+            applicationId "edu.unc.heroeshealth"
+            versionCode 1
+            versionName "1.0.0"
         }
     }
 }
