@@ -31,3 +31,19 @@ resource "google_project_iam_member" "sql_clients" {
   role    = "roles/cloudsql.client"
   member  = each.key
 }
+
+resource "google_project_iam_member" "bigquery_job_users" {
+  for_each = toset(var.bigquery_job_users)
+
+  project = var.project_id
+  role    = "roles/bigquery.jobUser"
+  member  = each.key
+}
+
+resource "google_project_iam_member" "bigquery_data_editors" {
+  for_each = toset(var.bigquery_data_editors)
+
+  project = var.project_id
+  role    = "roles/bigquery.dataEditor"
+  member  = each.key
+}
