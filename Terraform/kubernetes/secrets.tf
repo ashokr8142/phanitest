@@ -19,13 +19,15 @@ locals {
     "study-designer",
     "study-meta-data",
     "user-registration",
+    "triggers-pubsub-handler",
   ]
   apps_db_names = {
-    "auth-server"       = "auth_server"
-    "response-server"   = "mystudies_response_server"
-    "study-designer"    = "fda_hphc"
-    "study-meta-data"   = "fda_hphc"
-    "user-registration" = "mystudies_userregistration"
+    "auth-server"             = "auth_server"
+    "response-server"         = "mystudies_response_server"
+    "study-designer"          = "fda_hphc"
+    "study-meta-data"         = "fda_hphc"
+    "user-registration"       = "mystudies_userregistration"
+    "triggers-pubsub-handler" = "mystudies_userregistration"
   }
   # App codes for auth server authentication.
   auth_server_app_codes = [

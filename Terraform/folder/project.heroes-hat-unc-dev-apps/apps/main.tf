@@ -62,6 +62,7 @@ locals {
     "study-designer",
     "study-meta-data",
     "user-registration",
+    "triggers-pubsub-handler",
   ]
 }
 
