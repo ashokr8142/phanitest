@@ -13,3 +13,6 @@
 # limitations under the License.
 
 project_id = "heroes-hat-unc-dev-firebase"
+datastore_import_export_admins = [
+  "serviceAccount:heroes-hat-unc-dev-firebase@appspot.gserviceaccount.com"
+]
