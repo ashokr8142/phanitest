@@ -12,4 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-firebase"
+project_id       = "heroes-hat-unc-dev-firebase"
+storage_location = "us-east1"
+firestore_data_bucket_iam_members = [{
+  role   = "roles/storage.admin"
+  member = "serviceAccount:heroes-hat-unc-dev-firebase@appspot.gserviceaccount.com"
+}]

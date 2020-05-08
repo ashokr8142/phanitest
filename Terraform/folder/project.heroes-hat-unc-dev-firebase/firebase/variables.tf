@@ -15,3 +15,15 @@
 variable "project_id" {
   type = string
 }
+
+variable "storage_location" {
+  type = string
+}
+
+variable "firestore_data_bucket_iam_members" {
+  type = list(object({
+    role   = string
+    member = string
+  }))
+  default = []
+}
