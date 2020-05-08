@@ -69,13 +69,13 @@ inputs = {
   firestore_data_bucket_iam_members = [{
     role   = "roles/storage.objectCreator"
     member = "serviceAccount:${dependency.functions.outputs.functions_service_accounts["raw-data-export"].email}"
-  },
-{
-    role   = "roles/storage.objectViewer"
-    member = "serviceAccount:${dependency.functions.outputs.functions_service_accounts["bigquery-export"].email}"
+    },
+    {
+      role   = "roles/storage.objectViewer"
+      member = "serviceAccount:${dependency.functions.outputs.functions_service_accounts["bigquery-export"].email}"
   }]
   firestore_data_bigquery_access = [{
-    role = "roles/bigquery.dataEditor"
+    role          = "roles/bigquery.dataEditor"
     user_by_email = "${dependency.functions.outputs.functions_service_accounts["bigquery-export"].email}"
   }]
 }
