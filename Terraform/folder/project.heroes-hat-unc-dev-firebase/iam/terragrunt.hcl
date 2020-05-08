@@ -51,4 +51,5 @@ inputs = {
     "serviceAccount:${dependency.functions.outputs.functions_service_accounts["raw-data-export"].email}",
     "serviceAccount:${dependency.functions.outputs.functions_service_accounts["real-time-triggers"].email}"
   ]
+  pubsub_subscribers = ["serviceAccount:${dependency.apps.outputs.apps_service_accounts["triggers-pubsub-handler"].email}"]
 }

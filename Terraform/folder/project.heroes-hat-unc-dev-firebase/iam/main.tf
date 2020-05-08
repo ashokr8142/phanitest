@@ -34,3 +34,10 @@ resource "google_project_iam_member" "datastore_import_export_admins" {
   role     = "roles/datastore.importExportAdmin"
   member   = each.key
 }
+
+resource "google_project_iam_member" "pubsub_subscribers" {
+  for_each = toset(var.pubsub_subscribers)
+  project  = var.project_id
+  role     = "roles/pubsub.subscriber"
+  member   = each.key
+}
