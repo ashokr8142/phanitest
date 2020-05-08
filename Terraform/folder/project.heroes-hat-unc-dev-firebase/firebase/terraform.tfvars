@@ -13,3 +13,4 @@
 # limitations under the License.
 
 project_id = "heroes-hat-unc-dev-firebase"
+storage_location   = "us-east1"

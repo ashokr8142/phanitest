@@ -36,6 +36,27 @@ resource "google_firebase_project_location" "basic" {
   location_id = "us-east1"
 }
 
+# Firestore data export
+module "my_studies_firestore_data_bucket" {
+  source  = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
+  version = "~> 1.4"
+
+  name        = "heroes-hat-unc-dev-my-studies-firestore-raw-data"
+  project_id  = var.project_id
+  location    = var.storage_location
+  iam_members = var.firestore_data_bucket_iam_members
+
+  # TTL 7 days.
+  lifecycle_rules = [{
+    action = {
+      type = "Delete"
+    }
+    condition = {
+      age        = 7 # 7 days
+      with_state = "ANY"
+    }
+  }]
+}
 
 module "survey_pubsub" {
   source  = "terraform-google-modules/pubsub/google"
