@@ -20,3 +20,13 @@ variable "sql_clients" {
   description = "Clients who have access to the SQL instances in this project"
   type        = list(string)
 }
+
+variable "bigquery_job_users" {
+  description = "Clients who have bigquery jobUser access in this project"
+  type        = list(string)
+}
+
+variable "bigquery_data_editors" {
+  description = "Clients who have bigquery dataEditor access in this project"
+  type        = list(string)
+}
