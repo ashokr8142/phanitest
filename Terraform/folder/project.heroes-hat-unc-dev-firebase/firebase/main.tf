@@ -29,6 +29,14 @@ resource "google_firebase_project" "firebase" {
   project  = var.project_id
 }
 
+resource "google_firebase_project_location" "basic" {
+  provider = google-beta
+  project  = google_firebase_project.firebase.project
+
+  location_id = "us-east1"
+}
+
+
 module "survey_pubsub" {
   source  = "terraform-google-modules/pubsub/google"
   version = "~> 1.2.1"
