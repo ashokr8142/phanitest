@@ -25,3 +25,8 @@ variable "datastore_import_export_admins" {
   description = "Clients who have importExportAdmins access to the firestore in this project"
   type        = list(string)
 }
+
+variable "pubsub_subscribers" {
+  description = "Pubsub subscribers in this project"
+  type        = list(string)
+}
