@@ -12,5 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project_id = "heroes-hat-unc-dev-firebase"
-storage_location   = "us-east1"
+project_id       = "heroes-hat-unc-dev-firebase"
+storage_location = "us-east1"
