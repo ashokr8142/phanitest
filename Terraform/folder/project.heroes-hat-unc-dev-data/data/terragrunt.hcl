@@ -44,6 +44,18 @@ dependency "apps" {
   }
 }
 
+dependency "functions" {
+  config_path = "../../project.heroes-hat-unc-dev-firebase/functions"
+
+  mock_outputs = {
+    functions_service_accounts = {
+      user-registration = {
+        email = "mock-function-fn@mock-project.iam.gserviceaccount.com"
+      }
+    }
+  }
+}
+
 inputs = {
   network = dependency.network.outputs.private_network.id
   consent_documents_iam_members = [{
@@ -53,5 +65,17 @@ inputs = {
   fda_resources_iam_members = [{
     role   = "roles/storage.objectAdmin"
     member = "serviceAccount:${dependency.apps.outputs.apps_service_accounts["study-designer"].email}"
+  }]
+  firestore_data_bucket_iam_members = [{
+    role   = "roles/storage.objectCreator"
+    member = "serviceAccount:${dependency.functions.outputs.functions_service_accounts["raw-data-export"].email}"
+  },
+{
+    role   = "roles/storage.objectViewer"
+    member = "serviceAccount:${dependency.functions.outputs.functions_service_accounts["bigquery-export"].email}"
+  }]
+  firestore_data_bigquery_access = [{
+    role = "roles/bigquery.dataEditor"
+    user_by_email = "${dependency.functions.outputs.functions_service_accounts["bigquery-export"].email}"
   }]
 }
