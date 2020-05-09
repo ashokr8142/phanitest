@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: triggers-pubsub-handler
+  name: triggers-pubsub-handler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: triggers-pubsub-handler
+  template:
+    metadata:
+      labels:
+        app: triggers-pubsub-handler
+    spec:
+      containers:
+      - name: triggers-pubsub-handler
+        image: gcr.io/heroes-hat-unc-dev-apps/triggers-pubsub-handler:latest
+        env:
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: triggers-pubsub-handler-db-credentials
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: triggers-pubsub-handler-db-credentials
+                key: password
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: triggers-pubsub-handler-db-credentials
+                key: dbname
+          - name: EMAIL_ADDRESS
+            valueFrom:
+              secretKeyRef:
+                name: email-credentials
+                key: email_address
+          - name: EMAIL_PASS
+            valueFrom:
+              secretKeyRef:
+                name: email-credentials
+                key: email_password
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: "/secrets/gcloud_key/key.json"
+          - name: PROJECT_ID
+            value: "heroes-hat-unc-dev-firebase"
+          - name: PYTHONUNBUFFERED
+            value: "1"
+        volumeMounts:
+        - name: gcloud-key-volume
+          mountPath: /secrets/gcloud_key
+          readOnly: true
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:latest
+        command: ["/cloud_sql_proxy",
+          "-instances=heroes-hat-unc-dev-data:us-east1:my-studies=tcp:3306",
+          "-credential_file=/secrets/gcloud_key/key.json"]
+        volumeMounts:
+        - name: gcloud-key-volume
+          mountPath: /secrets/gcloud_key
+          readOnly: true
+      volumes:
+        - name: gcloud-key-volume
+          secret:
+            secretName: triggers-pubsub-handler-gcloud-key

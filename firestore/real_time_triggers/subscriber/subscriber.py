@@ -15,14 +15,12 @@ _DB_PASS = os.environ.get("DB_PASS")
 _DB_NAME = os.environ.get("DB_NAME")
 _EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
 _EMAIL_PASS = os.environ.get("EMAIL_PASS")
-_SQL_CONNECTION = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
 
 
 class EmailSender(object):
   def __init__(self):
-    self.server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    self.server = smtplib.SMTP_SSL('smtp-relay.gmail.com', 465)
     self.server.set_debuglevel(2)
-    self.server.login(_EMAIL_ADDRESS, _EMAIL_PASS)
 
   def __delete__(self):
     self.server.close()
