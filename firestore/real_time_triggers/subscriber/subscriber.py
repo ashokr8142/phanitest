@@ -101,6 +101,14 @@ class RoutingSubscriber(Subscriber):
 class DemographicsSubscriber(Subscriber):
   """Subsctiber fro Demographics survey massages."""
   def __init__(self, project_id, subscription_name):
+    self.db = sqlalchemy.create_engine(
+      sqlalchemy.engine.url.URL(
+        drivername="mysql+pymysql",
+        username=_DB_USER,
+        password=_DB_PASS,
+        database=_DB_NAME))
+        # To run with local cloud proxy instance add query to the method above:
+        # query={"unix_socket": "/cloudsql/{}".format(_SQL_CONNECTION)}
     super(DemographicsSubscriber, self).__init__(project_id, subscription_name,
                                                  'Demographics')
 
@@ -109,19 +117,54 @@ class DemographicsSubscriber(Subscriber):
     def _callback(message):
       data = json.loads(message.data)
       if data['activityId'] == self.activity_id:
-        institution = ''
+        institution_id = ''
         for result in data['data']['results']:
           if result['key'] == 'HealthcareSys':
-            institution = result['value']
+            institution_id = result['value']
+        participant_id = data['participantId']
         print(
           '''Received Demogrphics message from participant {}
-            with institution {}'''.format(data['participantId'], institution))
-        message.ack()
+            with institution {}'''.format(participant_id, institution_id))
+        try:
+          self._insert_user_institution(participant_id, institution_id)
+          message.ack()
+        except Exception as e:
+          print(str(e))
+          # Do not ack the message on expeception so it will be retried with
+          # exponential backoff.
+          message.nack()
       else:
         print('Ignoring message from activity {}'.format(data['activityId']))
         message.nack()
 
     return _callback
+
+  def _insert_user_institution(self, participant_id, institution_id):
+    with self.db.connect() as conn:
+      query = sqlalchemy.text(
+        '''SELECT user_details_id
+         FROM participant_study_info
+         WHERE participant_id=:participant_id''')
+      result = conn.execute(query, participant_id=participant_id).fetchone()
+      if not result:
+        raise ValueError(
+          'Failed fetching user_details_id for participant {}'.format(
+            participant_id))
+      user_details_id = result[0]
+      insert_query = sqlalchemy.text(
+        '''INSERT INTO user_institution (user_details_id, institution_id)
+          VALUES (:user_details_id, :institution_id)
+          ON DUPLICATE KEY UPDATE institution_id = :institution_id''')
+      try:
+        conn.execute(
+          insert_query,
+          user_details_id=user_details_id,
+          institution_id=institution_id)
+      except Exception as e:
+        raise ValueError(
+          '''Failed upsert into user_institution table for participant {}
+           institution {}, exception {}'''.format(participant_id,
+                                                  institution_id, e))
 
 class PHQDepSubscriber(Subscriber):
   """Subscriber for PHQDep survey messages."""
