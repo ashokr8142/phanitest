@@ -47,6 +47,8 @@ spec:
             value: "/secrets/gcloud_key/key.json"
           - name: PROJECT_ID
             value: "heroes-hat-unc-dev-firebase"
+          - name: PYTHONUNBUFFERED
+            value: "1"
         volumeMounts:
         - name: gcloud-key-volume
           mountPath: /secrets/gcloud_key
