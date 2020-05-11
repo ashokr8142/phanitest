@@ -10,6 +10,8 @@ from email.message import EmailMessage
 
 from google.cloud.pubsub_v1 import SubscriberClient
 
+import user_report
+
 _DB_USER = os.environ.get("DB_USER")
 _DB_PASS = os.environ.get("DB_PASS")
 _DB_NAME = os.environ.get("DB_NAME")
@@ -47,6 +49,7 @@ class Subscriber(object):
     self.subscription_path = self.subscriber_client.subscription_path(
       project_id, subscription_name)
     self.activity_id = activity_id
+    self.user_report = user_report.UserReportHandler()
 
   def get_streaming_subscription(self):
     """Retruns streaming subscription on Google Pub/Sub topic."""
@@ -54,6 +57,10 @@ class Subscriber(object):
       self.subscription_path,
       callback=self.get_callback())
     return subscription
+
+  def _update_user_report(self, participant_id):
+    # For now just print the content.
+    print(self.user_report.create_report_html(participant_id))
 
   @abc.abstractmethod
   def get_callback(self):
@@ -127,6 +134,7 @@ class DemographicsSubscriber(Subscriber):
             with institution {}'''.format(participant_id, institution_id))
         try:
           self._insert_user_institution(participant_id, institution_id)
+          self._update_user_report(participant_id)
           message.ack()
         except Exception as e:
           print(str(e))
@@ -190,14 +198,15 @@ class PHQDepSubscriber(Subscriber):
         for result in data['data']['results']:
           if result['key'] == '_SUM':
             score_sum = score_sum + float(result['value'])
-        email = self._get_participant_email(data['participantId'])
+        participant_id = data['participantId']
+        email = self._get_participant_email(participant_id)
         email_text = 'Your last PHQ survey score: {}.'.format(score_sum)
         print(
           'Received PHQDep message from participant {} with score {}'.format(
-            data['participantId'], score_sum))
+            participant_id, score_sum))
         if email:
-          print('Email: ' + email)
           self.email_sender.send('PHQ survey result.', email_text, [email])
+        self._update_user_report(participant_id)
         message.ack()
       else:
         print('Ignoring message from activity {}'.format(data['activityId']))
