@@ -31,7 +31,7 @@ terraform {
   }
   backend "gcs" {
     bucket = "heroes-hat-unc-dev-terraform-state"
-    prefix = "cicd"
+    prefix = "cicd/manual"
   }
 }
 
