@@ -20,29 +20,38 @@ steps:
     args: ["version"]
     id: Terraform version
 
-  # org/cicd
+  # folder/cicd
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
     entrypoint: terraform
     args: ["init"]
-    dir: "${_TERRAFORM_ROOT}/org/cicd"
+    dir: "${_TERRAFORM_ROOT}/folder/cicd"
     id: Init (CICD)
 
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
     entrypoint: terraform
     args: ["plan", "--lock=false", "-out=plan.tfplan"]
-    dir: "${_TERRAFORM_ROOT}/org/cicd"
+    dir: "${_TERRAFORM_ROOT}/folder/cicd"
     id: Speculative plan (CICD)
 
-  # org
+  # folder
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
     entrypoint: terragrunt
     args: ["init"]
     dir: "${_TERRAFORM_ROOT}/folder"
+    id: Init (folder)
 
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
-    entrypoint: terragrunt
-    args: ["plan-all", "--lock=false"]
+    entrypoint: bash
+    args: ["../cicd/configs/terragrunt.sh", "plan-all"]
     dir: "${_TERRAFORM_ROOT}/folder"
+    id: Speculative plan (folder)
+
+  # Check for delete operations as an FYI, it won't fail the build.
+  - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools@sha256:a09ad46f513847d31e2cfe20f818c2d64809e7d12695e2e6098900296f6527bf"
+    entrypoint: bash
+    args: ["../cicd/configs/tf-deletion-check.sh"]
+    dir: "${_TERRAFORM_ROOT}/folder"
+    id: Resource deletion check
 
 substitutions:
     _TERRAFORM_ROOT: "."

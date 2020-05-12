@@ -13,7 +13,7 @@
 # limitations under the License.
 
 variable "folder" {
-  description = "GCP Organization ID that Cloud Build Service Account will have purview over"
+  description = "GCP folder ID that Cloud Build Service Account will have purview over"
   type        = string
 }
 
