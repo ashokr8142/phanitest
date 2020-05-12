@@ -13,12 +13,16 @@
 # limitations under the License.
 
 variable "folder" {
-  description = "GCP Organization ID that Cloud Build Service Account will have purview over"
+  description = "GCP folder ID that Cloud Build Service Account will have purview over"
   type        = string
 }
 
-variable "devops_project_id" {
-  description = "Project ID of the devops project to create the Cloud Build Triggers"
+variable "billing_account" {
+  type = string
+}
+
+variable "project_id" {
+  description = "Project ID of the devops project to host CI/CD resources"
   type        = string
 }
 
