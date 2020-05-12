@@ -445,6 +445,8 @@
 		AB6F13ED2458D2E2000D91D1 /* ColorTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB6F13E92458D2D3000D91D1 /* ColorTheme.xcassets */; };
 		AB6F13EE2458D2E4000D91D1 /* ColorTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB6F13E92458D2D3000D91D1 /* ColorTheme.xcassets */; };
 		AB6F13F52459E870000D91D1 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD4F679244F2EE900584C0C /* DateHelper.swift */; };
+		AB710C56246B296B00D1BEC0 /* WKWebView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F214B9324603EFE008F2742 /* WKWebView+Extensions.swift */; };
+		AB710C57246B29AD00D1BEC0 /* UIPrintPageRenderer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F214B9524603F8D008F2742 /* UIPrintPageRenderer+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2658,7 +2660,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB6F13F52459E870000D91D1 /* DateHelper.swift in Sources */,
 				AB4F5B93243DA6DC00572AFC /* UIApplication+Extensions.swift in Sources */,
 				AB4F5B94243DA6DC00572AFC /* UIViewController+Extensions.swift in Sources */,
 				AB4F5B95243DA6DC00572AFC /* SignUpTableViewCell.swift in Sources */,
@@ -2668,6 +2669,7 @@
 				AB4F5B99243DA6DC00572AFC /* PinterestLayout.swift in Sources */,
 				AB4F5B9A243DA6DC00572AFC /* Cell+Extensions.swift in Sources */,
 				AB4F5B9B243DA6DC00572AFC /* DBActivity.swift in Sources */,
+				AB6F13F52459E870000D91D1 /* DateHelper.swift in Sources */,
 				AB4F5B9C243DA6DC00572AFC /* ContactUsTableViewCell.swift in Sources */,
 				AB4F5B9D243DA6DC00572AFC /* ConsentSharePdfStepViewController.swift in Sources */,
 				AB4F5B9E243DA6DC00572AFC /* ConsentServerConfiguration.swift in Sources */,
@@ -2789,11 +2791,13 @@
 				AB4F5C12243DA6DC00572AFC /* WCPConfiguration.swift in Sources */,
 				AB4F5C13243DA6DC00572AFC /* StudyOverviewPageViewControllerFirst.swift in Sources */,
 				AB4F5C14243DA6DC00572AFC /* Overview.swift in Sources */,
+				AB710C56246B296B00D1BEC0 /* WKWebView+Extensions.swift in Sources */,
 				AB4F5C15243DA6DC00572AFC /* StudyDashboard.swift in Sources */,
 				AB4F5C16243DA6DC00572AFC /* ChangePasswordViewController.swift in Sources */,
 				AB4F5C17243DA6DC00572AFC /* ComprehensionFailure.swift in Sources */,
 				AB4F5C18243DA6DC00572AFC /* ActivityFilterView.swift in Sources */,
 				AB4F5C19243DA6DC00572AFC /* VerificationViewController.swift in Sources */,
+				AB710C57246B29AD00D1BEC0 /* UIPrintPageRenderer+Extensions.swift in Sources */,
 				AB4F5C1A243DA6DC00572AFC /* FirstGatewayOverviewViewController.swift in Sources */,
 				AB4F5C1B243DA6DC00572AFC /* ResearchContainerSegue.swift in Sources */,
 				AB4F5C1C243DA6DC00572AFC /* AuthServerConfiguration.swift in Sources */,
