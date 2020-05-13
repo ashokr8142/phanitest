@@ -48,9 +48,11 @@ spec:
             - name: PROJECT_ID
               value: heroes-hat-dev
             - name: USER_REPORT_SURVEYS
-              value: GADAnx,PHQDepWithSum,PSQI1x,WorkplacePPE
+              value: 'GAD7,PHQ9+SH,PSQI2,PTSD2,WSAS2'
             - name: SURVEYS_COLLECTION_PREFIX
               value: SurveyTeamfood-RESPONSES/SurveyTeamfood/Activities
+            - name: PYTHONUNBUFFERED
+              value: "1"
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:latest
         command: ["/cloud_sql_proxy",
