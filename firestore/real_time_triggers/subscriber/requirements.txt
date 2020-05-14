@@ -1,3 +1,4 @@
+google-api-core==1.16.0
 google-cloud-firestore==1.6.2
 google-cloud-pubsub==1.4.3
 firebase-admin==4.2.0
