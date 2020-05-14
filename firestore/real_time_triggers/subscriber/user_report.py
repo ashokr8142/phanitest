@@ -29,42 +29,46 @@ _COLORS = {
   4: '#EA8279' # dark red
 }
 
+# List of (activityId, ActivityMsgs). This is a list because we want fixed
+# ordering of rows in the report HTML table.
 # TODO: This should be read from some kind of config file.
-_ACTIVITY_ID_TO_MSG = {
-  'PSQI2': ActivityMsgs('Your sleep quality was',
+_ACTIVITY_ID_TO_MSG_LIST = (
+  ('PSQI2', ActivityMsgs('Your sleep quality was',
                         [0, 1, 2, 3],
                         [TextAndColor('Very Good', _COLORS[0]),
                          TextAndColor('Fairly Good', _COLORS[1]),
                          TextAndColor('Fairly Bad', _COLORS[2]),
-                         TextAndColor('Very Bad', _COLORS[4])]),
-  'PHQ9+SH': ActivityMsgs('Your feelings of sadness or depression were',
+                         TextAndColor('Very Bad', _COLORS[4])])),
+  ('PHQ9+SH', ActivityMsgs('Your feelings of sadness or depression were',
                           [0, 5, 10, 15, 20],
                           [TextAndColor('None or minimal', _COLORS[0]),
                            TextAndColor('Mild', _COLORS[1]),
                            TextAndColor('Moderate', _COLORS[2]),
                            TextAndColor('Moderately Severe', _COLORS[3]),
-                           TextAndColor('Severe', _COLORS[4])]),
-  'GAD7': ActivityMsgs('Your feelings of worry or anxiety were',
+                           TextAndColor('Severe', _COLORS[4])])),
+  ('GAD7', ActivityMsgs('Your feelings of worry or anxiety were',
                        [0, 5, 10, 15],
                        [TextAndColor('None or minimal', _COLORS[0]),
                         TextAndColor('Mild', _COLORS[1]),
                         TextAndColor('Moderate', _COLORS[2]),
-                        TextAndColor('Severe', _COLORS[4])]),
-  'PTSD2': ActivityMsgs('Symptoms of posttraumatic stress were',
+                        TextAndColor('Severe', _COLORS[4])])),
+  ('PTSD2', ActivityMsgs('Symptoms of posttraumatic stress were',
                         [0, 6],
                         [TextAndColor('None or minimal', _COLORS[0]),
-                         TextAndColor('Present', _COLORS[2])]),
-  'WSAS2': ActivityMsgs('''Your limitations in day-to-day life due to your
+                         TextAndColor('Present', _COLORS[2])])),
+  ('WSAS2', ActivityMsgs('''Your limitations in day-to-day life due to your
                         mental health were''',
                         [0, 10, 21],
                         [TextAndColor('None or mild', _COLORS[0]),
                          TextAndColor('Moderate', _COLORS[2]),
-                         TextAndColor('Severe', _COLORS[4])])
-}
+                         TextAndColor('Severe', _COLORS[4])])),
+)
+
+_ACTIVITY_ID_TO_MSG = {key: value for key, value in _ACTIVITY_ID_TO_MSG_LIST}
 
 def get_message_from_score(activity_id, score):
   if score is None:
-    return TextAndColor('Survey not completed', _COLORS[-1])
+    return TextAndColor('Not completed', _COLORS[-1])
   if activity_id not in _ACTIVITY_ID_TO_MSG:
     return TextAndColor('Unknown survey', _COLORS[-1])
   index = bisect_right(_ACTIVITY_ID_TO_MSG[activity_id].ranges, score)
@@ -73,9 +77,9 @@ def get_message_from_score(activity_id, score):
   return _ACTIVITY_ID_TO_MSG[activity_id].text_colors[index]
 
 def html_table_line(title, text_and_color):
-  return '''<tr style="border:1px solid black;">
+  return '''<tr style="border:1px solid #999999;vertical-align:middle;">
       <td>{}</td>
-      <td style="background-color:{}">{}</td></tr>'''.format(
+      <td style="background-color:{};text-align:center;">{}</td></tr>'''.format(
         title, text_and_color.color, text_and_color.text)
 
 class UserReportHandler(object):
@@ -84,11 +88,26 @@ class UserReportHandler(object):
     self.firebase_db = firestore.client()
 
   def create_report_html(self, participant_id):
-    result = '<table style="border:1px solid black;border-collapse: collapse;">'
-    for key, value in self.get_updated_score_map(participant_id).items():
-      result += html_table_line(_ACTIVITY_ID_TO_MSG[key].title, value)
-    result += '</table>'
-    return result
+    result = []
+    result.append('<p><b>You reported that this past week:</b></p>')
+    result.append(
+        '<table style="border:1px solid #999999;border-collapse: collapse;">')
+    updated_score_map = self.get_updated_score_map(participant_id)
+    for activity_id, activity_msgs in _ACTIVITY_ID_TO_MSG_LIST:
+      value = updated_score_map.get(activity_id, None)
+      if value:
+        result.append(html_table_line(activity_msgs.title, value))
+      else:
+        logging.error('Failed to find entry for activity id: {}'.format(
+            activity_id))
+    result.append('</table>')
+    result.append('''<p><b>About Your Report:</b> These Heroes Health reports
+                  are to help you monitor your symptoms and mental health over
+                  time. They should not be interpreted as a diagnosis. If you
+                  have concerns about your mental health, contact your health
+                  care provider and/or use the resources listed in the resources
+                  tab.</p>''')
+    return ''.join(result)
 
   def get_updated_score_map(self, participant_id):
     result = {activity_id:get_message_from_score(activity_id, None)
