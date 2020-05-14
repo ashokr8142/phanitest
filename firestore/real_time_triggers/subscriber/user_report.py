@@ -77,9 +77,11 @@ def get_message_from_score(activity_id, score):
   return _ACTIVITY_ID_TO_MSG[activity_id].text_colors[index]
 
 def html_table_line(title, text_and_color):
-  return '''<tr style="border:1px solid #999999;vertical-align:middle;">
-      <td>{}</td>
-      <td style="background-color:{};text-align:center;">{}</td></tr>'''.format(
+  return '''
+    <tr style="height:2.2rem;border:1px solid #999999;vertical-align:middle;">
+      <td style="width:67%;border:1px solid #999999;">{}</td>
+      <td style="width:33%;background-color:{};text-align:center;">{}</td>
+    </tr>'''.format(
         title, text_and_color.color, text_and_color.text)
 
 class UserReportHandler(object):
