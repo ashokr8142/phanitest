@@ -1,11 +1,13 @@
 import logging
 import os
 import subscriber
+import sys
 
 _PROJECT_NAME = os.environ.get('PROJECT_ID')
 
 def main():
   logging.basicConfig(level=logging.DEBUG,
+                      stream=sys.stdout,
                       format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
   logging.info('Initializing RoutingSubscriber.')
   sub_client = subscriber.RoutingSubscriber(_PROJECT_NAME, 'surveyWriteGlobal')
