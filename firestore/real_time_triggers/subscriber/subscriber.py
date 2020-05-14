@@ -42,7 +42,7 @@ class EmailSender(object):
       msg.set_content(body)
       self.server.send_message(msg, _EMAIL_ADDRESS, recipients)
     except Exception as e:
-      print('Had trouble sending email to: {}'.format(msg['To']))
+      logging.error('Had trouble sending email to: {}'.format(msg['To']))
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -148,7 +148,7 @@ class TestSubscriber(Subscriber):
   def get_callback(self):
 
     def _callback(message):
-      print('Received message: {}'.format(message.data))
+      logging.info('Received message: {}'.format(message.data))
       message.ack()
 
     return _callback
@@ -174,7 +174,7 @@ class RoutingSubscriber(Subscriber):
       if activity_id in self.subscriber_map:
         self.subscriber_map[activity_id].get_callback()(message)
       else:
-        print('Ignoring message from activity {}'.format(activity_id))
+        logging.info('Ignoring message from activity {}'.format(activity_id))
         message.ack()
 
     return _callback
@@ -197,19 +197,19 @@ class DemographicsSubscriber(Subscriber):
             institution_id = result['value']
         participant_id = data['participantId']
         study_id = data['data']['studyId']
-        print(
+        logging.debug(
           '''Received Demogrphics message from participant {}
             with institution {}'''.format(participant_id, institution_id))
         try:
           self._insert_user_institution(participant_id, institution_id)
           message.ack()
         except Exception as e:
-          print(str(e))
+          logging.error(str(e))
           # Do not ack the message on expeception so it will be retried with
           # exponential backoff.
           message.nack()
       else:
-        print('Ignoring message from activity {}'.format(data['activityId']))
+        logging.info('Ignoring message from activity {}'.format(data['activityId']))
         message.nack()
 
     return _callback
@@ -248,13 +248,13 @@ class HealthActivitySubscriber(SubscriberWithUserReport):
       if data['activityId'] == self.activity_id:
         participant_id = data['participantId']
         study_id = data['data']['studyId']
-        print(
+        logging.info(
           'Received {} message from participant {}'.format(
             self.activity_id, participant_id))
         self.update_user_report(participant_id, study_id)
         message.ack()
       else:
-        print('Ignoring message from activity {}'.format(data['activityId']))
+        logging.info('Ignoring message from activity {}'.format(data['activityId']))
         message.nack()
 
     return _callback
