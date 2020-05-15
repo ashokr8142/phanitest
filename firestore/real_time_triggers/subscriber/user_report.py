@@ -1,7 +1,9 @@
 from bisect import bisect_right
 from collections import namedtuple
+import datetime
+import logging
 import os
-import time
+import pytz
 
 import firebase_admin
 from firebase_admin import credentials
@@ -89,12 +91,13 @@ class UserReportHandler(object):
   def __init__(self):
     self.firebase_db = firestore.client()
 
-  def create_report_html(self, participant_id):
+  def create_report_html(self, participant_id, report_start_date):
     result = []
     result.append('<p><b>You reported that this past week:</b></p>')
     result.append(
         '<table style="border:1px solid #999999;border-collapse: collapse;">')
-    updated_score_map = self.get_updated_score_map(participant_id)
+    updated_score_map = self.get_updated_score_map(participant_id,
+                                                   report_start_date)
     for activity_id, activity_msgs in _ACTIVITY_ID_TO_MSG_LIST:
       value = updated_score_map.get(activity_id, None)
       if value:
@@ -111,16 +114,22 @@ class UserReportHandler(object):
                   tab.</p>''')
     return ''.join(result)
 
-  def get_updated_score_map(self, participant_id):
+  def get_updated_score_map(self, participant_id, report_start_date):
     result = {activity_id:get_message_from_score(activity_id, None)
               for activity_id in _REPORT_SURVEYS}
-    days_ago_8 = str((int(time.time()) - 60*60*24*8)*1000)
+    # We consider all surveys that are completed since 12PM Eastern time on
+    # report_start_date.
+    eastern_tz = pytz.timezone('US/Eastern')
+    report_start_time = eastern_tz.localize(
+        datetime.datetime(report_start_date.year, report_start_date.month,
+                          report_start_date.day, hour=12))
+    start_timestamp_milli = int(report_start_time.timestamp()) * 1000
     survey_responses = self.firebase_db.collection(
       _SURVEYS_COLLECTION_PREFIX
       ).where(
         u'participantId', u'==', participant_id
       ).where(
-       u'createdTimestamp', u'>=', days_ago_8
+        u'createdTimestamp', u'>=', str(start_timestamp_milli)
       ).order_by(
        u'createdTimestamp',
        direction=firestore.Query.ASCENDING
