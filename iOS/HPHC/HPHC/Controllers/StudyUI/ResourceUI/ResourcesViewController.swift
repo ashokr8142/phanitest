@@ -503,11 +503,13 @@ class ResourcesViewController: UIViewController {
       currentUser.participatedActivites.remove(at: index!)
     }
 
-    // Clear database storage
-    DBHandler.deleteStudyData(studyId: (Study.currentStudy?.studyId)!)
+    if let studyID = Study.currentStudy?.studyId {
+      // Clear database storage
+      DBHandler.deleteStudyData(studyId: studyID)
 
-    // Clear local notification for study
-    LocalNotification.removeLocalNotificationfor(studyId: (Study.currentStudy?.studyId)!)
+      // Clear local notification for study
+      DBHandler.deleteStudyDBLocalNotifications(for: studyID)
+    }
 
     // Update status to false so notification can be registered again
     Study.currentStudy?.activitiesLocalNotificationUpdated = false
@@ -515,6 +517,8 @@ class ResourcesViewController: UIViewController {
       studyId: (Study.currentStudy?.studyId)!,
       status: false
     )
+
+    LocalNotification.refreshAllLocalNotification()
 
     self.removeProgressIndicator()
     self.navigationController?.navigationBar.isHidden = false
