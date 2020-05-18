@@ -66,6 +66,10 @@ inputs = {
     role   = "roles/storage.objectAdmin"
     member = "serviceAccount:${dependency.apps.outputs.apps_service_accounts["study-designer"].email}"
   }]
+  institution_resources_iam_members = [{
+    role   = "roles/storage.objectAdmin"
+    member = "serviceAccount:${dependency.apps.outputs.apps_service_accounts["user-registration"].email}"
+  }]
   firestore_data_bucket_iam_members = [{
     role   = "roles/storage.objectCreator"
     member = "serviceAccount:${dependency.functions.outputs.functions_service_accounts["raw-data-export"].email}"
