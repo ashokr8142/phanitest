@@ -45,8 +45,14 @@ spec:
                 key: email_password
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: "/secrets/gcloud_key/key.json"
+          - name: CLOUD_SQL_CONNECTION_NAME
+            value: heroes-hat-unc-dev-data:us-east1:my-studies
           - name: PROJECT_ID
             value: "heroes-hat-unc-dev-firebase"
+          - name: USER_REPORT_SURVEYS
+            value: 'GAD7,PHQ9+SH,PSQI2,PTSD2,WSAS2'
+          - name: SURVEYS_COLLECTION_PREFIX
+            value: SurveyTeamfood-RESPONSES/SurveyTeamfood/Activities
           - name: PYTHONUNBUFFERED
             value: "1"
         volumeMounts:
