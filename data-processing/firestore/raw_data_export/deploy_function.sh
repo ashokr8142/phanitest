@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-BUCKET_NAME=heroes-hat-firestore-raw
+BUCKET_NAME=heroes-hat-unc-dev-my-studies-firestore-raw-data
 SCHEDULE_TIME="every day 02:00"
 
 firebase functions:config:set \
