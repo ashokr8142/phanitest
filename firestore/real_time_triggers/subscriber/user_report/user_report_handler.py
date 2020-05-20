@@ -1,9 +1,7 @@
 from bisect import bisect_right
 from collections import namedtuple
-import datetime
 import logging
 import os
-import pytz
 
 import firebase_admin
 from firebase_admin import credentials
@@ -119,19 +117,14 @@ class UserReportHandler(object):
   def get_updated_score_map(self, participant_id, report_start_date):
     result = {activity_id:get_message_from_score(activity_id, None)
               for activity_id in _REPORT_SURVEYS}
-    # We consider all surveys that are completed since 12PM Eastern time on
-    # report_start_date.
-    eastern_tz = pytz.timezone('US/Eastern')
-    report_start_time = eastern_tz.localize(
-        datetime.datetime(report_start_date.year, report_start_date.month,
-                          report_start_date.day, hour=12))
-    start_timestamp_milli = int(report_start_time.timestamp()) * 1000
+    start_timestamp_millis = response_data_util.get_cutoff_timestamp_for_date(
+        report_start_date)
     survey_responses = self.firebase_db.collection(
       _SURVEYS_COLLECTION_PREFIX
       ).where(
         u'participantId', u'==', participant_id
       ).where(
-        u'createdTimestamp', u'>=', str(start_timestamp_milli)
+        u'createdTimestamp', u'>=', str(start_timestamp_millis)
       ).order_by(
        u'createdTimestamp',
        direction=firestore.Query.ASCENDING

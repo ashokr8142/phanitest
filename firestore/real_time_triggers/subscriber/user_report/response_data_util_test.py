@@ -4,6 +4,7 @@ Command to run tests:
   python3 -m unittest user_report/response_data_util_test.py -v
 """
 
+import datetime
 import unittest
 
 from user_report import response_data_util
@@ -40,6 +41,17 @@ class TestComputeScoreSum(unittest.TestCase):
         {'key': 'Q2', 'value': '3'},
         {'key': '_SUM', 'value': '8'}]}
     self.assertEqual(response_data_util.compute_score_sum(response_data), 5)
+
+
+class TestGetCutoffTimestampForDate(unittest.TestCase):
+  def test_daylight_saving(self):
+    date = datetime.date(2020, 5, 17)
+    self.assertEqual(response_data_util.get_cutoff_timestamp_for_date(date),
+                     1589731200000)
+  def test_non_daylight_saving(self):
+    date = datetime.date(2020, 11, 1)
+    self.assertEqual(response_data_util.get_cutoff_timestamp_for_date(date),
+                     1604250000000)
 
 
 if __name__ == '__main__':
