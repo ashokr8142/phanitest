@@ -12,7 +12,7 @@ from email.message import EmailMessage
 
 from google.cloud.pubsub_v1 import SubscriberClient
 
-import user_report
+from user_report import user_report_handler
 
 _DB_USER = os.environ.get("DB_USER")
 _DB_PASS = os.environ.get("DB_PASS")
@@ -53,7 +53,7 @@ class Subscriber(object):
     self.subscription_path = self.subscriber_client.subscription_path(
       project_id, subscription_name)
     self.activity_id = activity_id
-    self.user_report = user_report.UserReportHandler()
+    self.user_report = user_report_handler.UserReportHandler()
     self.db = sqlalchemy.create_engine(
       sqlalchemy.engine.url.URL(
         drivername="mysql+pymysql",

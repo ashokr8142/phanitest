@@ -9,6 +9,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
+from user_report import response_data_util
+
 _PROJECT_NAME = os.environ.get('PROJECT_ID')
 _REPORT_SURVEYS = set(os.environ.get('USER_REPORT_SURVEYS').split(','))
 _SURVEYS_COLLECTION_PREFIX = os.environ.get('SURVEYS_COLLECTION_PREFIX')
@@ -142,13 +144,6 @@ class UserReportHandler(object):
       activity_id = response_data['activityId']
       if activity_id not in _REPORT_SURVEYS:
         continue
-      score = 0
-      for reply in response_data['results']:
-        try:
-          value = float(reply['value'])
-        except ValueError:
-          value = None
-        if (value and value >= 0.0 and reply['key'] != '_SUM '):
-          score += value
+      score = response_data_util.compute_score_sum(response_data)
       result[activity_id] = get_message_from_score(activity_id, score)
     return result
