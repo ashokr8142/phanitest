@@ -138,15 +138,15 @@ class SubscriberWithUserReport(Subscriber):
     days_delta = reference_date.isoweekday() % 7
     return reference_date - datetime.timedelta(days=days_delta)
 
-  def _get_study_id(self, study_name):
+  def _get_study_id(self, custom_id):
     with self.db.connect() as conn:
       query = sqlalchemy.text(
-        '''SELECT id FROM study_info WHERE name=:study_name''')
-      result = conn.execute(query, study_name=study_name).fetchone()
+        '''SELECT id FROM study_info WHERE custom_id=:custom_id''')
+      result = conn.execute(query, custom_id=custom_id).fetchone()
       if not result:
         raise ValueError(
-          'Failed fetching study id for study name {}'.format(
-            study_name))
+          'Failed fetching study id for custom id {}'.format(
+            custom_id))
       return result[0]
 
   @abc.abstractmethod
