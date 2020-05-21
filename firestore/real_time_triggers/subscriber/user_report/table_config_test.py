@@ -47,14 +47,14 @@ class TableConfigTest(unittest.TestCase):
     config = TableConfig(json.loads(_CONFIG_JSON))
     html_table = config.make_html_table({"SurveyA": 2, "SurveyB": 7})
     expected_html = """
-    <table style="border:1px solid #999999;border-collapse: collapse;">
-      <tr style="height:2.2rem;border:1px solid #999999;vertical-align:middle;">
-        <td style="width:67%;border:1px solid #999999;">Title A</td>
-        <td style="width:33%;background-color:#FBE5D6;text-align:center;">Two</td>
+    <table>
+      <tr>
+        <td class="title">Title A</td>
+        <td class="value light-red">Two</td>
       </tr>
-      <tr style="height:2.2rem;border:1px solid #999999;vertical-align:middle;">
-        <td style="width:67%;border:1px solid #999999;">Title B</td>
-        <td style="width:33%;background-color:#FFF2CC;text-align:center;">Mild</td>
+      <tr>
+        <td class="title">Title B</td>
+        <td class="value yellow">Mild</td>
       </tr>
     </table>"""
     self.assertEqual(format_html(html_table), format_html(expected_html))
@@ -63,17 +63,44 @@ class TableConfigTest(unittest.TestCase):
     config = TableConfig(json.loads(_CONFIG_JSON))
     html_table = config.make_html_table({"SurveyA": 2})
     expected_html = """
-    <table style="border:1px solid #999999;border-collapse: collapse;">
-      <tr style="height:2.2rem;border:1px solid #999999;vertical-align:middle;">
-        <td style="width:67%;border:1px solid #999999;">Title A</td>
-        <td style="width:33%;background-color:#FBE5D6;text-align:center;">Two</td>
+    <table>
+      <tr>
+        <td class="title">Title A</td>
+        <td class="value light-red">Two</td>
       </tr>
-      <tr style="height:2.2rem;border:1px solid #999999;vertical-align:middle;">
-        <td style="width:67%;border:1px solid #999999;">Title B</td>
-        <td style="width:33%;background-color:#FFFFFF;text-align:center;">Not completed</td>
+      <tr>
+        <td class="title">Title B</td>
+        <td class="value white">Not completed</td>
       </tr>
     </table>"""
     self.assertEqual(format_html(html_table), format_html(expected_html))
+
+  def test_get_css(self):
+    config = TableConfig(json.loads(_CONFIG_JSON))
+    expected_css = """
+        table, tr, td {
+          border: 1px solid #999999;
+        }
+        table {
+          border-collapse: collapse;
+        }
+        tr {
+          height: 2.2rem;
+          vertical-align: middle;
+        }
+        td.title {
+          width: 67%;
+        }
+        td.value {
+          width: 33%;
+          text-align: center;
+        }
+        td.white { background-color: #FFFFFF; }
+        td.green { background-color: #CEE0D4; }
+        td.yellow { background-color: #FFF2CC; }
+        td.light-red { background-color: #FBE5D6; }
+    """
+    self.assertEqual(format_html(config.get_css()), format_html(expected_css))
 
 
 if __name__ == '__main__':

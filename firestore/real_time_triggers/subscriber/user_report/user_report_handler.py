@@ -33,6 +33,9 @@ class UserReportHandler(object):
     score_map = response_data_util.make_score_map(survey_responses)
     # Build HTML report based on score sum.
     result = []
+    result.append('<style>')
+    result.append(self.table_config.get_css())
+    result.append('</style>')
     result.append('<p><b>You reported that this past week:</b></p>')
     result.append(self.table_config.make_html_table(score_map))
     result.append('''<p><b>About Your Report:</b> These Heroes Health reports
