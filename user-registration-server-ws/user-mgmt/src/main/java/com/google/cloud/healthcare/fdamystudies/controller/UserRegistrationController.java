@@ -249,22 +249,19 @@ public class UserRegistrationController {
           "<html>"
               + "<body>"
               + "<div style='margin:20px;padding:10px;font-family: sans-serif;font-size: 14px;'>"
-              + "<span>Hi,</span><br/><br/>"
-              + "<span>Thank you for registering with us! We look forward to having you on board and actively taking part in<br/>research studies conducted by the &lt;Org Name&gt; and its partners.</span><br/><br/>"
-              + "<span>Your sign-up process is almost complete. Please use the verification code provided below to<br/>complete the Verification step in the mobile app. </span><br/><br/>"
-              + "<span><strong>Verification Code: </strong>"
+              + "<span>Your Heroes Health is almost complete. To access the app, enter the verification code below.</span><br/><br/>"
+              + "<span><strong>Verification Code: </strong><b>"
               + otp
-              + "</span><br/><br/>"
-              + "<span>This code can be used only once and is valid for a period of 48 hours only.</span><br/><br/>"
-              + "<span>Please note that  registration (or sign up) for the app  is requested only to provide you with a <br/>seamless experience of using the app. Your registration information does not become part of <br/>the data collected for any study housed in the app. Each study has its own consent process <br/> and no data for any study will not be collected unless and until you provide an informed consent<br/> prior to joining the study </span><br/><br/>"
-              + "<span>For any questions or assistance, please write to <a> &lt;contact email address&gt; </a> </span><br/><br/>"
-              + "<span style='font-size:15px;'>Thanks,</span><br/><span>The &lt;Org Name&gt; MyStudies Support Team</span>"
+              + "</b></span><br/><br/>"
+              + "<span>This code can be used only once, and is valid for a period of 48 hours only. If more than 48 hours has passed, and you need another verification code, please open the Heroes Health app and click &ldquo;resend&rdquo;.</span><br/><br/>"
+              + "<span>For questions or assistance, email <a href=\"mailto:heroeshealth_support@unc.edu\">heroeshealth_support@unc.edu</a>.</span><br/><br/>"
+              + "<span style='font-size:15px;'>Thanks, The Heroes Health Team</span>"
               + "<br/><span>----------------------------------------------------</span><br/>"
-              + "<span style='font-size:10px;'>PS - This is an auto-generated email. Please do not reply.</span>"
+              + "<span style='font-size:10px;'>Note: This is an auto-generated email. Please do not reply. For more information, please visit our website: <a href=\"https://heroeshealth.unc.edu/\">https://heroeshealth.unc.edu/</a></span>"
               + "</div>"
               + "</body>"
               + "</html>";
-      String subject = "Welcome to the <App Name> App!";
+      String subject = "Heroes Health App Verification";
       emailContent.add(subject);
       emailContent.add(message);
       return emailContent;
