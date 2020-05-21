@@ -47,8 +47,6 @@ spec:
               value: heroes-hat-dev:us-east1:my-studies2
             - name: PROJECT_ID
               value: heroes-hat-dev
-            - name: USER_REPORT_SURVEYS
-              value: 'GAD7,PHQ9+SH,PSQI2,PTSD2,WSAS2'
             - name: SURVEYS_COLLECTION_PREFIX
               value: SurveyTeamfood-RESPONSES/SurveyTeamfood/Activities
             - name: PYTHONUNBUFFERED
