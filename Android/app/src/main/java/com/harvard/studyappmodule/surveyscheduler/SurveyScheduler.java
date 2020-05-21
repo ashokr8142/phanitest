@@ -152,7 +152,10 @@ public class SurveyScheduler {
       startCalendar.setTime(mStartTime);
 
       Calendar endCalendar = Calendar.getInstance();
-      endCalendar.setTime(mEndTime);
+      //endCalendar.setTime(mEndTime);
+      // FIXME: Hack to set only the next 5 day's alarms
+      endCalendar.setTime(new Date());
+      endCalendar.add(Calendar.DATE, 5);
 
       int run = 1;
       while (startCalendar.before(endCalendar)) {
