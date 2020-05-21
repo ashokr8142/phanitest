@@ -7,6 +7,15 @@ import json
 ActivityMsgs = namedtuple('ActivityMsgs', 'title ranges text_colors')
 TextAndColor = namedtuple('TextAndColor', 'text color')
 
+
+def html_table_line(title, text_and_color):
+  return '''
+    <tr style="height:2.2rem;border:1px solid #999999;vertical-align:middle;">
+      <td style="width:67%;border:1px solid #999999;">{}</td>
+      <td style="width:33%;background-color:{};text-align:center;">{}</td>
+    </tr>'''.format(
+        title, text_and_color.color, text_and_color.text)
+
 class TableConfig:
   def __init__(self, json_config):
     self._colors = json_config["colors"]
@@ -34,8 +43,24 @@ class TableConfig:
     with open('app/user_report/table_config.json') as json_file:
       return TableConfig(json.load(json_file))
 
+  # Returns a list of activity ids in order of the table report.
+  def get_activity_ids(self):
+    return [id for id, _ in self._list]
+
+  # Returns an HTML table report for the given score_map.
+  def make_html_table(self, score_map):
+    htmls = []
+    htmls.append(
+        '<table style="border:1px solid #999999;border-collapse: collapse;">')
+    for activity_id, activity_msgs in self._list:
+      score = score_map.get(activity_id, None)
+      text_and_color = self._get_message_from_score(activity_id, score)
+      htmls.append(html_table_line(activity_msgs.title, text_and_color))
+    htmls.append('</table>')
+    return ''.join(htmls)
+
   # Returns a TextAndColor object corresponding to (activity_id, score)
-  def get_message_from_score(self, activity_id, score):
+  def _get_message_from_score(self, activity_id, score):
     if score is None:
       return TextAndColor('Not completed', self._default_color)
     if activity_id not in self._dict:
@@ -44,11 +69,3 @@ class TableConfig:
     if index > 0:
       index -= 1
     return self._dict[activity_id].text_colors[index]
-
-  # Returns a list of (activity_id, ActivityMsgs) in order of the table report.
-  def get_activity_list(self):
-    return self._list
-
-  # Returns a list of activity ids in order of the table report.
-  def get_activity_ids(self):
-    return [id for id, _ in self._list]

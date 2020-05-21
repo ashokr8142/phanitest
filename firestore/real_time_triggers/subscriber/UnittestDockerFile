@@ -14,4 +14,6 @@ COPY . ./
 RUN pip install -r requirements.txt
 
 # Run tests.
-CMD ["python3", "-m", "unittest", "user_report/response_data_util_test.py", "-v"]
+CMD ["python3", "-m", "unittest", "-v", \
+    "user_report/response_data_util_test.py", \
+    "user_report/table_config_test.py"]
