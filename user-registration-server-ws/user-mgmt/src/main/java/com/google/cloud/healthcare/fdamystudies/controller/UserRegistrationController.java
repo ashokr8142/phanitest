@@ -249,11 +249,11 @@ public class UserRegistrationController {
           "<html>"
               + "<body>"
               + "<div style='margin:20px;padding:10px;font-family: sans-serif;font-size: 14px;'>"
-              + "<span>Your Heroes Health is almost complete. To access the app, enter the verification code below.</span><br/><br/>"
+              + "<span>Your Heroes Health registration is almost complete. To access the app, enter the verification code below.</span><br/><br/>"
               + "<span><strong>Verification Code: </strong><b>"
               + otp
               + "</b></span><br/><br/>"
-              + "<span>This code can be used only once, and is valid for a period of 48 hours only. If more than 48 hours has passed, and you need another verification code, please open the Heroes Health app and click &ldquo;resend&rdquo;.</span><br/><br/>"
+              + "<span>This code can be used only once and is valid for a period of 48 hours only. If more than 48 hours has passed, and you need another verification code, please open the Heroes Health app and click &ldquo;resend&rdquo;.</span><br/><br/>"
               + "<span>For questions or assistance, email <a href=\"mailto:heroeshealth_support@unc.edu\">heroeshealth_support@unc.edu</a>.</span><br/><br/>"
               + "<span style='font-size:15px;'>Thanks, The Heroes Health Team</span>"
               + "<br/><span>----------------------------------------------------</span><br/>"
