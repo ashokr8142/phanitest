@@ -12,7 +12,8 @@ from email.message import EmailMessage
 
 from google.cloud.pubsub_v1 import SubscriberClient
 
-import user_report
+from user_report import user_report_handler
+from user_report import table_config
 
 _DB_USER = os.environ.get("DB_USER")
 _DB_PASS = os.environ.get("DB_PASS")
@@ -20,8 +21,6 @@ _DB_NAME = os.environ.get("DB_NAME")
 _EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
 _EMAIL_PASS = os.environ.get("EMAIL_PASS")
 _SQL_CONNECTION = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
-# Surveys that should trigger user report update.
-_REPORT_SURVEYS = set(os.environ.get('USER_REPORT_SURVEYS').split(','))
 
 
 class EmailSender(object):
@@ -53,7 +52,7 @@ class Subscriber(object):
     self.subscription_path = self.subscriber_client.subscription_path(
       project_id, subscription_name)
     self.activity_id = activity_id
-    self.user_report = user_report.UserReportHandler()
+    self.user_report = user_report_handler.UserReportHandler()
     self.db = sqlalchemy.create_engine(
       sqlalchemy.engine.url.URL(
         drivername="mysql+pymysql",
@@ -138,15 +137,15 @@ class SubscriberWithUserReport(Subscriber):
     days_delta = reference_date.isoweekday() % 7
     return reference_date - datetime.timedelta(days=days_delta)
 
-  def _get_study_id(self, study_name):
+  def _get_study_id(self, custom_id):
     with self.db.connect() as conn:
       query = sqlalchemy.text(
-        '''SELECT id FROM study_info WHERE name=:study_name''')
-      result = conn.execute(query, study_name=study_name).fetchone()
+        '''SELECT id FROM study_info WHERE custom_id=:custom_id''')
+      result = conn.execute(query, custom_id=custom_id).fetchone()
       if not result:
         raise ValueError(
-          'Failed fetching study id for study name {}'.format(
-            study_name))
+          'Failed fetching study id for custom id {}'.format(
+            custom_id))
       return result[0]
 
   @abc.abstractmethod
@@ -175,7 +174,8 @@ class RoutingSubscriber(Subscriber):
     self.subscriber_map = {
       'Demographics': DemographicsSubscriber(project_id, subscription_name)
     }
-    for activity_id in _REPORT_SURVEYS:
+    config = table_config.TableConfig.make_instance()
+    for activity_id in config.get_activity_ids():
       self.subscriber_map[activity_id] = HealthActivitySubscriber(
         project_id, subscription_name, activity_id)
     super(RoutingSubscriber, self).__init__(project_id, subscription_name)

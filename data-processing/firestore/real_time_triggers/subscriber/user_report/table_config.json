@@ -1,0 +1,51 @@
+{
+  "questionnaires": [
+    {"id": "PSQI2",
+     "title": "Your sleep quality was",
+     "buckets": [
+      {"lower_bound": 0, "text": "Very Good", "color-ref": "green"},
+      {"lower_bound": 1, "text": "Fairly Good", "color-ref": "yellow"},
+      {"lower_bound": 2, "text": "Fairly Bad", "color-ref": "light-red"},
+      {"lower_bound": 3, "text": "Very Bad", "color-ref": "dark-red"}
+    ]},
+    {"id": "PHQ9+SH",
+     "title": "Your feelings of sadness or depression were",
+     "buckets": [
+      {"lower_bound": 0, "text": "None or minimal", "color-ref": "green"},
+      {"lower_bound": 5, "text": "Mild", "color-ref": "yellow"},
+      {"lower_bound": 10, "text": "Moderate", "color-ref": "light-red"},
+      {"lower_bound": 15, "text": "Moderately Severe", "color-ref": "red"},
+      {"lower_bound": 20, "text": "Severe", "color-ref": "dark-red"}
+    ]},
+    {"id": "GAD7",
+     "title": "Your feelings of worry or anxiety were",
+     "buckets": [
+      {"lower_bound": 0, "text": "None or minimal", "color-ref": "green"},
+      {"lower_bound": 5, "text": "Mild", "color-ref": "yellow"},
+      {"lower_bound": 10, "text": "Moderate", "color-ref": "light-red"},
+      {"lower_bound": 15, "text": "Severe", "color-ref": "dark-red"}
+    ]},
+    {"id": "PTSD2",
+     "title": "Symptoms of posttraumatic stress were",
+     "buckets": [
+      {"lower_bound": 0, "text": "None or minimal", "color-ref": "green"},
+      {"lower_bound": 6, "text": "Mild", "color-ref": "light-red"}
+    ]},
+    {"id": "WSAS2",
+     "title": "Your limitations in day-to-day life due to your mental health were",
+     "buckets": [
+      {"lower_bound": 0, "text": "None or mild", "color-ref": "green"},
+      {"lower_bound": 10, "text": "Moderate", "color-ref": "light-red"},
+      {"lower_bound": 21, "text": "Severe", "color-ref": "dark-red"}
+    ]}
+  ],
+  "colors": {
+    "white": "#FFFFFF",
+    "green": "#CEE0D4",
+    "yellow": "#FFF2CC",
+    "light-red": "#FBE5D6",
+    "red": "#EAB0AB",
+    "dark-red": "#EA8279"
+  },
+  "default-color": "white"
+}
