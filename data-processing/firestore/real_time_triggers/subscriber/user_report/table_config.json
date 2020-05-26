@@ -8,7 +8,7 @@
       {"lower_bound": 2, "text": "Fairly Bad", "color-ref": "light-red"},
       {"lower_bound": 3, "text": "Very Bad", "color-ref": "dark-red"}
     ]},
-    {"id": "PHQ9+SHBeta",
+    {"id": "PHQ9Beta",
      "title": "Your feelings of sadness or depression were",
      "buckets": [
       {"lower_bound": 0, "text": "None or minimal", "color-ref": "green"},
