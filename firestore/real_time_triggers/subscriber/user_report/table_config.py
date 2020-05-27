@@ -28,6 +28,7 @@ td.value {
 '''
 
 def html_table_line(title, text_and_color):
+  """Returns a row in HTML table."""
   return '''
     <tr>
       <td class="title">{}</td>
@@ -61,18 +62,18 @@ class TableConfig:
       self._list.append((id, ActivityMsgs(title, ranges, text_colors)))
       self._dict = {key: value for key, value in self._list}
 
-  # Factory method to create an instance from the config file.
   @staticmethod
   def make_instance():
+    """Factory method to create an instance from the config file."""
     with open('app/user_report/table_config.json') as json_file:
       return TableConfig(json.load(json_file))
 
-  # Returns a list of activity ids in order of the table report.
   def get_activity_ids(self):
+    """Returns a list of activity ids in order of the table report."""
     return [id for id, _ in self._list]
 
-  # Returns CSS generated from the json config.
   def get_css(self):
+    """Returns CSS generated from the json config."""
     css = []
     css.append(_COMMON_CSS)
     for class_name, color_code in self._colors.items():
@@ -80,8 +81,8 @@ class TableConfig:
           class_name, color_code))
     return '\n'.join(css)
 
-  # Returns an HTML table report for the given score_map.
   def make_html_table(self, score_map):
+    """Returns an HTML table report for the given score_map."""
     htmls = []
     htmls.append('<table>')
     for activity_id, activity_msgs in self._list:
@@ -91,8 +92,8 @@ class TableConfig:
     htmls.append('</table>')
     return ''.join(htmls)
 
-  # Returns a TextAndColor object corresponding to (activity_id, score)
   def _get_message_from_score(self, activity_id, score):
+    """Returns a TextAndColor object corresponding to (activity_id, score)."""
     if score is None:
       return TextAndColor('Not completed', self._default_color)
     if activity_id not in self._dict:

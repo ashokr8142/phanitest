@@ -61,13 +61,14 @@ class Subscriber(object):
         # query={"unix_socket": "/cloudsql/{}".format(_SQL_CONNECTION)}
 
   def get_streaming_subscription(self):
-    """Retruns streaming subscription on Google Pub/Sub topic."""
+    """Returns streaming subscription on Google Pub/Sub topic."""
     subscription = self.subscriber_client.subscribe(
       self.subscription_path,
       callback=self.get_callback())
     return subscription
 
   def _get_user_details_id(self, participant_id):
+    """Returns the user_details_id for the given participant_id."""
     with self.db.connect() as conn:
       query = sqlalchemy.text(
         '''SELECT user_details_id FROM participant_study_info
@@ -91,6 +92,11 @@ class SubscriberWithUserReport(Subscriber):
                                                     activity_id)
 
   def update_user_report(self, participant_id, study_id):
+    """Updates user report for a participant in a study.
+
+    Deletes past reports of this participant from SQL database and inserts newly
+    generated reports for this particpant.
+    """
     try:
       user_id = self._get_user_details_id(participant_id)
       study_info_id = self._get_study_id(study_id)
