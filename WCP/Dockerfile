@@ -27,4 +27,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
   && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY --from=maven_builder /app/target/studybuilder.war /usr/local/tomcat/webapps/
+# Update conf/server.xml to remove remote IP address from access logs.
+# See https://tomcat.apache.org/tomcat-6.0-doc/config/valve.html#Access_Log_Valve
+RUN sed -i "s/pattern=\"%h %l %u %t &quot;%r&quot; %s %b\"/pattern=\"%t %r %s %b\"/g" /usr/local/tomcat/conf/server.xml
 CMD ["catalina.sh","run"]

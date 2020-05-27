@@ -5,7 +5,8 @@ WORKDIR /app/
 RUN mvn package
 
 From tomcat:9.0.33-jdk11-openjdk
-#RUN rm -rf /usr/local/tomcat/webapps/*
 COPY --from=maven_builder /app/target/mystudies-response-server.war /usr/local/tomcat/webapps/
-#RUN chmod 755 /usr/local/tomcat/webapps/mystudies-response-server.war
+# Update conf/server.xml to remove remote IP address from access logs.
+# See https://tomcat.apache.org/tomcat-6.0-doc/config/valve.html#Access_Log_Valve
+RUN sed -i "s/pattern=\"%h %l %u %t &quot;%r&quot; %s %b\"/pattern=\"%t %r %s %b\"/g" /usr/local/tomcat/conf/server.xml
 CMD ["catalina.sh","run"]
