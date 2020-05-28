@@ -1,9 +1,7 @@
 import abc
-import datetime
 import json
 import logging
 import os
-import pytz
 import six
 import smtplib
 import sqlalchemy
@@ -95,47 +93,32 @@ class SubscriberWithUserReport(Subscriber):
   def update_user_report(self, participant_id, study_id):
     try:
       user_id = self._get_user_details_id(participant_id)
-      with self.db.connect() as conn:
-        # The title contains date of the last Monday from the activity date.
-        report_start_date = self._get_report_start_date()
-        report_title = 'Summary Report: Week of {0:%B} {0:%d}, {0:%Y}'.format(
-          report_start_date)
-        report_content = self.user_report.create_report_html(participant_id,
-                                                             report_start_date)
-        study_info_id = self._get_study_id(study_id)
-        insert_query = sqlalchemy.text(
-          '''INSERT INTO personalized_user_report
-              (activity_date_time, report_content, report_title, study_info_id,
-              user_id)
-            VALUES (:activity_date_time, :report_content, :report_title,
-              :study_info_id, :user_id)
-            ON DUPLICATE KEY UPDATE activity_date_time = :activity_date_time,
-              report_content = :report_content, report_title = :report_title,
-              study_info_id = :study_info_id, user_id = :user_id''')
-        conn.execute(
-          insert_query,
-          activity_date_time=datetime.datetime.now(),
-          report_content=report_content, report_title=report_title,
-          study_info_id=study_info_id, user_id=user_id)
+      study_info_id = self._get_study_id(study_id)
+      new_reports = self.user_report.create_reports(participant_id)
+      # Runs deletion and insertions in one transaction.
+      with self.db.begin() as transaction:
+        delete_query = sqlalchemy.text(
+            'DELETE FROM personalized_user_report WHERE user_id = :user_id')
+        transaction.execute(delete_query, user_id=user_id)
+        for activity_date_time, title, content in new_reports:
+          insert_query = sqlalchemy.text(
+            '''INSERT INTO personalized_user_report
+                (activity_date_time, report_content, report_title,
+                 study_info_id, user_id)
+              VALUES (:activity_date_time, :report_content, :report_title,
+                :study_info_id, :user_id)
+              ON DUPLICATE KEY UPDATE activity_date_time = :activity_date_time,
+                report_content = :report_content, report_title = :report_title,
+                study_info_id = :study_info_id, user_id = :user_id''')
+          transaction.execute(
+            insert_query,
+            activity_date_time=activity_date_time, report_content=content,
+            report_title=title, study_info_id=study_info_id, user_id=user_id)
     except Exception as e:
       raise ValueError(
         '''Failed upsert into personalized_user_report table for
           participant {} study_id {}, exception {}'''.format(
             participant_id, study_id, e))
-
-  # Returns the start date for a report processed now.
-  def _get_report_start_date(self):
-    # Survey cutoff is at noon on Sunday. Given that we don't know user's
-    # timezone, we use Eastern timezone to be on the safer side. i.e. we expect
-    # more users to fill in surveys right after they are scheduled than right
-    # before they expire.
-    eastern_tz = pytz.timezone('US/Eastern')
-    eastern_now = datetime.datetime.now(eastern_tz)
-    # Refer to the date 12 hours ago in Eastern timezone so that time before
-    # noon counts as the previous day.
-    reference_date = (eastern_now - datetime.timedelta(hours=12)).date()
-    days_delta = reference_date.isoweekday() % 7
-    return reference_date - datetime.timedelta(days=days_delta)
 
   def _get_study_id(self, custom_id):
     with self.db.connect() as conn:
