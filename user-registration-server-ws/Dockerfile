@@ -16,4 +16,7 @@ COPY --from=maven_builder /app/enroll-mgmt/target/myStudiesEnrollmentMgmt.war /u
 RUN chmod 755 /usr/local/tomcat/webapps/myStudiesEnrollmentMgmt.war
 COPY --from=maven_builder /app/user-mgmt/target/myStudiesUserMgmtWS.war /usr/local/tomcat/webapps/
 RUN chmod 755 /usr/local/tomcat/webapps/myStudiesUserMgmtWS.war
+# Update conf/server.xml to remove remote IP address from access logs.
+# See https://tomcat.apache.org/tomcat-6.0-doc/config/valve.html#Access_Log_Valve
+RUN sed -i "s/pattern=\"%h %l %u %t &quot;%r&quot; %s %b\"/pattern=\"%t %r %s %b\"/g" /usr/local/tomcat/conf/server.xml
 CMD ["catalina.sh", "run"]
