@@ -28,6 +28,7 @@ let kStoryboardIdentifierSlideMenuVC = "FDASlideMenuViewController"
 class SplashViewController: UIViewController {
 
   var isAppOpenedForFirstTime: Bool? = false
+  var standaloneStudy: StandaloneStudy? = nil
 
   // MARK: - Viewcontroller Lifecycle
 
@@ -95,7 +96,9 @@ class SplashViewController: UIViewController {
       object: nil
     )
 
-    StandaloneStudy().setupStandaloneStudy()
+    let standaloneStudy = StandaloneStudy()
+    standaloneStudy.setupStandaloneStudy()
+    self.standaloneStudy = standaloneStudy
 
   }
 
