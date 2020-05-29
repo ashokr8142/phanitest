@@ -26,7 +26,7 @@ class ReachoutOptionsViewController: UIViewController {
   // MARK: - Viewcontroller Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.navigationItem.title = NSLocalizedString("Reach Out", comment: "")
+    self.navigationItem.title = NSLocalizedString("App Feedback", comment: "")
   }
 
   override func viewWillAppear(_ animated: Bool) {

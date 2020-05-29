@@ -285,7 +285,7 @@ class LeftMenuViewController: UIViewController, LeftMenuProtocol {
       if shouldAllowToGiveFeedback {
         menus.append(
           [
-            "menuTitle": "Reach Out",
+            "menuTitle": "App Feedback",
             "iconName": "reachout_menu1",
             "menuType": LeftMenu.reachOut_signIn,
           ])
@@ -296,7 +296,7 @@ class LeftMenuViewController: UIViewController, LeftMenuProtocol {
       if shouldAllowToGiveFeedback {
         menus.append(
           [
-            "menuTitle": "Reach Out",
+            "menuTitle": "App Feedback",
             "iconName": "reachout_menu1",
             "menuType": LeftMenu.profile_reachOut,
           ])

@@ -76,7 +76,7 @@
 	<key>RESPONSE_URL</key>
 	<string>$(RESPONSE_URL)</string>
 	<key>StandaloneStudyId</key>
-	<string>Standalone01</string>
+	<string>$(STANDALONE_STUDY_ID)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Verdana Italic.ttf</string>
