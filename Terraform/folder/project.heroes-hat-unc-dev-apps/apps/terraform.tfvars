@@ -19,6 +19,6 @@ cluster_name               = "heroes-hat-unc-dev-cluster"
 master_authorized_networks = [{ cidr_block = "104.132.0.0/14", display_name = "Google Offices/Campuses/CorpDC" }]
 repo_owner                 = "UNC-ITR"
 repo_name                  = "HeroesHealth"
-cloudbuild_trigger_branch  = "master"
+cloudbuild_trigger_branch  = "^master$"
 dns_name                   = "heroes-hat-unc-dev"
 dns_domain                 = "heroes-hat-unc-dev.rocketturtle.net."
