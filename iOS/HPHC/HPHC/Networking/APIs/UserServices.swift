@@ -143,8 +143,10 @@ class UserServices: NSObject {
       "emailId": emailId,
     ]
 
+    let user = User.currentUser
+    let headerParams = [kUserId: user.userId!]
     let method = RegistrationMethods.verifyEmailId.method
-    self.sendRequestWith(method: method, params: param, headers: nil)
+    self.sendRequestWith(method: method, params: param, headers: headerParams)
 
   }
 
