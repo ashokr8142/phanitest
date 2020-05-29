@@ -60,7 +60,7 @@
     <string name="passcode_to_access_app">Enter Passcode to\n access app</string>
     <string name="notifictions">NOTIFICATIONS</string>
     <string name="resources">RESOURCES</string>
-    <string name="reachout">REACH OUT</string>
+    <string name="reachout">APP FEEDBACK</string>
     <string name="profile">MY ACCOUNT</string>
     <string name="edit">Edit</string>
     <string name="change_password">Change password</string>
@@ -110,7 +110,7 @@
     <string name="confirmation">CONFIRMATION</string>
     <string name="side_menu_home">Home</string>
     <string name="side_menu_resources">Resources</string>
-    <string name="side_menu_reach_out">Reach Out</string>
+    <string name="side_menu_reach_out">App Feedback</string>
     <string name="side_menu_sign_in">Sign In</string>
     <string name="side_menu_new_user">New User?</string>
     <string name="side_menu_sign_up">Sign up</string>
