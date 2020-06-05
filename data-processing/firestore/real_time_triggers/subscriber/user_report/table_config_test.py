@@ -10,14 +10,16 @@ from user_report.table_config import TableConfig
 _CONFIG_JSON = """
 {
   "questionnaires": [
-    {"id": "SurveyA",
+    {"canonical_id": "A",
+     "activity_ids": ["SurveyA", "SurveyABeta"],
      "title": "Title A",
      "buckets": [
       {"lower_bound": 0, "text": "Zero", "color-ref": "green"},
       {"lower_bound": 1, "text": "One", "color-ref": "yellow"},
       {"lower_bound": 2, "text": "Two", "color-ref": "light-red"}
     ]},
-    {"id": "SurveyB",
+    {"canonical_id": "B",
+     "activity_ids": ["SurveyB"],
      "title": "Title B",
      "buckets": [
       {"lower_bound": 0, "text": "None or minimal", "color-ref": "green"},
@@ -42,7 +44,8 @@ def format_html(html):
 class TableConfigTest(unittest.TestCase):
   def test_get_activity_ids(self):
     config = TableConfig(json.loads(_CONFIG_JSON))
-    self.assertEqual(config.get_activity_ids(), ["SurveyA", "SurveyB"])
+    self.assertCountEqual(config.get_activity_ids(),
+                          ["SurveyA", "SurveyABeta", "SurveyB"])
   def test_make_html_table(self):
     config = TableConfig(json.loads(_CONFIG_JSON))
     html_table = config.make_html_table({"SurveyA": 2, "SurveyB": 7})
