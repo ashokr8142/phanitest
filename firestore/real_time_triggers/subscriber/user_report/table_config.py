@@ -3,6 +3,7 @@
 from bisect import bisect_right
 from collections import namedtuple
 import json
+import logging
 
 ActivityMsgs = namedtuple('ActivityMsgs', 'title ranges text_colors')
 TextAndColor = namedtuple('TextAndColor', 'text color')
@@ -45,9 +46,14 @@ class TableConfig:
     self._default_color = json_config["default-color"]
     self._list = []
     self._dict = {}
+    self._activity_id_to_canonical = {}
     for questionnaire in json_config["questionnaires"]:
-      id = questionnaire["id"]
+      canonical_id = questionnaire["canonical_id"]
       title = questionnaire["title"]
+      for activity_id in questionnaire["activity_ids"]:
+        assert (activity_id not in self._activity_id_to_canonical), \
+            "Found duplicated activity_id: '{}'.".format(activity_id)
+        self._activity_id_to_canonical[activity_id] = canonical_id
       ranges = []
       text_colors = []
       for bucket in questionnaire["buckets"]:
@@ -59,7 +65,7 @@ class TableConfig:
         ranges.append(lower_bound)
         text_colors.append(
             TextAndColor(bucket["text"], bucket["color-ref"]))
-      self._list.append((id, ActivityMsgs(title, ranges, text_colors)))
+      self._list.append((canonical_id, ActivityMsgs(title, ranges, text_colors)))
       self._dict = {key: value for key, value in self._list}
 
   @staticmethod
@@ -69,8 +75,8 @@ class TableConfig:
       return TableConfig(json.load(json_file))
 
   def get_activity_ids(self):
-    """Returns a list of activity ids in order of the table report."""
-    return [id for id, _ in self._list]
+    """Returns a list of activity ids."""
+    return [id for id in self._activity_id_to_canonical.keys()]
 
   def get_css(self):
     """Returns CSS generated from the json config."""
@@ -81,24 +87,36 @@ class TableConfig:
           class_name, color_code))
     return '\n'.join(css)
 
+  def _convert_to_canonical_id(self, score_map):
+    """Returns a copy of score_map where keys are converted to canonical id."""
+    result = {}
+    for activity_id, score in score_map.items():
+      canonical_id = self._activity_id_to_canonical.get(activity_id, None)
+      if canonical_id is None:
+        logging.error("Ignoring unknown activity_id: '{}'".format(activity_id))
+        continue
+      result[canonical_id] = score
+    return result
+
   def make_html_table(self, score_map):
     """Returns an HTML table report for the given score_map."""
+    canonical_score_map = self._convert_to_canonical_id(score_map)
     htmls = []
     htmls.append('<table>')
-    for activity_id, activity_msgs in self._list:
-      score = score_map.get(activity_id, None)
-      text_and_color = self._get_message_from_score(activity_id, score)
+    for canonical_id, activity_msgs in self._list:
+      score = canonical_score_map.get(canonical_id, None)
+      text_and_color = self._get_message_from_score(canonical_id, score)
       htmls.append(html_table_line(activity_msgs.title, text_and_color))
     htmls.append('</table>')
     return ''.join(htmls)
 
-  def _get_message_from_score(self, activity_id, score):
-    """Returns a TextAndColor object corresponding to (activity_id, score)."""
+  def _get_message_from_score(self, canonical_id, score):
+    """Returns a TextAndColor object corresponding to (canonical_id, score)."""
     if score is None:
       return TextAndColor('Not completed', self._default_color)
-    if activity_id not in self._dict:
+    if canonical_id not in self._dict:
       return TextAndColor('Unknown survey', self._default_color)
-    index = bisect_right(self._dict[activity_id].ranges, score)
+    index = bisect_right(self._dict[canonical_id].ranges, score)
     if index > 0:
       index -= 1
-    return self._dict[activity_id].text_colors[index]
+    return self._dict[canonical_id].text_colors[index]
