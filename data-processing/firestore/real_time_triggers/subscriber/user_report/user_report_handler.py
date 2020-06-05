@@ -20,8 +20,8 @@ cred = credentials.ApplicationDefault()
 # cred = credentials.Certificate('/path/to/firestore/key.json')
 firebase_admin.initialize_app(cred, { 'projectId': _PROJECT_NAME, })
 
-# Returns the start date for a report processed now.
 def _get_report_start_date():
+  """Returns the start date for a report processed now."""
   # Survey cutoff is at noon on Sunday. Given that we don't know user's
   # timezone, we use Eastern timezone to be on the safer side. i.e. we expect
   # more users to fill in surveys right after they are scheduled than right
@@ -43,9 +43,21 @@ class UserReportHandler(object):
     self.firebase_db = firestore.client()
     self.table_config = table_config.TableConfig.make_instance()
 
-  # Creates reports for participant_id and returns it as a list of
-  # PersonalizedReport.
   def create_reports(self, participant_id):
+    """Creates reports for the participant.
+
+    Queries all survey responses for the participant and generates HTML reports
+    based on the survey responses. Returns the reports as a list of
+    PersonalizedReport.
+
+    Args:
+      participant_id: Id of the participant to generate report for
+
+    Returns:
+      A list of PersonalizedReport for this participant. This will contain one
+      report for the current week, and one report for the entire history before
+      this week if there is any past survey responses before the current week.
+    """
     current_week_start_date = _get_report_start_date()
     # Query Firestore for data.
     survey_responses = self._get_responses_from_firestore(participant_id)
@@ -76,8 +88,8 @@ class UserReportHandler(object):
           content=past_content))
     return result
 
-  # Returns HTML content for report of the current week.
   def _create_current_week_content(self, weekly_responses):
+    """Returns HTML content for report of the current week."""
     # Aggregate score sum for each survey.
     score_map = response_data_util.make_score_map(weekly_responses)
     # Build HTML report based on score sum.
@@ -95,8 +107,8 @@ class UserReportHandler(object):
                   tab.</p>''')
     return ''.join(result)
 
-  # Returns HTML content for past reports.
   def _create_past_report_content(self, responses_by_week):
+    """Returns HTML content for past reports."""
     result = []
     result.append('<style>')
     result.append(self.table_config.get_css())
@@ -118,10 +130,16 @@ class UserReportHandler(object):
                   tab.</p>''')
     return ''.join(result)
 
-  # Gets all survey responses from Firestore for participant_id. Returns
-  # responses as a list of python dict sorted by createdTimestamp in ascending
-  # order.
   def _get_responses_from_firestore(self, participant_id):
+    """Gets all survey responses from Firestore for a participant.
+
+    Args:
+      participant_id: Id of the participant.
+
+    Returns:
+      A list of python dict each representing a survey response. The returned
+      list is sorted by createdTimestamp in ascending order.
+    """
     survey_responses = self.firebase_db.collection(
       _SURVEYS_COLLECTION_PREFIX
       ).where(

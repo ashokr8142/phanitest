@@ -5,6 +5,20 @@ import pytz
 
 # Computes score sum of response_data and returns it as a float.
 def compute_score_sum(response_data):
+  """Computes sum of scores from response_data.
+
+  Computes sum of scores from response_data. Ignores entries with negative value
+  or values which cannot be parsed as a float. Also ignores entries with
+  key=='_SUM'.
+
+  Args:
+    response_data: A python dict object representing survey response to one
+      questionnaire.
+
+  Returns:
+    A float being the sum of all positive scores, or 0 if none of the scores is
+    valid.
+  """
   score = 0
   for reply in response_data['results']:
     try:
@@ -16,11 +30,22 @@ def compute_score_sum(response_data):
       score += value
   return score
 
-# Computes score sum of each survey response and returns it as a map of
-# activityId->scoreSum.
-# If multiple responses use the same activityId, this function takes the last
-# response in order of the list and ignores the previous ones.
 def make_score_map(survey_responses):
+  """Computes score sum of each survey response and returns it as a map.
+
+  Computes score sum of each survey response and returns it as a map of
+  activityId->scoreSum. If multiple responses use the same activityId, this
+  function takes the last response in order of the list and ignores the previous
+  ones.
+
+  Args:
+    survey_responses: A list of python dict, each being response to one
+    questionnaire.
+
+  Returns:
+    A dict mapping activityId to score sum.
+
+  """
   score_map = {}
   for response in survey_responses:
     activity_id = response['activityId']
@@ -28,9 +53,18 @@ def make_score_map(survey_responses):
     score_map[activity_id] = score
   return score_map
 
-# Returns a millisecond UTC timestamp of the cutoff time for the given date.
-# Cutoff time is 12PM noon in US Eastern timezone.
 def get_cutoff_timestamp_for_date(date):
+  """ Returns a millisecond UTC timestamp of the cutoff time for the given date.
+
+  Cutoff time is 12PM noon in US Eastern timezone.
+
+  Args:
+    date: A python date object to compute cutoff timestamp for.
+
+  Returns:
+    An int of millisecond timestamp for 12PM noon in US Eastern timezone on
+    date.
+  """
   eastern_tz = pytz.timezone('US/Eastern')
   time = eastern_tz.localize(
       datetime.datetime(date.year, date.month, date.day, hour=12))
@@ -39,15 +73,27 @@ def get_cutoff_timestamp_for_date(date):
 # Structure holding the Sunday of a week and all responses in that week.
 WeeklyResponses = namedtuple('WeeklyResponses', 'date responses')
 
-# Groups survey responses by week and returns a list of WeeklyResponses.
-# Consumes the input list.
-# The returned list is sorted by date in ascending order. Responses in each item
-# is sorted by createdTimestamp in ascending order.
-# If there is no response in a week, a WeeklyResponse with an empty list will
-# still be added to the returned value.
-# Requires:
-#   survey_responses to be sorted by createdTimestamp in ascending order.
 def group_by_week(survey_responses, current_week_start_date):
+  """Groups survey responses by week and returns a list of WeeklyResponses.
+
+  Consumes the input survey_responses and group responses by week.
+
+  Args:
+    survey_responses: A list of python dict, each representing response to one
+      questionnaire. Requires the list to be sorted by createTimestamp in
+      ascending order. Consumes this list.
+    current_week_start_date: Start date of the current week for generating
+      reports.
+
+  Returns:
+    A list of WeeklyResponses sorted by date in ascending order. For each
+    WeeklyResponses, the responses list is sorted by createdTimestamp in
+    ascending order. The returned list is guaranteed to be consecutive. If there
+    is no survey response in a week, a WeeklyResponse with an empty list will
+    be added to the returned value. If the last response is before the current
+    week, WeeklyResponses up to the current week will be added with empty
+    responses list.
+  """
   result = []
   week_start_date = current_week_start_date
   week_start_timestamp = get_cutoff_timestamp_for_date(week_start_date)
