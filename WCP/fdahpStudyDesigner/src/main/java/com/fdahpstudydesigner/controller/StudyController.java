@@ -1602,6 +1602,10 @@ public class StudyController {
             consentBo = studyService.getConsentDetailsByStudyId(studyId);
           }
           if ((null != consentInfoBoList) && !consentInfoBoList.isEmpty()) {
+            // Remove newline characters because it results in invalid javascript.
+            for (ConsentInfoBo consentInfoBo : consentInfoBoList) {
+              consentInfoBo.setElaborated(consentInfoBo.getElaborated().replace("\r\n", " "));
+            }
             map.addAttribute(FdahpStudyDesignerConstants.CONSENT_INFO_LIST, consentInfoBoList);
           } else {
             map.addAttribute(FdahpStudyDesignerConstants.CONSENT_INFO_LIST, "");
