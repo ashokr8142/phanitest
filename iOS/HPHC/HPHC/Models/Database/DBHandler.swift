@@ -1803,6 +1803,7 @@ class DBHandler: NSObject {
 
     let dbResource = DBResources()
     dbResource.resourceId = resource.resourcesId
+    dbResource.resourceType = resource.resourceType
     dbResource.title = resource.title
     dbResource.audience = resource.audience?.rawValue
     dbResource.endDate = resource.endDate
