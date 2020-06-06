@@ -46,7 +46,7 @@ class ResourcesViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.navigationItem.title = NSLocalizedString("Resources", comment: "")
+    self.navigationItem.title = NSLocalizedString(self.title ?? "Resources", comment: "")
 
     if StudyUpdates.studyConsentUpdated {
       let appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
@@ -157,7 +157,7 @@ class ResourcesViewController: UIViewController {
   }
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == "ResourceDetailViewSegueIdentifier" {
+    if segue.identifier == "ResourceDetailViewSegueIdentifier" || segue.identifier == "ReportsDetailViewSegueIdentifier" {
 
       let resourceDetail = (segue.destination as? ResourceDetailViewController)!
       resourceDetail.resource = (sender as? Resource)!
@@ -191,12 +191,23 @@ class ResourcesViewController: UIViewController {
 
     tableViewRowDetails = []
 
-    self.addDefaultList()
-    self.appendLeaveStudy()
+    if (self.title == "Resources") {
+      self.addDefaultList()
+      self.appendLeaveStudy()
+    }
 
     let todayDate = Date()
 
     for resource in (Study.currentStudy?.resources)! {
+
+      // "report" resources only show up in the Reports tab
+      if self.title == "Reports" {
+        if resource.resourceType != "report" {
+          continue
+        }
+      } else if resource.resourceType == "report" {
+        continue
+      }
 
       if resource.startDate != nil && resource.endDate != nil {
 
@@ -616,8 +627,11 @@ extension ResourcesViewController: UITableViewDelegate {
 
       resourceLink = (resource as? Resource)?.file?.getFileLink()
       fileType = (resource as? Resource)?.file?.getMIMEType()
-      self.performSegue(withIdentifier: "ResourceDetailViewSegueIdentifier", sender: resource)
-
+      if self.title == "Reports" {
+        self.performSegue(withIdentifier: "ReportsDetailViewSegueIdentifier", sender: resource)
+      } else {
+        self.performSegue(withIdentifier: "ResourceDetailViewSegueIdentifier", sender: resource)
+      }
     } else {
       if (resource as? String)! == leaveStudy {
         self.handleLeaveStudy()

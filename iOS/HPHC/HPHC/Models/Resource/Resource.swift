@@ -36,6 +36,7 @@ let kResourceFile = "file"
 let kResourceConfigration = "availability"
 let kResourceTitle = "title"
 let kResourceId = "resourcesId"
+let kResourceResourceType = "resourceType"
 let kResourceAudience = "audience"
 
 /// Resource model stores the resource of any Study or Gateway. Each resource has a unique id and have file and anchor data
@@ -48,6 +49,7 @@ class Resource {
   var file: File?
   var audience: Audience?
   var resourcesId: String?
+  var resourceType: String?
   var configration: [String: Any]?
   var startDate: Date?
   var endDate: Date?
@@ -82,6 +84,7 @@ class Resource {
   init(dbResource: DBResources) {
 
     self.resourcesId = dbResource.resourceId
+    self.resourceType = dbResource.resourceType
     self.title = dbResource.title
     self.anchorDateEndDays = dbResource.anchorDateEndDays
     self.anchorDateStartDays = dbResource.anchorDateStartDays
@@ -213,6 +216,9 @@ class Resource {
 
       if Utilities.isValidValue(someObject: (dict[kResourceId]) as AnyObject) {
         self.resourcesId = dict[kResourceId] as? String
+      }
+      if Utilities.isValidValue(someObject: (dict[kResourceResourceType]) as AnyObject) {
+        self.resourceType = dict[kResourceResourceType] as? String
       }
       if Utilities.isValidValue(someObject: (dict[kResourceAudience]) as AnyObject) {
         self.audience = Audience(rawValue: dict[kResourceAudience] as! String)

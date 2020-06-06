@@ -166,6 +166,7 @@ class DBResources: Object {
   @objc dynamic var type: String?
   @objc dynamic var audience: String?
   @objc dynamic var resourceId: String?
+  @objc dynamic var resourceType: String?
   @objc dynamic var notificationMessage: String?
   @objc dynamic var startDate: Date?
   @objc dynamic var endDate: Date?
