@@ -2452,7 +2452,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CONSENTMGMT_URL = service.heroeshealth.unc.edu/myStudiesConsentMgmtWS/;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = FW6TDPDXVD;
 				ENABLE_BITCODE = NO;
@@ -2498,7 +2498,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CONSENTMGMT_URL = service.heroeshealth.unc.edu/myStudiesConsentMgmtWS/;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = FW6TDPDXVD;
 				ENABLE_BITCODE = NO;
