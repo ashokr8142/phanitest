@@ -161,7 +161,7 @@ class RoutingSubscriber(Subscriber):
   def __init__(self, project_id, subscription_name):
     # Map from activityId to subscriber
     self.subscriber_map = {
-      'Demographics': DemographicsSubscriber(project_id, subscription_name)
+      'Onboarding': OnboardingSubscriber(project_id, subscription_name)
     }
     config = table_config.TableConfig.make_instance()
     for activity_id in config.get_activity_ids():
@@ -183,11 +183,11 @@ class RoutingSubscriber(Subscriber):
     return _callback
 
 
-class DemographicsSubscriber(Subscriber):
-  """Subsctiber fro Demographics survey massages."""
+class OnboardingSubscriber(Subscriber):
+  """Subsctiber fro Onboarding survey massages."""
   def __init__(self, project_id, subscription_name):
-    super(DemographicsSubscriber, self).__init__(project_id, subscription_name,
-                                                 'Demographics')
+    super(OnboardingSubscriber, self).__init__(project_id, subscription_name,
+                                               'Onboarding')
 
   def get_callback(self):
 
@@ -196,7 +196,7 @@ class DemographicsSubscriber(Subscriber):
       if data['activityId'] == self.activity_id:
         institution_id = ''
         for result in data['data']['results']:
-          if result['key'] == 'HealthcareSys':
+          if result['key'] == 'Q10':
             institution_id = result['value']
         participant_id = data['participantId']
         study_id = data['data']['studyId']
