@@ -14,20 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/setup_info"
-            style="@style/signUpTextField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/container"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="50dp"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="@string/passcode_setup"
-            android:textSize="13sp" />
-
         <RelativeLayout
             android:id="@+id/container"
             android:layout_width="wrap_content"
@@ -65,10 +51,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="50dp"
                     android:gravity="center"
-                    android:text="@string/enter_passcode_to_access_app"
-                    android:textSize="12sp" />
+                    android:padding="20dp"
+                    android:text="@string/passcode_setup"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <com.harvard.passcodemodule.PasscodeView
