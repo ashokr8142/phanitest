@@ -161,11 +161,12 @@
           android:theme="@style/AppThemeNoActionBar"
           android:windowSoftInputMode="stateHidden"/>
         <activity
+          tools:replace="android:windowSoftInputMode"
           android:name=".studyappmodule.consent.CustomConsentViewTaskActivity"
           android:configChanges="screenLayout|orientation"
           android:screenOrientation="portrait"
           android:theme="@style/Theme.BackboneApp"
-          android:windowSoftInputMode="stateHidden"/>
+          android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
           android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"
           android:configChanges="screenLayout|orientation"
