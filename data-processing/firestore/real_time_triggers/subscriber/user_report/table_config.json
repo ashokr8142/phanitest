@@ -1,7 +1,7 @@
 {
   "questionnaires": [
     {"canonical_id": "PSQI",
-     "activity_ids": ["PSQIBeta", "PSQIBeta1"],
+     "activity_ids": ["PSQIBeta", "PSQIBeta1", "PSQIPublic"],
      "title": "Your sleep quality was",
      "buckets": [
       {"lower_bound": 0, "text": "Very Good", "color-ref": "green"},
@@ -10,7 +10,7 @@
       {"lower_bound": 3, "text": "Very Bad", "color-ref": "dark-red"}
     ]},
     {"canonical_id": "PHQ9",
-     "activity_ids": ["PHQ9Beta", "PHQ9Beta1"],
+     "activity_ids": ["PHQ9Beta", "PHQ9Beta1", "PHQ9Public"],
      "title": "Your feelings of sadness or depression were",
      "buckets": [
       {"lower_bound": 0, "text": "None or minimal", "color-ref": "green"},
@@ -20,7 +20,7 @@
       {"lower_bound": 20, "text": "Severe", "color-ref": "dark-red"}
     ]},
     {"canonical_id": "GAD7",
-     "activity_ids": ["GAD7Beta", "GAD7Beta1"],
+     "activity_ids": ["GAD7Beta", "GAD7Beta1", "GAD7Public"],
      "title": "Your feelings of worry or anxiety were",
      "buckets": [
       {"lower_bound": 0, "text": "None or minimal", "color-ref": "green"},
@@ -29,14 +29,14 @@
       {"lower_bound": 15, "text": "Severe", "color-ref": "dark-red"}
     ]},
     {"canonical_id": "PTSD",
-     "activity_ids": ["PTSDBeta", "PTSDBeta1"],
+     "activity_ids": ["PTSDBeta", "PTSDBeta1", "PTSDPublic"],
      "title": "Symptoms of posttraumatic stress were",
      "buckets": [
       {"lower_bound": 0, "text": "None or minimal", "color-ref": "green"},
       {"lower_bound": 6, "text": "Mild", "color-ref": "light-red"}
     ]},
     {"canonical_id": "WSAS",
-     "activity_ids": ["WSASBeta", "WSASBeta1"],
+     "activity_ids": ["WSASBeta", "WSASBeta1", "WSASPublic"],
      "title": "Your limitations in day-to-day life due to your mental health were",
      "buckets": [
       {"lower_bound": 0, "text": "None or mild", "color-ref": "green"},
