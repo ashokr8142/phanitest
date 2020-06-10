@@ -303,10 +303,12 @@ public class SurveyActivitiesFragment extends Fragment
   }
 
   private void getStudyUpdateFomWS(boolean isSwipeToRefresh) {
-    if (isSwipeToRefresh)
+    if (isSwipeToRefresh) {
       AppController.getHelperProgressDialog()
           .showSwipeListCustomProgress(getActivity(), R.drawable.transparent, false);
-    else AppController.getHelperProgressDialog().showProgress(getActivity(), "", "", false);
+    } else {
+      AppController.getHelperProgressDialog().showProgressWithText(getActivity(), "", getString(R.string.activity_loading_msg), false);
+    }
 
     GetUserStudyListEvent getUserStudyListEvent = new GetUserStudyListEvent();
     HashMap<String, String> header = new HashMap();
