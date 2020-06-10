@@ -35,7 +35,7 @@ spec:
                   key: dbname 
             - name: FIRESTORE_PROJECT_ID
               value: "heroes-hat-dev"
-            - name: AUTH_SERVER_URL
+            - name: AUTH_SERVER_NP_URL
               value: "auth-server-np:50000"
             - name: REGISTRATION_CLIENT_ID
               valueFrom:
