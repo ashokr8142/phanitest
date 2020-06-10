@@ -65,7 +65,7 @@ spec:
                 secretKeyRef:
                   name: user-registration-secrets
                   key: INSTITUTION_RESOURCES_BUCKET_NAME
-            - name: AUTH_SERVER_URL
+            - name: AUTH_SERVER_NP_URL
               value: "auth-server-np:50000"
             - name: RESPONSE_SERVER_URL
               value: "response-server-np:50000"

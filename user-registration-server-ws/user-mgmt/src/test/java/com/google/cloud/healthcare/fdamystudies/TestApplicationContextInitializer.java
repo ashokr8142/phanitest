@@ -11,7 +11,7 @@ public class TestApplicationContextInitializer implements
     public void initialize(ConfigurableApplicationContext applicationContext) {
         System.setProperty("FROM_EMAIL_ADDRESS", "dummy-value");
         System.setProperty("FROM_EMAIL_PASSWORD", "dummy-value");
-        System.setProperty("AUTH_SERVER_URL", "dummy-value");
+        System.setProperty("AUTH_SERVER_NP_URL", "dummy-value");
         System.setProperty("RESPONSE_SERVER_URL", "dummy-value");
         System.setProperty("CLIENT_ID", "dummy-value");
         System.setProperty("SECRET_KEY", "dummy-value");
