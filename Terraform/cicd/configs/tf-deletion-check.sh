@@ -33,7 +33,7 @@ for planfile in $(find "$(pwd)" -name 'plan.tfplan'); do
   plandir="$(dirname ${planfile})"
   pushd "${plandir}" &>/dev/null
 
-  delchanges="$(terraform show -json $(basename ${planfile}) | jq -rM '.resource_changes[] | select(.change.actions | index("delete")) | "\t" + .address')"
+  delchanges="$(terraform show -json $(basename ${planfile}) | jq -rM '.resource_changes[]? | select(.change.actions | index("delete")) | "\t" + .address')"
   if ! [[ -z "${delchanges}" ]]; then
     cat >&2 <<EOF
 Warning: Found changes intending to delete the following resources in module ${plandir}:

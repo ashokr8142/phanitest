@@ -28,7 +28,8 @@
 #
 # The bastion compute instance, service account, firewall rule, and IAM permissions setups.
 module "bastion" {
-  source = "terraform-google-modules/bastion-host/google"
+  source  = "terraform-google-modules/bastion-host/google"
+  version = "~> 2.5.0"
 
   name         = "bastion-vm"
   host_project = var.project_id
@@ -56,6 +57,8 @@ EOF
 # TODO: Rename the module to "router" and nats to "nat" now that it's not bastion-specific.
 module "bastion_router" {
   source  = "terraform-google-modules/cloud-router/google"
+  version = "~> 0.1.0"
+
   name    = "bastion-router"
   region  = var.region
   project = var.project_id
