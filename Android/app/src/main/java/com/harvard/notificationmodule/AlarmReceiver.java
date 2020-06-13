@@ -24,6 +24,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -73,6 +76,14 @@ public class AlarmReceiver extends BroadcastReceiver {
     } else {
       showLocalNotification(context, intent);
     }
+  }
+
+  private Bitmap getBitmapFromDrawable(Drawable drawable) {
+    final Bitmap bmp = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+    final Canvas canvas = new Canvas(bmp);
+    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+    drawable.draw(canvas);
+    return bmp;
   }
 
   private void showLocalNotification(Context context, Intent intent) {
@@ -127,7 +138,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     int notifyIcon = R.mipmap.ic_launcher;
-    Bitmap icon = BitmapFactory.decodeResource(context.getResources(), notifyIcon);
+    Drawable drawable = context.getResources().getDrawable(notifyIcon);
+    Bitmap icon = getBitmapFromDrawable(drawable);
     Notification notification = null;
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       notification =
