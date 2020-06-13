@@ -323,14 +323,14 @@ public class VerificationStepActivity extends AppCompatActivity
 
   @Override
   public void onBackPressed() {
-    if (mFrom.equalsIgnoreCase(ForgotPasswordActivity.FROM)) {
-      super.onBackPressed();
-      SharedPreferences settings =
-          SharedPreferenceHelper.getPreferences(VerificationStepActivity.this);
-      settings.edit().clear().apply();
-      // delete passcode from keystore
-      String pass = AppController.refreshKeys("passcode");
-      if (pass != null) AppController.deleteKey("passcode_" + pass);
+    super.onBackPressed();
+    SharedPreferences settings =
+            SharedPreferenceHelper.getPreferences(VerificationStepActivity.this);
+    settings.edit().clear().apply();
+    // delete passcode from keystore
+    String pass = AppController.refreshKeys("passcode");
+    if (pass != null) {
+      AppController.deleteKey("passcode_" + pass);
     }
   }
 

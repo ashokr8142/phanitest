@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 public class ProgressDialogHelper {
-  private ProgressDialog mRingProgressDialog;
+  private ProgressDialog ringProgressDialog;
 
   /**
    * To show a progress dialog
@@ -21,7 +21,6 @@ public class ProgressDialogHelper {
    * @param cancelable True or False
    */
   public void showProgress(Context context, String title, String msg, boolean cancelable) {
-    //        showCustomProgress(context, R.drawable.loader, cancelable);
     showProgressOnly(context, false);
   }
 
@@ -33,14 +32,15 @@ public class ProgressDialogHelper {
    * @param msg msg to display
    * @param cancelable is cancelable or not
    */
-  private void showProgressDefault(Context context, String title, String msg, boolean cancelable) {
-    if (mRingProgressDialog == null) {
-      mRingProgressDialog = new ProgressDialog(context);
-      mRingProgressDialog.setCancelable(cancelable);
-      mRingProgressDialog.setTitle(title);
-      mRingProgressDialog.setMessage(msg);
-      mRingProgressDialog.show();
+  public void showProgressWithText(Context context, String title, String msg, boolean cancelable) {
+    if (ringProgressDialog != null) {
+      return;
     }
+    ringProgressDialog = new ProgressDialog(context);
+    ringProgressDialog.setCancelable(cancelable);
+    ringProgressDialog.setTitle(title);
+    ringProgressDialog.setMessage(msg);
+    ringProgressDialog.show();
   }
 
   /**
@@ -50,15 +50,16 @@ public class ProgressDialogHelper {
    * @param cancelable is cancelable or not
    */
   private void showProgressOnly(Context context, boolean cancelable) {
-    if (mRingProgressDialog == null) {
-      mRingProgressDialog = new ProgressDialog(context);
-      mRingProgressDialog
-          .getWindow()
-          .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-      mRingProgressDialog.setCancelable(cancelable);
-      mRingProgressDialog.show();
-      mRingProgressDialog.setContentView(new ProgressBar(context));
+    if (ringProgressDialog != null) {
+      return;
     }
+    ringProgressDialog = new ProgressDialog(context);
+    ringProgressDialog
+            .getWindow()
+            .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    ringProgressDialog.setCancelable(cancelable);
+    ringProgressDialog.show();
+    ringProgressDialog.setContentView(new ProgressBar(context));
   }
 
   /**
@@ -69,12 +70,12 @@ public class ProgressDialogHelper {
    * @param cancelable is cancelable or not
    */
   private void showCustomProgress(Context context, int id, boolean cancelable) {
-    mRingProgressDialog = new ProgressDialog(context);
-    mRingProgressDialog
+    ringProgressDialog = new ProgressDialog(context);
+    ringProgressDialog
         .getWindow()
         .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-    mRingProgressDialog.setCancelable(cancelable);
-    mRingProgressDialog.show();
+    ringProgressDialog.setCancelable(cancelable);
+    ringProgressDialog.show();
     ProgressBar progressDialog = new ProgressBar(context);
     progressDialog.setIndeterminate(true);
     progressDialog.setIndeterminateDrawable(getdrawable(context, id));
@@ -89,17 +90,17 @@ public class ProgressDialogHelper {
     progressDialog.setLayoutParams(layoutParamsprogress);
     relativeLayout.setLayoutParams(layoutParams);
     relativeLayout.addView(progressDialog);
-    mRingProgressDialog.setContentView(relativeLayout);
+    ringProgressDialog.setContentView(relativeLayout);
   }
 
   /** only for swipe to refresh time */
   public void showSwipeListCustomProgress(Context context, int id, boolean cancelable) {
-    mRingProgressDialog = new ProgressDialog(context);
-    mRingProgressDialog
+    ringProgressDialog = new ProgressDialog(context);
+    ringProgressDialog
         .getWindow()
         .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-    mRingProgressDialog.setCancelable(cancelable);
-    mRingProgressDialog.show();
+    ringProgressDialog.setCancelable(cancelable);
+    ringProgressDialog.show();
     ProgressBar progressDialog = new ProgressBar(context);
     progressDialog.setIndeterminate(true);
     progressDialog.setIndeterminateDrawable(getdrawable(context, id));
@@ -119,14 +120,14 @@ public class ProgressDialogHelper {
     progressDialog.setLayoutParams(layoutParamsprogress);
     relativeLayout.setLayoutParams(layoutParams);
     relativeLayout.addView(progressDialog);
-    mRingProgressDialog.setContentView(relativeLayout);
+    ringProgressDialog.setContentView(relativeLayout);
   }
 
   /** dismiss a dialog */
   public void dismissDialog() {
-    if (mRingProgressDialog != null && mRingProgressDialog.isShowing()) {
-      mRingProgressDialog.dismiss();
-      mRingProgressDialog = null;
+    if (ringProgressDialog != null && ringProgressDialog.isShowing()) {
+      ringProgressDialog.dismiss();
+      ringProgressDialog = null;
     }
   }
 
