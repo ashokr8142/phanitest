@@ -121,3 +121,23 @@ resource "google_cloudbuild_trigger" "response_server_ws" {
 
   filename = "response-server-ws/cloudbuild.yaml"
 }
+
+resource "google_cloudbuild_trigger" "triggers_pubsub_handler" {
+  provider = google-beta
+  project  = var.project_id
+  name     = "triggers-pubsub-handler"
+
+  included_files = [
+    "data-processing/firestore/real_time_triggers/subscriber/**"
+  ]
+
+  github {
+    owner = var.repo_owner
+    name  = var.repo_name
+    push {
+      branch = var.cloudbuild_trigger_branch
+    }
+  }
+
+  filename = "data-processing/firestore/real_time_triggers/subscriber/cloudbuild.yaml"
+}
