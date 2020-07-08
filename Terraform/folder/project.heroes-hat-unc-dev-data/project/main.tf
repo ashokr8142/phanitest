@@ -41,10 +41,3 @@ module "project" {
   default_service_account = "keep"
   skip_gcloud_download    = true
 }
-
-# Temporary owner permissions for Googlers to debug.
-resource "google_project_iam_member" "owners" {
-  project = module.project.project_id
-  role    = "roles/owner"
-  member  = "group:heroes-health-googlers@gcp.unc.edu"
-}
