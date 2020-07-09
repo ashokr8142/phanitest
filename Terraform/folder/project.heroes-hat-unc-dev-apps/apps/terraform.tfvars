@@ -16,7 +16,7 @@ project_id                 = "heroes-hat-unc-dev-apps"
 network_project_id         = "heroes-hat-unc-dev-networks"
 gke_region                 = "us-east1"
 cluster_name               = "heroes-hat-unc-dev-cluster"
-master_authorized_networks = master_authorized_networks = [
+master_authorized_networks = [
   {
     cidr_block   = "152.2.0.0/16"
     display_name = "UNC-CH/Campus"
