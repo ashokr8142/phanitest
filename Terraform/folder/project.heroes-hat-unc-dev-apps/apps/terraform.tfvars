@@ -16,23 +16,7 @@ project_id                 = "heroes-hat-unc-dev-apps"
 network_project_id         = "heroes-hat-unc-dev-networks"
 gke_region                 = "us-east1"
 cluster_name               = "heroes-hat-unc-dev-cluster"
-master_authorized_networks = [
-  {
-    cidr_block   = "152.2.0.0/16"
-    display_name = "UNC-CH/Campus"
-  },
-  {
-    cidr_block   = "152.23.0.0/16"
-    display_name = "UNC-CH/Campus"
-  },
-  {
-    cidr_block   = "152.19.0.0/16"
-    display_name = "UNC-CH/Campus"
-  },
-  { cidr_block   = "104.132.0.0/14"
-    display_name = "Google Offices/Campuses/CorpDC"
-  }
-]
+master_authorized_networks = [{ cidr_block = "152.2.0.0/16", display_name = "UNC-CH/Campus" }, { cidr_block = "152.23.0.0/16", display_name = "UNC-CH/Campus" }, { cidr_block = "152.19.0.0/16", display_name = "UNC-CH/Campus" }, { cidr_block = "104.132.0.0/14", display_name = "Google Offices/Campuses/CorpDC" }]
 repo_owner                 = "UNC-ITR"
 repo_name                  = "HeroesHealth"
 cloudbuild_trigger_branch  = "^master$"
