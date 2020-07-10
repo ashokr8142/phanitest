@@ -224,7 +224,7 @@ class OnboardingSubscriber(Subscriber):
   def _insert_user_institution(self, participant_id, institution_id):
     try:
       user_details_id = self._get_user_details_id(participant_id)
-      if not user_id:
+      if not user_details_id:
         logging.warning('Ignoring participant {} because user_id lookup failed.'.format(
             participant_id))
         return
