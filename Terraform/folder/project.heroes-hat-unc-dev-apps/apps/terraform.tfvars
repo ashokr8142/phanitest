@@ -28,7 +28,10 @@ master_authorized_networks = [
   {
     cidr_block   = "152.19.0.0/16"
     display_name = "UNC-CH/Campus"
-  }
+  },
+  { cidr_block   = "104.132.0.0/14"
+    display_name = "Google Offices/Campuses/CorpDC"
+  }
 ]
 repo_owner                 = "UNC-ITR"
 repo_name                  = "HeroesHealth"
