@@ -75,7 +75,7 @@ class Subscriber(object):
          WHERE participant_id=:participant_id''')
       result = conn.execute(query, participant_id=participant_id).fetchone()
       if not result:
-        log.warning('Failed fetching user_id for participant {}'.format(
+        logging.warning('Failed fetching user_id for participant {}'.format(
             participant_id))
         return None
       return result[0]
@@ -100,7 +100,7 @@ class SubscriberWithUserReport(Subscriber):
     try:
       user_id = self._get_user_details_id(participant_id)
       if not user_id:
-        log.warning('Ignoring participant {} because user_id lookup failed.'.format(
+        logging.warning('Ignoring participant {} because user_id lookup failed.'.format(
             participant_id))
         return
       study_info_id = self._get_study_id(study_id)
@@ -225,7 +225,7 @@ class OnboardingSubscriber(Subscriber):
     try:
       user_details_id = self._get_user_details_id(participant_id)
       if not user_id:
-        log.warning('Ignoring participant {} because user_id lookup failed.'.format(
+        logging.warning('Ignoring participant {} because user_id lookup failed.'.format(
             participant_id))
         return
       with self.db.connect() as conn:
