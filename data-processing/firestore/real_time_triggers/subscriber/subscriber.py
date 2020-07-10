@@ -75,9 +75,9 @@ class Subscriber(object):
          WHERE participant_id=:participant_id''')
       result = conn.execute(query, participant_id=participant_id).fetchone()
       if not result:
-        raise ValueError(
-          'Failed fetching user_id for participant {}'.format(
+        logging.warning('Failed fetching user_id for participant {}'.format(
             participant_id))
+        return None
       return result[0]
 
   @abc.abstractmethod
@@ -99,6 +99,10 @@ class SubscriberWithUserReport(Subscriber):
     """
     try:
       user_id = self._get_user_details_id(participant_id)
+      if not user_id:
+        logging.warning('Ignoring participant {} because user_id lookup failed.'.format(
+            participant_id))
+        return
       study_info_id = self._get_study_id(study_id)
       new_reports = self.user_report.create_reports(participant_id)
       # Runs deletion and insertions in one transaction.
@@ -220,6 +224,10 @@ class OnboardingSubscriber(Subscriber):
   def _insert_user_institution(self, participant_id, institution_id):
     try:
       user_details_id = self._get_user_details_id(participant_id)
+      if not user_id:
+        logging.warning('Ignoring participant {} because user_id lookup failed.'.format(
+            participant_id))
+        return
       with self.db.connect() as conn:
         insert_query = sqlalchemy.text(
           '''INSERT INTO user_institution (user_details_id, institution_id)
