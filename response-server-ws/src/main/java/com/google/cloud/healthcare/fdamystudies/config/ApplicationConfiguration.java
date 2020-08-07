@@ -7,12 +7,12 @@
  */
 package com.google.cloud.healthcare.fdamystudies.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import lombok.Getter;
-import lombok.Setter;
 
 @Setter
 @Getter
@@ -79,4 +79,7 @@ public class ApplicationConfiguration {
 
   @Value("${regServerPartStudyInfoUrl}")
   private String regServerPartStudyInfoUrl;
+
+  @Value("${chartDateStart}")
+  private String chartDateStart;
 }

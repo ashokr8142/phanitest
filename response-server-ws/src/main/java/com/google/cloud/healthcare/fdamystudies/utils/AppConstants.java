@@ -74,5 +74,91 @@ public class AppConstants {
   public static final String TYPE = "type";
   public static final String DETAIL_MESSAGE = "detailMessage";
   public static final String BASIC_PREFIX = "Basic ";
+  public static final String SYSTEM_USER = "RESPONSE_SERVER";
   public static final String COMMA_STR = ",";
+  public static final String SQUARE_BRACKET_OPEN = "[";
+  public static final String SQUARE_BRACKET_CLOSE = "]";
+  public static final String SEMI_COLON = ";";
+  public static final String PSQIPUBLIC1_ACTIVITY_ID = "PSQIPublic1";
+  public static final String PHQ9PUBLIC_ACTIVITY_ID = "PHQ9Public";
+  public static final String GAD7PUBLIC1_ACTIVITY_ID = "GAD7Public1";
+  public static final String PTSDPUBLIC_ACTIVITY_ID = "PTSDPublic";
+  public static final String WSASPUBLIC_ACTIVITY_ID = "WSASPublic";
+  public static final String CHART_HTML_STR_START =
+      "<!DOCTYPE html>\n"
+          + "<html>\n"
+          + "<head>\n"
+          + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n"
+          + "   <script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js\"></script>\n"
+          + "  </head>\n"
+          + "<body>\n"
+          + "<canvas height=\"50\" id=\"PSQIPublic1\"></canvas>\n"
+          + "<canvas height=\"51\" id=\"PHQ9Public\"></canvas>\n"
+          + "<canvas height=\"51\" id=\"GAD7Public1\"></canvas>\n"
+          + "<canvas height=\"51\" id=\"PTSDPublic\"></canvas>\n"
+          + "<canvas height=\"51\" id=\"WSASPublic\"></canvas>\n"
+          + "<script>";
+  public static final String CHART_HTML_CHART_PREFIX_1 = "var {0}Labels = ";
+  public static final String CHART_HTML_CHART_PREFIX_2 = "var {0}Data = ";
+  public static final String CHART_HTML_CHART_DYNAMIC =
+      "var ctx{0} = document.getElementById(''{0}'').getContext(''2d'');\n"
+          + " const gradient{0} = ctx{0}.createLinearGradient(0, 0, 0, 750);\n"
+          + "        gradient{0}.addColorStop(0, ''rgba(250,174,50,1)'');   \n"
+          + "        gradient{0}.addColorStop(1, ''rgba(250,174,50,0)'');\n"
+          + "        gradient{0}.addColorStop(1, ''rgba(255, 0, 0, 0.6)'');\n"
+          + "\n"
+          + "        var  gr{0}  = ctx{0}.createLinearGradient(0, 0, 0, 700);\n"
+          + "  gr{0}.addColorStop(0,''rgba(250,174,50,1)''); \n"
+          + "  gr{0}.addColorStop(0.8,''rgba(250,174,50,0)''); \n"
+          + "  // gr.addColorStop(0.8,''rgb(0,255,0.8)'');\n"
+          + "   //gr.addColorStop(0.5,''rgba(255, 0, 0, 0.4)'');\n"
+          + "\n"
+          + "   var gradientFill = ctx{0}.createLinearGradient(0, 0, 0, 400);\n"
+          + "gradientFill.addColorStop(0, ''rgba(128, 182, 244, 0.6)'');\n"
+          + "gradientFill.addColorStop(1, ''rgba(244, 144, 128, 0.6)'');\n"
+          + "\n"
+          + "var myChart{0} = new Chart(ctx{0}, '{'\n"
+          + "    type: ''line'',\n"
+          + "    data: '{'\n"
+          + "        labels:{0}Labels,\n"
+          + "        datasets: ['{'\n"
+          + "            label:true,\n"
+          + "            data:{0}Data,\n"
+          + "            backgroundColor : gradientFill, "
+          + "            borderColor : ''# '',\n"
+          + "            borderWidth: 2,\n"
+          + "            pointColor : ''#fff'',\n"
+          + "            pointStrokeColor : ''#ff6c23'',\n"
+          + "            pointHighlightFill: ''#fff'',\n"
+          + "            pointHighlightStroke: ''#ff6c23'',\n"
+          + "       '}']\n"
+          + "    '}',\n";
+
+  public static final String CHART_HTML_CHART_STATIC =
+      "options: {\n"
+          + "        scales: {\n"
+          + "            yAxes: [{\n"
+          + "              ticks: {\n"
+          + "                display:false,\n"
+          + "                stepSize: 1,\n"
+          + "                min: 0,\n"
+          + "                max: 7\n"
+          + "              },\n"
+          + "              drawBorder: false\n"
+          + "            }],\n"
+          + "            xAxes : [ {\n"
+          + "               ticks: {\n"
+          + "              //maxRotation: 90,\n"
+          + "              //minRotation: 80,\n"
+          + "            },\n"
+          + "            gridLines : {\n"
+          + "              display : false\n"
+          + "            }\n"
+          + "          }]\n"
+          + "        },\n"
+          + "    },\n"
+          + "      \n"
+          + "});";
+
+  public static final String CHART_HTML_STR_END = "</script>\n" + "</body>\n" + "</html>";
 }
