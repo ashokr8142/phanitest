@@ -84,38 +84,72 @@ public class AppConstants {
   public static final String GAD7PUBLIC1_ACTIVITY_ID = "GAD7Public1";
   public static final String PTSDPUBLIC_ACTIVITY_ID = "PTSDPublic";
   public static final String WSASPUBLIC_ACTIVITY_ID = "WSASPublic";
+  public static final String NO_CHART_DISPLAY_INFORMATION = "Unable to display chart information.";
   public static final String CHART_HTML_STR_START =
       "<!DOCTYPE html>\n"
-          + "<html>\n"
           + "<head>\n"
-          + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n"
-          + "   <script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js\"></script>\n"
-          + "  </head>\n"
-          + "<body>\n"
-          + "<canvas height=\"50\" id=\"PSQIPublic1\"></canvas>\n"
-          + "<canvas height=\"51\" id=\"PHQ9Public\"></canvas>\n"
-          + "<canvas height=\"51\" id=\"GAD7Public1\"></canvas>\n"
-          + "<canvas height=\"51\" id=\"PTSDPublic\"></canvas>\n"
-          + "<canvas height=\"51\" id=\"WSASPublic\"></canvas>\n"
-          + "<script>";
+          + "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n"
+          + "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+          + "  <link href=\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap\" rel=\"stylesheet\">\n"
+          + "  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js\"></script>\n"
+          + "\n"
+          + "  <style>\n"
+          + "    body{\n"
+          + "      background: #E1E3E9;\n"
+          + "      margin: 0;\n"
+          + "      padding: 30px 0px;\n"
+          + "      font-family: 'Roboto', sans-serif;\n"
+          + "    }\n"
+          + "    .canvas-container{\n"
+          + "      background: #fff;\n"
+          + "      padding: 15px;\n"
+          + "    }\n"
+          + "    .title{\n"
+          + "      font-size:20px;\n"
+          + "      margin-bottom:10px;\n"
+          + "      padding: 0 15px;\n"
+          + "    }\n"
+          + "    .main-container{\n"
+          + "      margin-bottom:20px;\n"
+          + "    }\n"
+          + "    .flex-container{\n"
+          + "     /* display: flex;*/\n"
+          + "      justify-content: space-between;\n"
+          + "      text-align:center;\n"
+          + "    }\n"
+          + "    .months{\n"
+          + "      color:green;\n"
+          + "    }\n"
+          + "    #left-arrow,\n"
+          + "    #right-arrow{\n"
+          + "        cursor:pointer;\n"
+          + "    }\n"
+          + "  </style>\n"
+          + "\n"
+          + "</head>\n"
+          + "<body>";
+  public static final String CHART_HTML_STR_CONTAINER_DYNAMIC =
+      "<div class=\"main-container\">\n"
+          + "    <div class=\"title\">{0}</div>\n"
+          + "    <div class=\"canvas-container\">\n"
+          + "      <div class=\"flex-container\">\n"
+          + "        <!-- <div id=\"left-arrow\" onclick=\"alert('left arrow clicked')\"><img src=\"chevron-left.svg\"></div> -->\n"
+          + "        <div class=\"months\">{1}</div>\n"
+          + "        <!-- <div id=\"right-arrow\" onclick=\"alert('right arrow clicked')\"><img src=\"chevron-right.svg\"></div> -->\n"
+          + "      </div>\n"
+          + "      <canvas style=\"width:100%\" id=''{2}''></canvas>\n"
+          + "      \n"
+          + "    </div>";
+  public static final String CHART_HTML_CHART_PREFIX_SCRIPT = "<script>";
   public static final String CHART_HTML_CHART_PREFIX_1 = "var {0}Labels = ";
   public static final String CHART_HTML_CHART_PREFIX_2 = "var {0}Data = ";
   public static final String CHART_HTML_CHART_DYNAMIC =
       "var ctx{0} = document.getElementById(''{0}'').getContext(''2d'');\n"
-          + " const gradient{0} = ctx{0}.createLinearGradient(0, 0, 0, 750);\n"
-          + "        gradient{0}.addColorStop(0, ''rgba(250,174,50,1)'');   \n"
-          + "        gradient{0}.addColorStop(1, ''rgba(250,174,50,0)'');\n"
-          + "        gradient{0}.addColorStop(1, ''rgba(255, 0, 0, 0.6)'');\n"
-          + "\n"
-          + "        var  gr{0}  = ctx{0}.createLinearGradient(0, 0, 0, 700);\n"
-          + "  gr{0}.addColorStop(0,''rgba(250,174,50,1)''); \n"
-          + "  gr{0}.addColorStop(0.8,''rgba(250,174,50,0)''); \n"
-          + "  // gr.addColorStop(0.8,''rgb(0,255,0.8)'');\n"
-          + "   //gr.addColorStop(0.5,''rgba(255, 0, 0, 0.4)'');\n"
-          + "\n"
-          + "   var gradientFill = ctx{0}.createLinearGradient(0, 0, 0, 400);\n"
-          + "gradientFill.addColorStop(0, ''rgba(128, 182, 244, 0.6)'');\n"
-          + "gradientFill.addColorStop(1, ''rgba(244, 144, 128, 0.6)'');\n"
+          + "   var gradientFill = ctx{0}.createLinearGradient(0, 0, 0, 150);\n"
+          + "gradientFill.addColorStop(0.2, ''rgba(254, 111, 90, 0.6)'');\n"
+          + "gradientFill.addColorStop(0.4, ''rgba(253, 187, 108, 0.6)'');\n"
+          + "gradientFill.addColorStop(0.6, ''rgba(253, 241, 166, 0.6)'');\n"
+          + "gradientFill.addColorStop(0.8, ''rgba(151, 237, 142, 0.8)'');\n"
           + "\n"
           + "var myChart{0} = new Chart(ctx{0}, '{'\n"
           + "    type: ''line'',\n"
@@ -125,31 +159,91 @@ public class AppConstants {
           + "            label:true,\n"
           + "            data:{0}Data,\n"
           + "            backgroundColor : gradientFill, "
-          + "            borderColor : ''# '',\n"
-          + "            borderWidth: 2,\n"
-          + "            pointColor : ''#fff'',\n"
-          + "            pointStrokeColor : ''#ff6c23'',\n"
-          + "            pointHighlightFill: ''#fff'',\n"
-          + "            pointHighlightStroke: ''#ff6c23'',\n"
+          + "            borderWidth: 1,\r\n"
+          + "            borderColor: \"#2f6942\",\r\n"
+          + "            pointBackgroundColor: \"#2f6942\",\r\n"
+          + "            pointRadius: 1.5,"
           + "       '}']\n"
           + "    '}',\n";
 
-  public static final String CHART_HTML_CHART_STATIC =
+  public static final String CHART_HTML_CHART_STATIC_1 =
       "options: {\n"
+          + "      responsive: false,\n"
+          + "      legend: {\n"
+          + "            display: false,\n"
+          + "         },\n"
           + "        scales: {\n"
           + "            yAxes: [{\n"
+          + "              colo:'#dce4eb',\n"
           + "              ticks: {\n"
-          + "                display:false,\n"
           + "                stepSize: 1,\n"
           + "                min: 0,\n"
-          + "                max: 7\n"
+          + "                max: 4,\n"
+          + "                autoSkip:true,\n"
+          + "                fontSize: 12,\n"
+          + "                fontStyle: \"bold\",\n"
+          + "                callback: function(label, index, labels) {\n";
+  public static final String CHART_HTML_CHART_AXIS_LABELS_1 =
+      "switch (label) '{'" + " case 0:\n" + " return ''{0}'';\n" + "'}'";
+
+  public static final String CHART_HTML_CHART_AXIS_LABELS_2 =
+      "switch (label) '{'"
+          + " case 0:\n"
+          + " return ''{0}'';\n"
+          + "                        case 1:\n"
+          + "                            return ''{1}'';\n"
+          + "'}'";
+  public static final String CHART_HTML_CHART_AXIS_LABELS_3 =
+      "switch (label) '{'"
+          + " case 0:\n"
+          + " return ''{0}'';\n"
+          + "                        case 1:\n"
+          + "                            return ''{1}'';\n"
+          + "                        case 2:\n"
+          + "                            return ''{2}'';\n"
+          + "'}'";
+  public static final String CHART_HTML_CHART_AXIS_LABELS_4 =
+      "switch (label) '{'"
+          + " case 0:\n"
+          + " return ''{0}'';\n"
+          + "                        case 1:\n"
+          + "                            return ''{1}'';\n"
+          + "                        case 2:\n"
+          + "                            return ''{2}'';\n"
+          + "                        case 3:\n"
+          + "                            return ''{3}'';\n"
+          + "'}'";
+  public static final String CHART_HTML_CHART_AXIS_LABELS_5 =
+      "switch (label) '{'"
+          + " case 0:\n"
+          + " return ''{0}'';\n"
+          + "                        case 1:\n"
+          + "                            return ''{1}'';\n"
+          + "                        case 2:\n"
+          + "                            return ''{2}'';\n"
+          + "                        case 3:\n"
+          + "                            return ''{3}'';\n"
+          + "                        case 4:\n"
+          + "                            return ''{4}'';\n"
+          + "'}'";
+
+  public static final String CHART_HTML_CHART_STATIC_2 =
+      "\n"
+          + "                }\n"
           + "              },\n"
-          + "              drawBorder: false\n"
+          + "              drawBorder: false,\n"
+          + "              scaleLabel: {\n"
+          + "                    display: false,\n"
+          + "                    labelString: 'Sleep Quality',\n"
+          + "                    fontSize: 15,\n"
+          + "                    fontStyle: \"bold\",\n"
+          + "                }\n"
           + "            }],\n"
           + "            xAxes : [ {\n"
-          + "               ticks: {\n"
-          + "              //maxRotation: 90,\n"
-          + "              //minRotation: 80,\n"
+          + "              ticks: {\n"
+          + "               fontSize: 12,\n"
+          + "               fontStyle: \"bold\",\n"
+          + "               maxRotation: 180\n"
           + "            },\n"
           + "            gridLines : {\n"
           + "              display : false\n"
@@ -161,4 +255,11 @@ public class AppConstants {
           + "});";
 
   public static final String CHART_HTML_STR_END = "</script>\n" + "</body>\n" + "</html>";
+  public static final String VERY_GOOD_LABEL = "Very good";
+  public static final String FAIRLY_GOOD_LABEL = "Fairly good";
+  public static final String FAIRLY_BAD_LABEL = "Fairly bad";
+  public static final String VERY_BAD_LABEL = "Very bad";
+  public static final int MAX_AXIS_LABEL_LIST_SIZE = 5;
+  public static final String SPACE_STR = " ";
+  public static final String NO_DATA_AVAILABLE = "There is no data available for this time period";
 }
