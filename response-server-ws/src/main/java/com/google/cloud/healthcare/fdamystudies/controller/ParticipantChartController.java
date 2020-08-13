@@ -46,15 +46,10 @@ public class ParticipantChartController {
             participantChartInfoService.getParticpantChartAsHtml(participantId, studyId);
         return new ResponseEntity<>(participantChart, HttpStatus.OK);
       } catch (Exception e) {
-        ErrorBean errorBean =
-            AppUtil.dynamicResponse(
-                ErrorCode.EC_713.code(),
-                ErrorCode.EC_713.errorMessage(),
-                AppConstants.ERROR_STR,
-                e.getMessage());
+
         logger.error(
             "(C)...ParticipantChartController.getParticipantChart()...Exception " + e.getMessage());
-        return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(AppConstants.CHART_ERROR_HTML, HttpStatus.BAD_REQUEST);
       }
     }
   }
