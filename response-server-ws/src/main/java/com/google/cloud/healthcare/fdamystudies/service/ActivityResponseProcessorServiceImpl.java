@@ -256,6 +256,37 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
     scoreSumResponseBean.setValue(new Double(sum));
   }
 
+  private void calculateScoreSumForChart(
+      List<QuestionnaireActivityStepsBean> questionnaireResponses,
+      QuestionnaireActivityStepsBean sumResponseBean,
+      String activityId) {
+    double sum = 0;
+    for (QuestionnaireActivityStepsBean responseBean : questionnaireResponses) {
+      if (responseBean == sumResponseBean) {
+        continue;
+      }
+      // Exclude certain questions IDs for a particulat activity ID, from the sum score
+      if (activityId.equalsIgnoreCase(AppConstants.PHQ9PUBLIC_ACTIVITY_ID)
+          && (responseBean.getKey().contains("Q10")
+              || responseBean.getKey().contains("Q11")
+              || responseBean.getKey().contains("Q12"))) {
+        continue;
+      }
+      Object value = responseBean.getValue();
+      // If the response value type is a list, iterate through all items and add up.
+      if (value instanceof List) {
+        List<Object> valueList = (ArrayList<Object>) value;
+        for (Object o : valueList) {
+          sum = sum + convertResponseValueToDouble(o);
+        }
+        // Otherwise, just convert the single response value to double.
+      } else {
+        sum = sum + convertResponseValueToDouble(value);
+      }
+    }
+    sumResponseBean.setValue(new Double(sum));
+  }
+
   private ActivityValueGroupBean getValueGroupResponses(
       List<QuestionnaireActivityStepsBean> activityMetadataBeanFromWCP,
       QuestionnaireActivityStepsBean responseBean) {
@@ -348,10 +379,6 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
       for (QuestionnaireActivityStepsBean tmpBean : questionnaireResponses) {
         Map<String, Object> dataToStoreTemp = getHashMapForBean(tmpBean);
         stepsList.add(dataToStoreTemp);
-        // Extract the chart bean
-        if (tmpBean.getKey().equals(AppConstants.DUMMY_SUM_QUESTION_KEY)) {
-          sumResponseBean = tmpBean;
-        }
       }
       dataToStoreActivityResults.put(AppConstants.RESULTS_FIELD_KEY, stepsList);
       this.addParticipantDataToMap(questionnaireActivityResponseBean, dataToStoreActivityResults);
@@ -367,11 +394,14 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
       String studyCollectionName = AppUtil.makeStudyCollectionName(studyId);
       logger.info("saveActivityResponseData() : \n Study Collection Name: " + studyCollectionName);
       // Store data for charts
-      if (sumResponseBean == null) {
-        sumResponseBean = new QuestionnaireActivityStepsBean();
-        sumResponseBean.setKey(AppConstants.DUMMY_SUM_QUESTION_KEY);
-        calculateScoreSum(questionnaireResponses, sumResponseBean);
-      }
+
+      sumResponseBean = new QuestionnaireActivityStepsBean();
+      sumResponseBean.setKey(AppConstants.DUMMY_SUM_QUESTION_KEY);
+      calculateScoreSumForChart(
+          questionnaireResponses,
+          sumResponseBean,
+          questionnaireActivityResponseBean.getMetadata().getActivityId());
+
       responsesDao.saveActivityResponseData(
           studyId,
           studyCollectionName,

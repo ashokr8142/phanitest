@@ -42,7 +42,7 @@
           "lowerBound": 0,
           "upperBound": 4,
           "normalizedValue": 0,
-          "text": "None or minimal",
+          "text": "Minimal",
           "colorRef": "green"
         },
         {
@@ -83,7 +83,7 @@
           "lowerBound": 0,
           "upperBound": 4,
           "normalizedValue": 0,
-          "text": "None or minimal",
+          "text": "Minimal",
           "colorRef": "green"
         },
         {
@@ -117,14 +117,14 @@
           "lowerBound": 0,
           "upperBound": 5,
           "normalizedValue": 0,
-          "text": "None or minimal",
+          "text": "Minimal",
           "colorRef": "green"
         },
         {
           "lowerBound": 6,
           "upperBound": 11,
           "normalizedValue": 1,
-          "text": "Mild",
+          "text": "Present",
           "colorRef": "light-red"
         }
       ]
@@ -137,7 +137,7 @@
           "lowerBound": 0,
           "upperBound": 9,
           "normalizedValue": 0,
-          "text": "None or mild",
+          "text": "Mild",
           "colorRef": "green"
         },
         {

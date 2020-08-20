@@ -19,4 +19,22 @@ public interface ParticipantChartInfoBoRepository
   LocalDateTime findMinCreatedDateForParticipant(
       @Param("participantIdentifier") String participantIdentifier,
       @Param("studyId") String studyId);
+
+  @Query(
+      "SELECT max(pc.created) from ParticipantChartInfoBo pc WHERE pc.participantIdentifier = :participantIdentifier and pc.studyId = :studyId")
+  LocalDateTime findMaxCreatedDateForParticipant(
+      @Param("participantIdentifier") String participantIdentifier,
+      @Param("studyId") String studyId);
+
+  @Query(
+      "SELECT pc from ParticipantChartInfoBo pc WHERE pc.participantIdentifier = :participantIdentifier "
+          + "and pc.studyId = :studyId "
+          + "and pc.activityId = :activityId and pc.created >= :dateTimeStart and pc.created <= :dateTimeEnd "
+          + "order by pc.created ASC")
+  List<ParticipantChartInfoBo> findParticipantChartInfoBetweenDates(
+      @Param("participantIdentifier") String participantIdentifier,
+      @Param("studyId") String studyId,
+      @Param("activityId") String activityId,
+      @Param("dateTimeStart") LocalDateTime dateTimeStart,
+      @Param("dateTimeEnd") LocalDateTime dateTimeEnd);
 }

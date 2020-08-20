@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+	rel="stylesheet">
+<style>
+body {
+	background: #E1E3E9;
+	margin: 0;
+	padding: 30px 0px;
+	font-family: 'Roboto', sans-serif;
+}
+
+.canvas-container {
+	background: #fff;
+	padding: 15px;
+}
+
+.title {
+	font-size: 20px;
+	margin-bottom: 10px;
+	padding: 0 15px;
+}
+
+.main-container {
+	margin-bottom: 20px;
+}
+
+.top-container.current {
+	display: block;
+}
+
+.top-container{
+  display: none;
+}
+
+.flex-container {
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+}
+
+.months {
+	color: green;
+}
+
+.left-arrow, .right-arrow {
+	cursor: pointer;
+}
+
+.canvas {
+	display: block;
+}
+
+.canvas.current {
+	display: block;
+}
+
+.no-canvas {
+	opacity: 0.2;
+	cursor: not-allowed;
+}
+
+.mb-lg {
+	margin-bottom: 20px;
+}
+
+.no-data {
+	display: none;
+	text-align: center;
+}
+</style>
+
+</head>
+
+<body>
+	<div id="main">
+		<div th:each="participantChartBean,pState:${participantChartBeanList}" th:attr="class=${pState.index == 0 ? 'top-container current' : 'top-container'}">
+
+			<div
+				class="main-container"
+				th:each="participantChartActivity:${participantChartBean.chartActivityList}">
+				<div class="title"
+					th:text="${participantChartActivity.activityIdTitle}">Sleep
+					quality</div>
+				<div class="canvas-container">
+					<div class="flex-container mb-lg">
+						<div class="left-arrow no-canvas">
+							<img src="/resources/static/images/chevron-left.svg">
+						</div>
+						<div class="months" th:text="${participantChartBean.monthRange}"></div>
+						<div id="right-arrow" class="right-arrow">
+							<img th:src="@{/resources/static/images/chevron-left.svg}">
+						</div>
+					</div>
+
+					<div class="canvas">
+						<canvas style="width: 100%"
+							th:id="${participantChartActivity.activityIdIndex}"></canvas>
+						<div th:if="${#strings.contains(participantChartActivity.activityIdIndex,'999')}">
+						No data found</div>
+						
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+	<script>
+
+      $('.right-arrow').click(function(){
+      if ($('.current').next('.top-container').length) {
+        $('.right-arrow').removeClass('no-canvas');
+        $('.left-arrow').removeClass('no-canvas');
+        $('.current').removeClass('current').next('.top-container').addClass('current');
+      }
+      else{
+        $('.right-arrow').addClass('no-canvas');
+      }
+    });
+
+    $('.left-arrow').click(function(){
+      if ($('.current').prev('.top-container').length) {
+        $('.right-arrow').removeClass('no-canvas');
+        $('.left-arrow').removeClass('no-canvas');
+        $('.current').removeClass('current').prev('.top-container').addClass('current');
+      }
+      else{
+        $('.left-arrow').addClass('no-canvas');
+      }
+    });
+
+    
+   </script>
+	<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    
+    var chartListMain = /*[[${participantChartBeanList}]]*/;
+    
+    for (i = 0; i < chartListMain.length; i++) {
+      console.log(chartListMain);
+        var chartBean = chartListMain[i];
+        Object.values(chartBean); 
+        var chartListDetail = chartBean.chartActivityList;
+        for (j = 0; j < chartListDetail.length; j++) {
+          var idChartDiv = chartListDetail[j];
+          var labelStr = idChartDiv.activityIdTitle;
+          console.log(Object.values(idChartDiv.axisLabels)); 
+          var axisLabels = Object.values(idChartDiv.axisLabels);
+          var data = Object.values(idChartDiv.data);
+          var labels = Object.values(idChartDiv.labels);  
+        
+            var id = idChartDiv.activityIdIndex;
+            if (id != null && !id.includes("999")) {
+            var ctx = document.getElementById(id).getContext('2d');
+            console.log(ctx);
+            
+            
+            var gradientFill = ctx.createLinearGradient(0, 0, 0, 150);
+            gradientFill.addColorStop(0.2, 'rgba(254, 111, 90, 0.6)');
+            gradientFill.addColorStop(0.4, 'rgba(253, 187, 108, 0.6)');
+            gradientFill.addColorStop(0.6, 'rgba(253, 241, 166, 0.6)');
+            gradientFill.addColorStop(0.8, 'rgba(151, 237, 142, 0.8)');
+
+            if(data !=""){
+              var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels:labels,
+                    datasets: [{
+                        label:true,
+                        data:data,
+                        backgroundColor : gradientFill,             borderWidth: 1,
+                        borderColor: "#2f6942",
+                        pointBackgroundColor: "#2f6942",
+                        pointRadius: 1.5,       }]
+                },
+            options: {
+                    
+                  responsive: false,
+                  legend: {
+                        display: false,
+                     },
+                    scales: {
+                        yAxes: [{
+                          colo:'#dce4eb',
+                          ticks: {
+                            stepSize: 1,
+                            min: 0,
+                            max: 4,
+                            autoSkip:true,
+                            fontSize: 12,
+                            fontStyle: "bold",
+                            callback: function(label, index, labels) {
+                              switch (label) { 
+                              case 0: return axisLabels[0]; 
+                              case 1: return axisLabels[1];
+                              case 2: return axisLabels[2];
+                              case 3: return axisLabels[3];
+                              case 4: return axisLabels[4];
+                              }
+                            },
+                          },
+                          drawBorder: false,
+                          scaleLabel: {
+                                display: false,
+                                labelString: labelStr,
+                                fontSize: 15,
+                                fontStyle: "bold",
+                            }
+                        }],
+                        xAxes : [ {
+                          ticks: {
+                           fontSize: 12,
+                           fontStyle: "bold",
+                           maxRotation: 180
+                        },
+                        gridLines : {
+                          display : false
+                        }
+                      }]
+                    },
+                    
+                    tooltips: {
+                        callbacks: {
+                         
+                            label: function(tooltipItem, data) {
+                            	return tooltipItem.yLabel;
+                            }
+                        }
+                    },
+                },
+                  
+            });
+            }
+           
+            }
+            else{
+                $('.no-data').show();
+                var idToHide = '#main #' + id;
+                $(idToHide).hide();
+              }
+            
+        }
+    }
+    /*]]>*/
+    </script>
+</body>
+
+</html>
