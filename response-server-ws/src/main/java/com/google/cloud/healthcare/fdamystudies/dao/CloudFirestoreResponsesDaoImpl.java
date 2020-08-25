@@ -423,6 +423,7 @@ public class CloudFirestoreResponsesDaoImpl implements ResponsesDao {
               .collection(studyCollectionName)
               .document(studyId)
               .collection(AppConstants.ACTIVITIES_COLLECTION_NAME)
+              .whereEqualTo(AppConstants.PARTICIPANT_ID_KEY, participantId)
               .whereEqualTo(AppConstants.ACTIVITY_ID_KEY, activityId)
               .whereEqualTo(AppConstants.ACTIVITY_RUN_ID_KEY, activityRunId);
       final ApiFuture<QuerySnapshot> querySnapshot = queryByActivityRuns.get();
