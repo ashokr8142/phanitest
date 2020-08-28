@@ -7,6 +7,21 @@
  */
 package com.google.cloud.healthcare.fdamystudies.dao;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.FirestoreOptions;
+import com.google.cloud.firestore.Query;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteBatch;
+import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.healthcare.fdamystudies.bean.ResponseRows;
+import com.google.cloud.healthcare.fdamystudies.bean.SavedActivityResponse;
+import com.google.cloud.healthcare.fdamystudies.bean.StoredResponseBean;
+import com.google.cloud.healthcare.fdamystudies.config.ApplicationConfiguration;
+import com.google.cloud.healthcare.fdamystudies.utils.AppConstants;
+import com.google.cloud.healthcare.fdamystudies.utils.ProcessResponseException;
+import com.google.gson.Gson;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,21 +39,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Repository;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
-import com.google.cloud.firestore.Query;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteBatch;
-import com.google.cloud.firestore.WriteResult;
-import com.google.cloud.healthcare.fdamystudies.bean.ResponseRows;
-import com.google.cloud.healthcare.fdamystudies.bean.SavedActivityResponse;
-import com.google.cloud.healthcare.fdamystudies.bean.StoredResponseBean;
-import com.google.cloud.healthcare.fdamystudies.config.ApplicationConfiguration;
-import com.google.cloud.healthcare.fdamystudies.utils.AppConstants;
-import com.google.cloud.healthcare.fdamystudies.utils.ProcessResponseException;
-import com.google.gson.Gson;
 
 @Repository
 @Qualifier("cloudFirestoreResponsesDaoImpl")
@@ -92,7 +92,19 @@ public class CloudFirestoreResponsesDaoImpl implements ResponsesDao {
       throws ProcessResponseException {
     try {
       initializeFirestore();
-
+      // Check if data already exists before updating it. This is to account for discrepancies
+      // created on loss of
+      // connectivity where there is a potential of data getting created twice
+      String participantId =
+          (String) dataToStoreActivityResults.get(AppConstants.PARTICIPANT_ID_KEY);
+      String activityId = (String) dataToStoreActivityResults.get(AppConstants.ACTIVITY_ID_KEY);
+      String activityRunId =
+          (String) dataToStoreActivityResults.get(AppConstants.ACTIVITY_RUN_ID_KEY);
+      if (isResponseExists(
+          studyCollectionName, studyId, participantId, activityId, activityRunId)) {
+        logger.info("Response exists. Returning without saving. Study ID " + studyId);
+        return;
+      }
       Map<String, Object> studyVersionMap = new HashMap<>();
       studyVersionMap.put("studyVersion", dataToStoreActivityResults.get("studyVersion"));
       ApiFuture<WriteResult> futuresStudyColl =
@@ -129,7 +141,7 @@ public class CloudFirestoreResponsesDaoImpl implements ResponsesDao {
       // only through the console or CLI, not programmatically. So this method will not depend on
       // the index to sort the data, based on timestamp in firestore. It will do the sort on the
       // query result object
-      //
+
       final Query activitiesQuery =
           this.responsesDb
               .collection(studyCollectionName)
@@ -395,6 +407,36 @@ public class CloudFirestoreResponsesDaoImpl implements ResponsesDao {
       storedResponseBean.setRowCount(storedResponseBean.getRows().size());
     }
     return storedResponseBean;
+  }
+
+  private boolean isResponseExists(
+      String studyCollectionName,
+      String studyId,
+      String participantId,
+      String activityId,
+      String activityRunId) {
+    initializeFirestore();
+    // 1. Check if the
+    try {
+      final Query queryByActivityRuns =
+          this.responsesDb
+              .collection(studyCollectionName)
+              .document(studyId)
+              .collection(AppConstants.ACTIVITIES_COLLECTION_NAME)
+              .whereEqualTo(AppConstants.PARTICIPANT_ID_KEY, participantId)
+              .whereEqualTo(AppConstants.ACTIVITY_ID_KEY, activityId)
+              .whereEqualTo(AppConstants.ACTIVITY_RUN_ID_KEY, activityRunId);
+      final ApiFuture<QuerySnapshot> querySnapshot = queryByActivityRuns.get();
+      List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+      if (!documents.isEmpty()) {
+        return true;
+      }
+      // if
+    } catch (Exception e) {
+      logger.error("isResponseExists() method. Exception is: " + e.getMessage(), e);
+      return false;
+    }
+    return false;
   }
 
   private void addResponsesToMap(ResponseRows responsesRow, List<Object> results) {
