@@ -13,18 +13,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.google.cloud.healthcare.fdamystudies.model.ParticipantInstitutionMappingFixAuditBO;
 import com.google.cloud.healthcare.fdamystudies.model.ParticipantStudiesBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserInstitution;
+import com.google.cloud.healthcare.fdamystudies.repository.ParticipantInstitutionMappingFixAuditRepository;
 import com.google.cloud.healthcare.fdamystudies.repository.ParticipantStudiesRepository;
 import com.google.cloud.healthcare.fdamystudies.repository.UserDetailsBORepository;
 import com.google.cloud.healthcare.fdamystudies.repository.UserInstitutionRepository;
+import com.google.cloud.healthcare.fdamystudies.util.UserManagementUtil;
 
 @RestController
 public class InstitutionController {
   @Resource private ParticipantStudiesRepository participantStudiesRepository;
   @Resource private UserInstitutionRepository userInstitutionRepository;
   @Resource private UserDetailsBORepository userDetailsBORepository;
+
+  @Resource
+  private ParticipantInstitutionMappingFixAuditRepository
+      participantInstitutionMappingFixAuditRepository;
 
   @GetMapping("/updateInstitution")
   public ResponseEntity<?> updateInstitution() {
@@ -65,27 +72,45 @@ public class InstitutionController {
       e.printStackTrace();
     }
     // compare and insert
-    HashMap<String, String> participantInstitution=new HashMap<>();
     for (String participantId : participantUserIdMap.keySet()) {
+      String currentInstitutionId = null;
+      String updatedInstitutionId = null;
       UserInstitution userInstitution =
           userInstitutionRepository.findByUserUserDetailsId(
               participantUserIdMap.get(participantId));
       if (userInstitution == null) {
+        updatedInstitutionId = institution.get(participantId);
         UserDetailsBO userDetailsBO =
             userDetailsBORepository.findByUserDetailsId(participantUserIdMap.get(participantId));
         UserInstitution userInstitutionBo = new UserInstitution();
         userInstitutionBo.setUser(userDetailsBO);
-        userInstitutionBo.setInstitutionId(institution.get(participantId));
+        userInstitutionBo.setInstitutionId(updatedInstitutionId);
         userInstitutionRepository.save(userInstitutionBo);
       } else {
         if (StringUtils.isBlank(userInstitution.getInstitutionId())) {
-          userInstitution.setInstitutionId(institution.get(participantId));
+          currentInstitutionId = userInstitution.getInstitutionId();
+          updatedInstitutionId = institution.get(participantId);
+          userInstitution.setInstitutionId(updatedInstitutionId);
           userInstitutionRepository.save(userInstitution);
-        }else {
-          participantInstitution.put(participantId, userInstitution.getInstitutionId());
+        } else {
+          currentInstitutionId = userInstitution.getInstitutionId();
+          updatedInstitutionId = "NOT_UPDATED";
         }
       }
+      ParticipantInstitutionMappingFixAuditBO participantInstitutionMappingFixAuditBO =
+          new ParticipantInstitutionMappingFixAuditBO();
+      participantInstitutionMappingFixAuditBO.setParticipantId(participantId);
+      participantInstitutionMappingFixAuditBO.setCurrentInstitutionId(currentInstitutionId);
+      participantInstitutionMappingFixAuditBO.setUpdatedInstitutionId(updatedInstitutionId);
+      participantInstitutionMappingFixAuditBO.setCreatedBy("user_reg_server");
+      participantInstitutionMappingFixAuditBO.setCreatedTimeStamp(
+          UserManagementUtil.getCurrentUtilDateTime());
+      participantInstitutionMappingFixAuditRepository.save(participantInstitutionMappingFixAuditBO);
     }
-    return new ResponseEntity<>(participantInstitution, HttpStatus.OK);
+    boolean flag =
+        participantInstitutionMappingFixAuditRepository.count() == participants.size()
+            ? true
+            : false;
+    return new ResponseEntity<>(flag, HttpStatus.OK);
   }
 }
