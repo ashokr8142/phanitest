@@ -28,4 +28,6 @@ public interface UserDetailsBORepository extends JpaRepository<UserDetailsBO, In
   UserDetailsBO findByUserId(String userId);
 
   List<UserDetailsBO> findByEmail(String emailId);
+  
+  UserDetailsBO findByUserDetailsId(Integer userId);
 }
