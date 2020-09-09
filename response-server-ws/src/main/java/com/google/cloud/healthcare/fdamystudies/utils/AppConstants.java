@@ -80,30 +80,19 @@ public class AppConstants {
   public static final String SYSTEM_USER = "RESPONSE_SERVER";
   public static final String COMMA_STR = ",";
   public static final String SPACE_STR = " ";
-  public static final String PSQIPUBLIC1_ACTIVITY_ID = "PSQIPublic1";
-  public static final String PHQ9PUBLIC_ACTIVITY_ID = "PHQ9Public";
-  public static final String GAD7PUBLIC1_ACTIVITY_ID = "GAD7Public1";
-  public static final String PTSDPUBLIC_ACTIVITY_ID = "PTSDPublic";
-  public static final String WSASPUBLIC_ACTIVITY_ID = "WSASPublic";
-
-  public static final String PSQIPUBLIC2_ACTIVITY_ID = "PSQIPublic2";
-  public static final String PHQ9PUBLIC2_ACTIVITY_ID = "PHQ9Public2";
-  public static final String GAD7PUBLIC2_ACTIVITY_ID = "GAD7Public2";
-  public static final String PTSDPUBLIC2_ACTIVITY_ID = "PTSDPublic2";
-  public static final String WSASPUBLIC2_ACTIVITY_ID = "WSASPublic2";
+  public static final String PSQIPUBLIC_GENERIC_ACTIVITY_ID = "PSQIPublic";
+  public static final String PHQ9PUBLIC_GENERIC_ACTIVITY_ID = "PHQ9Public";
+  public static final String GAD7PUBLIC_GENERIC_ACTIVITY_ID = "GAD7Public";
+  public static final String PTSDPUBLIC_GENERIC_ACTIVITY_ID = "PTSDPublic";
+  public static final String WSASPUBLIC_GENERIC_ACTIVITY_ID = "WSASPublic";
 
   public static final List<String> getActivityIdsToProcessForChart() {
     List<String> chartActivityIdList = new ArrayList<String>();
-    chartActivityIdList.add(PSQIPUBLIC1_ACTIVITY_ID);
-    chartActivityIdList.add(PHQ9PUBLIC_ACTIVITY_ID);
-    chartActivityIdList.add(GAD7PUBLIC1_ACTIVITY_ID);
-    chartActivityIdList.add(PTSDPUBLIC_ACTIVITY_ID);
-    chartActivityIdList.add(WSASPUBLIC_ACTIVITY_ID);
-    chartActivityIdList.add(PSQIPUBLIC2_ACTIVITY_ID);
-    chartActivityIdList.add(PHQ9PUBLIC2_ACTIVITY_ID);
-    chartActivityIdList.add(GAD7PUBLIC2_ACTIVITY_ID);
-    chartActivityIdList.add(PTSDPUBLIC2_ACTIVITY_ID);
-    chartActivityIdList.add(WSASPUBLIC2_ACTIVITY_ID);
+    chartActivityIdList.add(PSQIPUBLIC_GENERIC_ACTIVITY_ID);
+    chartActivityIdList.add(PHQ9PUBLIC_GENERIC_ACTIVITY_ID);
+    chartActivityIdList.add(GAD7PUBLIC_GENERIC_ACTIVITY_ID);
+    chartActivityIdList.add(PTSDPUBLIC_GENERIC_ACTIVITY_ID);
+    chartActivityIdList.add(WSASPUBLIC_GENERIC_ACTIVITY_ID);
     return chartActivityIdList;
   }
 }

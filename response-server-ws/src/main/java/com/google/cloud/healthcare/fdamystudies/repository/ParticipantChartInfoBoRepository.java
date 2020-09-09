@@ -29,7 +29,7 @@ public interface ParticipantChartInfoBoRepository
   @Query(
       "SELECT pc from ParticipantChartInfoBo pc WHERE pc.participantIdentifier = :participantIdentifier "
           + "and pc.studyId = :studyId "
-          + "and pc.activityId = :activityId and pc.created >= :dateTimeStart and pc.created <= :dateTimeEnd "
+          + "and pc.activityId LIKE (:activityId%) and pc.created >= :dateTimeStart and pc.created <= :dateTimeEnd "
           + "order by pc.created ASC")
   List<ParticipantChartInfoBo> findParticipantChartInfoBetweenDates(
       @Param("participantIdentifier") String participantIdentifier,

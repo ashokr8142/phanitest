@@ -1,7 +1,7 @@
 {
   "activityList": [
     {
-      "activityId": "PSQIBeta,PSQIBeta1,PSQIBeta2,PSQIPublic,PSQIPublic1,PSQIPublic2",
+      "activityId": "PSQIPublic",
       "title": "Sleep quality",
       "buckets": [
         {
@@ -35,7 +35,7 @@
       ]
     },
     {
-      "activityId": "PHQ9Beta,PHQ9Beta1,PHQ9Beta2,PHQ9Public,PHQ9Public1,PHQ9Public2",
+      "activityId": "PHQ9Public",
       "title": "Sadness/Depression",
       "buckets": [
         {
@@ -76,7 +76,7 @@
       ]
     },
     {
-      "activityId": "GAD7Beta,GAD7Beta1,GAD7Beta2,GAD7Public,GAD7Public1,GAD7Public2",
+      "activityId": "GAD7Public",
       "title": "Anxiety",
       "buckets": [
         {
@@ -110,7 +110,7 @@
       ]
     },
     {
-      "activityId": "PTSDBeta,PTSDBeta1,PTSDBeta2,PTSDPublic,PTSDPublic1,PTSDPublic2",
+      "activityId": "PTSDPublic",
       "title": "Post-traumatic stress",
       "buckets": [
         {
@@ -130,7 +130,7 @@
       ]
     },
     {
-      "activityId": "WSASBeta,WSASBeta1,WSASBeta2,WSASPublic,WSASPublic1,WSASPublic2",
+      "activityId": "WSASPublic",
       "title": "Life Impact of Stress",
       "buckets": [
         {

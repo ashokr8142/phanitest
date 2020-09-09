@@ -265,9 +265,10 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
       if (responseBean == sumResponseBean) {
         continue;
       }
-      // Exclude certain questions IDs for a particulat activity ID, from the sum score
-      if ((activityId.equalsIgnoreCase(AppConstants.PHQ9PUBLIC_ACTIVITY_ID)
-              || activityId.equalsIgnoreCase(AppConstants.PHQ9PUBLIC2_ACTIVITY_ID))
+      // Exclude certain questions IDs for a particular activity ID, from the sum score
+      if ((activityId
+              .toLowerCase()
+              .contains(AppConstants.PHQ9PUBLIC_GENERIC_ACTIVITY_ID.toLowerCase()))
           && (responseBean.getKey().contains("Q10")
               || responseBean.getKey().contains("Q11")
               || responseBean.getKey().contains("Q12"))) {
