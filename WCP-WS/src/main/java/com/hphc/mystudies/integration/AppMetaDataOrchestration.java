@@ -121,25 +121,33 @@ public class AppMetaDataOrchestration {
     return updateAppVersionResponse;
   }
 
-  public AppVersionInfoBean getAppVersionInfo() {
+  public AppVersionInfoBean getAppVersionInfo(String appId, String orgId) {
     LOGGER.info("INFO: AppMetaDataOrchestration - getAppVersionInfo() :: Starts");
-
-    AppVersionInfoBean aAppVersionInfoBean = new AppVersionInfoBean();
+    AppVersionInfoBean aAppVersionInfoBean;
     AppVersionInfo appVersionInfo = null;
     DeviceVersion android = new DeviceVersion();
     DeviceVersion ios = new DeviceVersion();
 
-    appVersionInfo = appMetaDataDao.getAppVersionInfo();
-
+    appVersionInfo = appMetaDataDao.getAppVersionInfo(appId, orgId);
+    if (appVersionInfo == null) {
+      LOGGER.info("INFO: AppMetaDataOrchestration - getAppVersionInfo() :: Ends");
+      return null;
+    }
     android.setLatestVersion(appVersionInfo.getAndroidVersion());
-    android.setForceUpdate("true");
-
-    ios.setForceUpdate("true");
+    if (appVersionInfo.getAndroidForceUpdate() != null && appVersionInfo.getAndroidForceUpdate()) {
+      android.setForceUpdate("true");
+    } else {
+      android.setForceUpdate("false");
+    }
+    if (appVersionInfo.getIosForceUpdate() != null && appVersionInfo.getIosForceUpdate()) {
+      ios.setForceUpdate("true");
+    } else {
+      ios.setForceUpdate("false");
+    }
     ios.setLatestVersion(appVersionInfo.getIosVersion());
-
+    aAppVersionInfoBean = new AppVersionInfoBean();
     aAppVersionInfoBean.setAndroid(android);
     aAppVersionInfoBean.setIos(ios);
-
     LOGGER.info("INFO: AppMetaDataOrchestration - getAppVersionInfo() :: Ends");
     return aAppVersionInfoBean;
   }
