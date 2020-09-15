@@ -1,0 +1,160 @@
+{
+  "activityList": [
+    {
+      "activityId": "PSQIPublic",
+      "title": "Sleep quality",
+      "buckets": [
+        {
+          "lowerBound": 0,
+          "upperBound": 0,
+          "normalizedValue": 0,
+          "text": "Very Good",
+          "colorRef": "green"
+        },
+        {
+          "lowerBound": 1,
+          "upperBound": 1,
+          "normalizedValue": 1,
+          "text": "Fairly Good",
+          "colorRef": "yellow"
+        },
+        {
+          "lowerBound": 2,
+          "upperBound": 2,
+          "normalizedValue": 2,
+          "text": "Fairly Bad",
+          "colorRef": "light-red"
+        },
+        {
+          "lowerBound": 3,
+          "upperBound": 3,
+          "normalizedValue": 3,
+          "text": "Very Bad",
+          "colorRef": "dark-red"
+        }
+      ]
+    },
+    {
+      "activityId": "PHQ9Public",
+      "title": "Sadness/Depression",
+      "buckets": [
+        {
+          "lowerBound": 0,
+          "upperBound": 4,
+          "normalizedValue": 0,
+          "text": "Minimal",
+          "colorRef": "green"
+        },
+        {
+          "lowerBound": 5,
+          "upperBound": 9,
+          "normalizedValue": 1,
+          "text": "Mild",
+          "colorRef": "yellow"
+        },
+        {
+          "lowerBound": 10,
+          "upperBound": 14,
+          "normalizedValue": 2,
+          "text": "Moderate",
+          "colorRef": "light-red"
+        },
+        {
+          "lowerBound": 15,
+          "upperBound": 19,
+          "normalizedValue": 3,
+          "text": "Moderately Severe",
+          "colorRef": "red"
+        },
+        {
+          "lowerBound": 20,
+          "upperBound": 27,
+          "normalizedValue": 4,
+          "text": "Severe",
+          "colorRef": "dark-red"
+        }
+      ]
+    },
+    {
+      "activityId": "GAD7Public",
+      "title": "Anxiety",
+      "buckets": [
+        {
+          "lowerBound": 0,
+          "upperBound": 4,
+          "normalizedValue": 0,
+          "text": "Minimal",
+          "colorRef": "green"
+        },
+        {
+          "lowerBound": 5,
+          "upperBound": 9,
+          "normalizedValue": 1,
+          "text": "Mild",
+          "colorRef": "yellow"
+        },
+        {
+          "lowerBound": 10,
+          "upperBound": 14,
+          "normalizedValue": 2,
+          "text": "Moderate",
+          "colorRef": "light-red"
+        },
+        {
+          "lowerBound": 15,
+          "upperBound": 21,
+          "normalizedValue": 3,
+          "text": "Severe",
+          "colorRef": "dark-red"
+        }
+      ]
+    },
+    {
+      "activityId": "PTSDPublic",
+      "title": "Post-traumatic stress",
+      "buckets": [
+        {
+          "lowerBound": 0,
+          "upperBound": 5,
+          "normalizedValue": 0,
+          "text": "Minimal",
+          "colorRef": "green"
+        },
+        {
+          "lowerBound": 6,
+          "upperBound": 11,
+          "normalizedValue": 1,
+          "text": "Present",
+          "colorRef": "light-red"
+        }
+      ]
+    },
+    {
+      "activityId": "WSASPublic",
+      "title": "Life Impact of Stress",
+      "buckets": [
+        {
+          "lowerBound": 0,
+          "upperBound": 9,
+          "normalizedValue": 0,
+          "text": "Mild",
+          "colorRef": "green"
+        },
+        {
+          "lowerBound": 10,
+          "upperBound": 20,
+          "normalizedValue": 1,
+          "text": "Moderate",
+          "colorRef": "light-red"
+        },
+        {
+          "lowerBound": 21,
+          "upperBound": 40,
+          "normalizedValue": 2,
+          "text": "Severe",
+          "colorRef": "dark-red"
+        }
+      ]
+    }
+  ]
+}

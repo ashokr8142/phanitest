@@ -7,6 +7,9 @@
  */
 package com.google.cloud.healthcare.fdamystudies.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AppConstants {
   public static final String HYPHEN = "-";
   public static final String RESPONSES = "RESPONSES";
@@ -74,5 +77,22 @@ public class AppConstants {
   public static final String TYPE = "type";
   public static final String DETAIL_MESSAGE = "detailMessage";
   public static final String BASIC_PREFIX = "Basic ";
+  public static final String SYSTEM_USER = "RESPONSE_SERVER";
   public static final String COMMA_STR = ",";
+  public static final String SPACE_STR = " ";
+  public static final String PSQIPUBLIC_GENERIC_ACTIVITY_ID = "PSQIPublic";
+  public static final String PHQ9PUBLIC_GENERIC_ACTIVITY_ID = "PHQ9Public";
+  public static final String GAD7PUBLIC_GENERIC_ACTIVITY_ID = "GAD7Public";
+  public static final String PTSDPUBLIC_GENERIC_ACTIVITY_ID = "PTSDPublic";
+  public static final String WSASPUBLIC_GENERIC_ACTIVITY_ID = "WSASPublic";
+
+  public static final List<String> getActivityIdsToProcessForChart() {
+    List<String> chartActivityIdList = new ArrayList<String>();
+    chartActivityIdList.add(PSQIPUBLIC_GENERIC_ACTIVITY_ID);
+    chartActivityIdList.add(PHQ9PUBLIC_GENERIC_ACTIVITY_ID);
+    chartActivityIdList.add(GAD7PUBLIC_GENERIC_ACTIVITY_ID);
+    chartActivityIdList.add(PTSDPUBLIC_GENERIC_ACTIVITY_ID);
+    chartActivityIdList.add(WSASPUBLIC_GENERIC_ACTIVITY_ID);
+    return chartActivityIdList;
+  }
 }

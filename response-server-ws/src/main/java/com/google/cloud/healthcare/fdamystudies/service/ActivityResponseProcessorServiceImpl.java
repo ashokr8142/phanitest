@@ -8,11 +8,29 @@
 
 package com.google.cloud.healthcare.fdamystudies.service;
 
+import com.google.cloud.healthcare.fdamystudies.bean.ActivityMetadataBean;
+import com.google.cloud.healthcare.fdamystudies.bean.ActivityResponseBean;
+import com.google.cloud.healthcare.fdamystudies.bean.ActivityValueGroupBean;
+import com.google.cloud.healthcare.fdamystudies.bean.QuestionnaireActivityStepsBean;
+import com.google.cloud.healthcare.fdamystudies.bean.QuestionnaireActivityStructureBean;
+import com.google.cloud.healthcare.fdamystudies.bean.StoredResponseBean;
+import com.google.cloud.healthcare.fdamystudies.config.ApplicationConfiguration;
+import com.google.cloud.healthcare.fdamystudies.dao.ResponsesDao;
+import com.google.cloud.healthcare.fdamystudies.model.ParticipantChartInfoBo;
+import com.google.cloud.healthcare.fdamystudies.repository.ParticipantChartInfoBoRepository;
+import com.google.cloud.healthcare.fdamystudies.utils.AppConstants;
+import com.google.cloud.healthcare.fdamystudies.utils.AppUtil;
+import com.google.cloud.healthcare.fdamystudies.utils.ProcessResponseException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,25 +43,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import com.google.cloud.healthcare.fdamystudies.bean.ActivityMetadataBean;
-import com.google.cloud.healthcare.fdamystudies.bean.ActivityResponseBean;
-import com.google.cloud.healthcare.fdamystudies.bean.ActivityValueGroupBean;
-import com.google.cloud.healthcare.fdamystudies.bean.QuestionnaireActivityStepsBean;
-import com.google.cloud.healthcare.fdamystudies.bean.QuestionnaireActivityStructureBean;
-import com.google.cloud.healthcare.fdamystudies.bean.StoredResponseBean;
-import com.google.cloud.healthcare.fdamystudies.config.ApplicationConfiguration;
-import com.google.cloud.healthcare.fdamystudies.dao.ResponsesDao;
-import com.google.cloud.healthcare.fdamystudies.utils.AppConstants;
-import com.google.cloud.healthcare.fdamystudies.utils.AppUtil;
-import com.google.cloud.healthcare.fdamystudies.utils.ProcessResponseException;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 @Service
 public class ActivityResponseProcessorServiceImpl implements ActivityResponseProcessorService {
   @Autowired
   @Qualifier("cloudFirestoreResponsesDaoImpl")
   private ResponsesDao responsesDao;
+
+  @Autowired ParticipantChartInfoBoRepository participantChartInfoBoRepository;
 
   @Autowired private ApplicationConfiguration appConfig;
 
@@ -89,6 +96,7 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
         rawResponseData = getRawJsonInputData(questionnaireActivityResponseBean);
       }
       this.saveActivityResponseData(questionnaireActivityResponseBean, rawResponseData);
+
     } else {
       logger.error(
           "saveActivityResponseDataForParticipant() - The activity ID in the response does not match activity ID in the metadata provided.\n"
@@ -160,32 +168,35 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
         plugInMetadataToResponses(activityMetadataBeanFromWCP, responseBean, false);
       }
     }
-    // We might want to hide the dummy sum question from users with conditional branching, which will cause response for it
+    // We might want to hide the dummy sum question from users with conditional branching, which
+    // will cause response for it
     // to be absent.
     if (scoreSumResponseBean == null) {
       // Try to create a response for the dummy sum question by copying from metadata.
-      scoreSumResponseBean =
-          maybeCreateDummySumResponseFromMetadata(activityMetadataBeanFromWCP);
+      scoreSumResponseBean = maybeCreateDummySumResponseFromMetadata(activityMetadataBeanFromWCP);
       if (scoreSumResponseBean != null) {
         // If copying is successful, add it to the list of responses.
         questionnaireResponses.add(scoreSumResponseBean);
       }
     }
     if (scoreSumResponseBean != null) {
-      // Iterate through responses for a second pass to calculate the score sum if the dummy sum question presents.
-      calculateScoreSum(questionnaireResponses,scoreSumResponseBean);
+      // Iterate through responses for a second pass to calculate the score sum if the dummy sum
+      // question presents.
+      calculateScoreSum(questionnaireResponses, scoreSumResponseBean);
     }
   }
 
-  // Returns an empty response with metadata copied from the dummy sum question, or null if the dummy sum question is not found in metadata.
+  // Returns an empty response with metadata copied from the dummy sum question, or null if the
+  // dummy sum question is not found in metadata.
   private static QuestionnaireActivityStepsBean maybeCreateDummySumResponseFromMetadata(
       List<QuestionnaireActivityStepsBean> activityMetadataBeanFromWCP) {
-    List<QuestionnaireActivityStepsBean> metadataMatchList = 
-          activityMetadataBeanFromWCP
-              .stream()
-              .filter(QuestionnaireActivityStepsBeanPredicate.questionKeyMatch(
-                  AppConstants.DUMMY_SUM_QUESTION_KEY))
-              .collect(Collectors.<QuestionnaireActivityStepsBean>toList());
+    List<QuestionnaireActivityStepsBean> metadataMatchList =
+        activityMetadataBeanFromWCP
+            .stream()
+            .filter(
+                QuestionnaireActivityStepsBeanPredicate.questionKeyMatch(
+                    AppConstants.DUMMY_SUM_QUESTION_KEY))
+            .collect(Collectors.<QuestionnaireActivityStepsBean>toList());
     // Return null if dummy sum question is not found from metadata.
     if (metadataMatchList == null || metadataMatchList.size() != 1) return null;
     // Otherwise, create a new entry and copy contents from metadata.
@@ -214,12 +225,14 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
         logger.debug("Failed to parse value as number. Error: " + e.getMessage());
       }
     } else {
-      logger.error("convertResponseValueToDouble() - Unhandled value type: " + value.getClass().getName());
+      logger.error(
+          "convertResponseValueToDouble() - Unhandled value type: " + value.getClass().getName());
     }
     return 0;
   }
 
-  // Calculates score sum in questionnaireResponses and store it to the value of scoreSumRespnoseBean.
+  // Calculates score sum in questionnaireResponses and store it to the value of
+  // scoreSumRespnoseBean.
   private void calculateScoreSum(
       List<QuestionnaireActivityStepsBean> questionnaireResponses,
       QuestionnaireActivityStepsBean scoreSumResponseBean) {
@@ -235,12 +248,45 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
         for (Object o : valueList) {
           sum = sum + convertResponseValueToDouble(o);
         }
-      // Otherwise, just convert the single response value to double.
+        // Otherwise, just convert the single response value to double.
       } else {
         sum = sum + convertResponseValueToDouble(value);
       }
     }
     scoreSumResponseBean.setValue(new Double(sum));
+  }
+
+  private void calculateScoreSumForChart(
+      List<QuestionnaireActivityStepsBean> questionnaireResponses,
+      QuestionnaireActivityStepsBean sumResponseBean,
+      String activityId) {
+    double sum = 0;
+    for (QuestionnaireActivityStepsBean responseBean : questionnaireResponses) {
+      if (responseBean == sumResponseBean) {
+        continue;
+      }
+      // Exclude certain questions IDs for a particular activity ID, from the sum score
+      if ((activityId
+              .toLowerCase()
+              .contains(AppConstants.PHQ9PUBLIC_GENERIC_ACTIVITY_ID.toLowerCase()))
+          && (responseBean.getKey().contains("Q10")
+              || responseBean.getKey().contains("Q11")
+              || responseBean.getKey().contains("Q12"))) {
+        continue;
+      }
+      Object value = responseBean.getValue();
+      // If the response value type is a list, iterate through all items and add up.
+      if (value instanceof List) {
+        List<Object> valueList = (ArrayList<Object>) value;
+        for (Object o : valueList) {
+          sum = sum + convertResponseValueToDouble(o);
+        }
+        // Otherwise, just convert the single response value to double.
+      } else {
+        sum = sum + convertResponseValueToDouble(value);
+      }
+    }
+    sumResponseBean.setValue(new Double(sum));
   }
 
   private ActivityValueGroupBean getValueGroupResponses(
@@ -327,7 +373,8 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
       Map<String, Object> dataToStoreActivityResults =
           this.getHashMapForBean(questionnaireActivityResponseBean.getMetadata());
       dataToStoreActivityResults.remove(AppConstants.DATA_FIELD_KEY);
-
+      // Bean that has chart sum info
+      QuestionnaireActivityStepsBean sumResponseBean = null;
       List<QuestionnaireActivityStepsBean> questionnaireResponses =
           questionnaireActivityResponseBean.getData().getResults();
       List<Map<String, Object>> stepsList = new ArrayList<Map<String, Object>>();
@@ -348,13 +395,28 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
 
       String studyCollectionName = AppUtil.makeStudyCollectionName(studyId);
       logger.info("saveActivityResponseData() : \n Study Collection Name: " + studyCollectionName);
+      // Store data for charts
+
+      sumResponseBean = new QuestionnaireActivityStepsBean();
+      sumResponseBean.setKey(AppConstants.DUMMY_SUM_QUESTION_KEY);
+      calculateScoreSumForChart(
+          questionnaireResponses,
+          sumResponseBean,
+          questionnaireActivityResponseBean.getMetadata().getActivityId());
+
       responsesDao.saveActivityResponseData(
           studyId,
           studyCollectionName,
           AppConstants.ACTIVITIES_COLLECTION_NAME,
           dataToStoreActivityResults);
       logger.info("saveActivityResponseData() : \n Study Collection Name: " + studyCollectionName);
-
+      // Save the chart info
+      saveActivityResponseDataForCharts(
+          sumResponseBean,
+          questionnaireActivityResponseBean.getParticipantId(),
+          studyId,
+          questionnaireActivityResponseBean.getMetadata().getActivityId(),
+          questionnaireActivityResponseBean.getCreatedTimestamp());
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
       throw new ProcessResponseException(e.getMessage());
@@ -479,5 +541,30 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
       }
     }
     return dataToStore;
+  }
+
+  private void saveActivityResponseDataForCharts(
+      QuestionnaireActivityStepsBean sumResponseBean,
+      String participantId,
+      String studyId,
+      String activityId,
+      String createdTimestamp) {
+    if (sumResponseBean != null) {
+      try {
+        ParticipantChartInfoBo participantChartInfoBoToSave = new ParticipantChartInfoBo();
+        participantChartInfoBoToSave.setParticipantIdentifier(participantId);
+        participantChartInfoBoToSave.setStudyId(studyId);
+        participantChartInfoBoToSave.setActivityId(activityId);
+        participantChartInfoBoToSave.setQuestionId(sumResponseBean.getKey());
+        participantChartInfoBoToSave.setQuestionResponse(sumResponseBean.getValue().toString());
+        long timeInMillis = Long.parseLong(createdTimestamp);
+        LocalDateTime createdLocalDateTime = new Timestamp(timeInMillis).toLocalDateTime();
+        participantChartInfoBoToSave.setCreated(createdLocalDateTime);
+        participantChartInfoBoToSave.setCreatedBy(AppConstants.SYSTEM_USER);
+        participantChartInfoBoRepository.save(participantChartInfoBoToSave);
+      } catch (NumberFormatException | DateTimeParseException | NullPointerException ne) {
+        logger.error("Could not save chart information. Error is " + ne.getMessage());
+      }
+    }
   }
 }

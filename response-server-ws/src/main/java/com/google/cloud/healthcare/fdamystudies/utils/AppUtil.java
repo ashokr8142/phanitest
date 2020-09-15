@@ -7,10 +7,19 @@
  */
 package com.google.cloud.healthcare.fdamystudies.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.cloud.healthcare.fdamystudies.bean.ErrorBean;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.google.cloud.healthcare.fdamystudies.bean.ErrorBean;
+import org.springframework.util.ResourceUtils;
 
 public class AppUtil {
   private static final Logger logger = LogManager.getLogger(AppUtil.class);
@@ -53,5 +62,36 @@ public class AppUtil {
           + AppConstants.ACTIVITIES_COLLECTION_NAME;
     }
     return null;
+  }
+
+  public static Map<String, Activity> getChartJsonConfig() throws IOException {
+    BufferedReader br = null;
+    Map<String, Activity> activityConfigMap = new HashMap<String, Activity>();
+
+    File file = ResourceUtils.getFile("classpath:chart_config_params.json");
+    try {
+      br = new BufferedReader(new FileReader(file));
+      ObjectMapper mapper = new ObjectMapper();
+      ChartJsonConfig obj = mapper.readValue(br, ChartJsonConfig.class);
+      if (obj != null) {
+        List<Activity> actvityParamList = obj.getActivityList();
+        if (!actvityParamList.isEmpty()) {
+          for (Activity tempActivity : actvityParamList) {
+            if (tempActivity != null) {
+              activityConfigMap.put(tempActivity.getActivityId(), tempActivity);
+            }
+          }
+        }
+      }
+    } catch (Exception ex) {
+      logger.error("ERROR: AppUtil - getChartJsonConfig() - error()", ex.getMessage());
+      return null;
+    } finally {
+
+      if (br != null) {
+        br.close();
+      }
+      return activityConfigMap;
+    }
   }
 }
