@@ -54,7 +54,8 @@ CREATE TABLE IF NOT EXISTS `app_info` (
   `org_info_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`app_info_id`),
   KEY `FK1kiba8w1fk6ae3t5ve0bmxynm` (`org_info_id`),
-  CONSTRAINT `FK1kiba8w1fk6ae3t5ve0bmxynm` FOREIGN KEY (`org_info_id`) REFERENCES `org_info` (`id`)
+  CONSTRAINT `FK1kiba8w1fk6ae3t5ve0bmxynm` FOREIGN KEY (`org_info_id`) REFERENCES `org_info` (`id`),
+  CONSTRAINT `app_id` UNIQUE (`custom_app_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- Data exporting was unselected.
