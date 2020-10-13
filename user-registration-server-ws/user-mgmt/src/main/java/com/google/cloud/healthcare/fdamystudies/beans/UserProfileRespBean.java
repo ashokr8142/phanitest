@@ -17,4 +17,5 @@ public class UserProfileRespBean {
   private String message;
   private ProfileRespBean profile = new ProfileRespBean();
   private SettingsRespBean settings = new SettingsRespBean();
+  private InstitutionInfoBean institutionInfo;
 }

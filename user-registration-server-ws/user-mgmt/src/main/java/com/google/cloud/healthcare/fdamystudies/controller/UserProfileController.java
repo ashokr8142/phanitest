@@ -8,7 +8,24 @@
 
 package com.google.cloud.healthcare.fdamystudies.controller;
 
+import com.google.cloud.healthcare.fdamystudies.beans.AppOrgInfoBean;
+import com.google.cloud.healthcare.fdamystudies.beans.DeactivateAcctBean;
+import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
+import com.google.cloud.healthcare.fdamystudies.beans.InstitutionBean;
+import com.google.cloud.healthcare.fdamystudies.beans.LoginBean;
+import com.google.cloud.healthcare.fdamystudies.beans.ResponseBean;
+import com.google.cloud.healthcare.fdamystudies.beans.StatesBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
+import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
+import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
+import com.google.cloud.healthcare.fdamystudies.service.CommonService;
+import com.google.cloud.healthcare.fdamystudies.service.UserManagementProfileService;
+import com.google.cloud.healthcare.fdamystudies.util.AppUtil;
+import com.google.cloud.healthcare.fdamystudies.util.ErrorCode;
+import com.google.cloud.healthcare.fdamystudies.util.MyStudiesUserRegUtil;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -23,24 +40,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.google.cloud.healthcare.fdamystudies.beans.AppOrgInfoBean;
-import com.google.cloud.healthcare.fdamystudies.beans.DeactivateAcctBean;
-import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
-import com.google.cloud.healthcare.fdamystudies.beans.LoginBean;
-import com.google.cloud.healthcare.fdamystudies.beans.ResponseBean;
-import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
-import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
-import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
-import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
-import com.google.cloud.healthcare.fdamystudies.service.CommonService;
-import com.google.cloud.healthcare.fdamystudies.service.UserManagementProfileService;
-import com.google.cloud.healthcare.fdamystudies.util.AppUtil;
-import com.google.cloud.healthcare.fdamystudies.util.ErrorCode;
-import com.google.cloud.healthcare.fdamystudies.util.MyStudiesUserRegUtil;
 
 @RestController
 public class UserProfileController {
@@ -67,6 +71,10 @@ public class UserProfileController {
       @RequestHeader("userId") String userId, @Context HttpServletResponse response) {
     logger.info("UserProfileController getUserProfile() - starts ");
     UserProfileRespBean userPrlofileRespBean = null;
+    if (org.apache.commons.lang3.StringUtils.isBlank(userId)) {
+      ErrorBean errorBean = new ErrorBean(ErrorCode.EC_711.code(), ErrorCode.EC_711.errorMessage());
+      return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
+    }
     try {
       userPrlofileRespBean = userManagementProfService.getParticipantInfoDetails(userId, 0, 0);
       if (userPrlofileRespBean != null) {
@@ -98,6 +106,10 @@ public class UserProfileController {
       @Context HttpServletResponse response) {
     logger.info("UserProfileController updateUserProfile() - Starts ");
     ErrorBean errorBean = null;
+    if (org.apache.commons.lang3.StringUtils.isBlank(userId)) {
+      errorBean = new ErrorBean(ErrorCode.EC_711.code(), ErrorCode.EC_711.errorMessage());
+      return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
+    }
     try {
       errorBean = userManagementProfService.updateUserProfile(userId, user);
       if (errorBean.getCode() == ErrorCode.EC_200.code()) {
@@ -245,5 +257,79 @@ public class UserProfileController {
     }
     logger.info("UserProfileController resendConfirmation() - Ends ");
     return new ResponseEntity<>(responseBean, HttpStatus.OK);
+  }
+
+  @PutMapping(
+      value = "/removeDeviceToken",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> removeDeviceToken(@RequestHeader("userId") String userId) {
+    logger.info("UserProfileController removeDeviceToken() - Starts ");
+    ErrorBean errorBean = null;
+    if (org.apache.commons.lang3.StringUtils.isBlank(userId)) {
+      errorBean = new ErrorBean(ErrorCode.EC_711.code(), ErrorCode.EC_711.errorMessage());
+      return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
+    }
+    try {
+      errorBean = userManagementProfService.removeDeviceToken(userId);
+      if (errorBean.getCode() == ErrorCode.EC_500.code()) {
+        return new ResponseEntity<>(errorBean, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch (Exception e) {
+      logger.error("UserProfileController removeDeviceToken() - error ", e);
+      errorBean = new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
+      return new ResponseEntity<>(errorBean, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    logger.info("UserProfileController removeDeviceToken() - Ends ");
+    return new ResponseEntity<>(errorBean, HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/statesList", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> getStatesList(@Context HttpServletResponse response) {
+    logger.info("UserProfileController getStatesList() - starts ");
+    StatesBean statesBean = new StatesBean();
+    try {
+      List<String> statesList = userManagementProfService.getStatesList();
+      if (statesList == null || statesList.isEmpty()) {
+        ErrorBean errorBean =
+            new ErrorBean(ErrorCode.EC_720.code(), ErrorCode.EC_720.errorMessage());
+        return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
+      }
+      statesBean.setStatesList(statesList);
+    } catch (Exception e) {
+      logger.error("UserProfileController getStatesList() - error ", e);
+      ErrorBean errorBean = new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
+      return new ResponseEntity<>(errorBean, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    logger.info("UserProfileController getStatesList() - Ends ");
+    return new ResponseEntity<>(statesBean, HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/institutionList", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> getInstitutionsList(
+      @RequestHeader("state") String state, @Context HttpServletResponse response) {
+    logger.info("UserProfileController getInstitutionsList() - starts ");
+    InstitutionBean institutionBean = new InstitutionBean();
+
+    if (org.apache.commons.lang3.StringUtils.isBlank(state)) {
+      ErrorBean errorBean = new ErrorBean(ErrorCode.EC_711.code(), ErrorCode.EC_711.errorMessage());
+      return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
+    }
+
+    try {
+      List<String> institutionsList = userManagementProfService.getInstitutionsList(state);
+      if (institutionsList == null || institutionsList.isEmpty()) {
+        ErrorBean errorBean =
+            new ErrorBean(ErrorCode.EC_720.code(), ErrorCode.EC_720.errorMessage());
+        return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
+      }
+      institutionBean.setInstitutionsList(institutionsList);
+    } catch (Exception e) {
+      logger.error("UserProfileController getInstitutionsList() - error ", e);
+      ErrorBean errorBean = new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
+      return new ResponseEntity<>(errorBean, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    logger.info("UserProfileController getInstitutionsList() - Ends ");
+    return new ResponseEntity<>(institutionBean, HttpStatus.OK);
   }
 }

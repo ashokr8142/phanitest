@@ -14,6 +14,7 @@ import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
 import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
 import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
+import java.util.List;
 
 public interface UserManagementProfileService {
 
@@ -38,4 +39,10 @@ public interface UserManagementProfileService {
 
   public int resendConfirmationthroughEmail(
       String applicationId, String securityToken, String emailId);
+
+  public ErrorBean removeDeviceToken(String userId);
+
+  public List<String> getStatesList();
+
+  public List<String> getInstitutionsList(String state);
 }

@@ -21,4 +21,5 @@ public class UserRequestBean implements Serializable {
   private SettingsRespBean settings;
   private InfoBean info;
   private List<ParticipantInfoBean> participantInfo;
+  private InstitutionInfoBean institutionInfo;
 }

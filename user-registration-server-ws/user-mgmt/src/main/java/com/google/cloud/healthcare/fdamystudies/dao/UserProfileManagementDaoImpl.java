@@ -8,10 +8,26 @@
 
 package com.google.cloud.healthcare.fdamystudies.dao;
 
+import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
+import com.google.cloud.healthcare.fdamystudies.beans.InstitutionInfoBean;
+import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
+import com.google.cloud.healthcare.fdamystudies.model.AppInfoDetailsBO;
+import com.google.cloud.healthcare.fdamystudies.model.AuthInfoBO;
+import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
+import com.google.cloud.healthcare.fdamystudies.model.ParticipantStudiesBO;
+import com.google.cloud.healthcare.fdamystudies.model.StudyInfoBO;
+import com.google.cloud.healthcare.fdamystudies.model.UserAppDetailsBO;
+import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
+import com.google.cloud.healthcare.fdamystudies.model.UserInstitution;
+import com.google.cloud.healthcare.fdamystudies.repository.UserInstitutionRepository;
+import com.google.cloud.healthcare.fdamystudies.util.AppConstants;
+import com.google.cloud.healthcare.fdamystudies.util.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
@@ -26,17 +42,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
-import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
-import com.google.cloud.healthcare.fdamystudies.model.AppInfoDetailsBO;
-import com.google.cloud.healthcare.fdamystudies.model.AuthInfoBO;
-import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
-import com.google.cloud.healthcare.fdamystudies.model.ParticipantStudiesBO;
-import com.google.cloud.healthcare.fdamystudies.model.StudyInfoBO;
-import com.google.cloud.healthcare.fdamystudies.model.UserAppDetailsBO;
-import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
-import com.google.cloud.healthcare.fdamystudies.util.AppConstants;
-import com.google.cloud.healthcare.fdamystudies.util.ErrorCode;
 
 @Repository
 public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
@@ -48,6 +53,8 @@ public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
   @Autowired ApplicationPropertyConfiguration appConfig;
 
   @Autowired CommonDao commonDao;
+
+  @Autowired private UserInstitutionRepository userInstitutionRepository;
 
   @Override
   public UserDetailsBO getParticipantInfoDetails(String userId) {
@@ -104,7 +111,11 @@ public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
   }
 
   @Override
-  public ErrorBean updateUserProfile(String userId, UserDetailsBO userDetail, AuthInfoBO authInfo) {
+  public ErrorBean updateUserProfile(
+      String userId,
+      UserDetailsBO userDetail,
+      AuthInfoBO authInfo,
+      InstitutionInfoBean institutionInfoBean) {
     logger.info("UserProfileManagementDaoImpl updateUserProfile() - Starts ");
     Transaction transaction = null;
     ErrorBean errorBean = null;
@@ -119,6 +130,35 @@ public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
           session.saveOrUpdate(authInfo);
           isUpdatedAuthInfo = true;
         }
+
+        Optional<UserInstitution> maybeUserInstitution =
+            userInstitutionRepository.findByUserUserId(userId);
+        if (institutionInfoBean != null) {
+          if (maybeUserInstitution.isPresent()) {
+            UserInstitution userInstitution = maybeUserInstitution.get();
+            userInstitution.setInstitutionId(institutionInfoBean.getInstitutionId());
+            userInstitution.setState(institutionInfoBean.getStateId());
+            userInstitution.setStudyId(institutionInfoBean.getStudyId());
+            session.update(userInstitution);
+          } else {
+            UserInstitution userInstitution = new UserInstitution();
+            userInstitution.setUser(userDetail);
+            userInstitution.setInstitutionId(institutionInfoBean.getInstitutionId());
+            userInstitution.setState(institutionInfoBean.getStateId());
+            userInstitution.setStudyId(institutionInfoBean.getStudyId());
+            session.save(userInstitution);
+          }
+        } else {
+          if (maybeUserInstitution.isPresent()) {
+            Query query =
+                session.createQuery(
+                    "DELETE FROM UserInstitution UI WHERE UI.userInstitutionId=:userInstitutionId");
+            query.setParameter(
+                "userInstitutionId", maybeUserInstitution.get().getUserInstitutionId());
+            query.executeUpdate();
+          }
+        }
+
       } else {
         errorBean = new ErrorBean(ErrorCode.EC_61.code(), ErrorCode.EC_61.errorMessage());
       }
@@ -415,5 +455,73 @@ public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
       logger.error("UserProfileManagementDaoImpl - resetLoginAttempts() - error ", e);
     }
     return appPropertiesDetails;
+  }
+
+  @Override
+  public ErrorBean removeDeviceToken(int userId) {
+    Transaction transaction = null;
+    Query query = null;
+    ErrorBean errorBean = null;
+    logger.info("UserProfileManagementDaoImpl - removeDeviceToken() - starts");
+    try (Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession()) {
+      transaction = session.beginTransaction();
+      query =
+          session.createQuery(
+              "UPDATE AuthInfoBO ABO SET ABO.deviceToken=NULL WHERE ABO.userId=:userId");
+      query.setParameter("userId", userId);
+      int result = query.executeUpdate();
+      errorBean =
+          result > 0
+              ? new ErrorBean(ErrorCode.EC_200.code(), ErrorCode.EC_200.errorMessage())
+              : new ErrorBean(ErrorCode.EC_61.code(), ErrorCode.EC_61.errorMessage());
+      transaction.commit();
+    } catch (Exception e) {
+      logger.error("UserProfileManagementDaoImpl - removeDeviceToken() - error ", e);
+      if (transaction != null) {
+        try {
+          transaction.rollback();
+        } catch (Exception e1) {
+          logger.error("UserProfileManagementDaoImpl - removeDeviceToken() - error rollback", e1);
+        }
+      }
+      errorBean = new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
+    }
+    logger.info("UserProfileManagementDaoImpl - removeDeviceToken() - end");
+    return errorBean;
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<String> getStatesList() {
+    List<String> statesList = null;
+    logger.info("UserProfileManagementDaoImpl - getStatesList() - starts");
+    try (Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession()) {
+      Query query =
+          session.createQuery(
+              "SELECT DISTINCT SIMBO.state FROM StateInstitutionMappingBO SIMBO ORDER BY SIMBO.state ASC");
+      statesList = query.getResultList();
+    } catch (Exception e) {
+      logger.error("UserProfileManagementDaoImpl - getStatesList() - error ", e);
+    }
+    logger.info("UserProfileManagementDaoImpl - getStatesList() - end");
+    return statesList;
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<String> getInstitutionsList(String state) {
+    List<String> institutionsList = null;
+    logger.info("UserProfileManagementDaoImpl - getInstitutionsList() - starts");
+    try (Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession()) {
+      Query query =
+          session.createQuery(
+              "SELECT SIMBO.institutionId FROM StateInstitutionMappingBO SIMBO WHERE SIMBO.state=:state ORDER BY SIMBO.institutionId ASC");
+      query.setParameter("state", state);
+      institutionsList = query.getResultList();
+    } catch (Exception e) {
+      logger.error("UserProfileManagementDaoImpl - getInstitutionsList() - error ", e);
+    }
+    logger.info("UserProfileManagementDaoImpl - getInstitutionsList() - end");
+    return institutionsList;
   }
 }
