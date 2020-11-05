@@ -15,6 +15,7 @@ import com.google.cloud.healthcare.fdamystudies.model.AppInfoDetailsBO;
 import com.google.cloud.healthcare.fdamystudies.model.AuthInfoBO;
 import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
 import com.google.cloud.healthcare.fdamystudies.model.ParticipantStudiesBO;
+import com.google.cloud.healthcare.fdamystudies.model.StateInstitutionMappingBO;
 import com.google.cloud.healthcare.fdamystudies.model.StudyInfoBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserAppDetailsBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
@@ -515,7 +516,7 @@ public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
     try (Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession()) {
       Query query =
           session.createQuery(
-              "SELECT SIMBO.institutionId FROM StateInstitutionMappingBO SIMBO WHERE SIMBO.state=:state ORDER BY SIMBO.institutionId ASC");
+              "SELECT SIMBO.institutionId FROM StateInstitutionMappingBO SIMBO WHERE SIMBO.state=:state AND (SIMBO.newlyAdded=false OR SIMBO.newlyAdded IS NULL) AND (SIMBO.removed=false OR SIMBO.removed IS NULL) ORDER BY SIMBO.institutionId ASC");
       query.setParameter("state", state);
       institutionsList = query.getResultList();
     } catch (Exception e) {
@@ -523,5 +524,68 @@ public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
     }
     logger.info("UserProfileManagementDaoImpl - getInstitutionsList() - end");
     return institutionsList;
+  }
+
+  @Override
+  public boolean updateNewlyAddedInstitutes(List<StateInstitutionMappingBO> newInstitutionList) {
+    logger.info("UserProfileManagementDaoImpl - updateNewlyAddedInstitutes() - starts");
+    Transaction transaction = null;
+    boolean flag = false;
+    try (Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession()) {
+      transaction = session.beginTransaction();
+      for (StateInstitutionMappingBO newInstitute : newInstitutionList) {
+        newInstitute.setNewlyAdded(false);
+        session.update(newInstitute);
+      }
+      transaction.commit();
+      flag = true;
+    } catch (Exception e) {
+      logger.error("UserProfileManagementDaoImpl - updateNewlyAddedInstitutes() - error ", e);
+      if (transaction != null) {
+        try {
+          transaction.rollback();
+        } catch (Exception e1) {
+          logger.error(
+              "UserProfileManagementDaoImpl - updateNewlyAddedInstitutes() - error rollback", e1);
+        }
+      }
+    }
+    logger.info("UserProfileManagementDaoImpl - updateNewlyAddedInstitutes() - end");
+    return flag;
+  }
+
+  @Override
+  public boolean removeInstitutions(List<StateInstitutionMappingBO> institutionToRemoveList) {
+    logger.info("UserProfileManagementDaoImpl - removeInstitutions() - starts");
+    Transaction transaction = null;
+    boolean flag = false;
+    try (Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession()) {
+      transaction = session.beginTransaction();
+      for (StateInstitutionMappingBO institution : institutionToRemoveList) {
+        Query query =
+            session.createQuery(
+                "DELETE FROM UserInstitution UI WHERE UI.state=:state AND UI.institutionId=:institution");
+        query.setParameter("state", institution.getState());
+        query.setParameter("institution", institution.getInstitutionId());
+        query.executeUpdate();
+
+        institution.setRemoved(true);
+        institution.setToRemove(false);
+        session.update(institution);
+      }
+      transaction.commit();
+      flag = true;
+    } catch (Exception e) {
+      logger.error("UserProfileManagementDaoImpl - removeInstitutions() - error ", e);
+      if (transaction != null) {
+        try {
+          transaction.rollback();
+        } catch (Exception e1) {
+          logger.error("UserProfileManagementDaoImpl - removeInstitutions() - error rollback", e1);
+        }
+      }
+    }
+    logger.info("UserProfileManagementDaoImpl - removeInstitutions() - end");
+    return flag;
   }
 }

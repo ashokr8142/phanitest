@@ -28,6 +28,7 @@ public class AppConstants {
   public static final String USER_DETAILS_ID = "userDetailsId";
   public static final String STUDY_LEVEL = "ST";
   public static final String GATEWAY_LEVEL = "GT";
+  public static final String INSTITUTION_LEVEL = "IT";
   public static final String USER_REGISTRATION_CONTROLLER_ENDS_MESSAGE =
       "UserRegistrationController registerUser() - ends";
   public static final boolean FALSE = false;
@@ -68,6 +69,12 @@ public class AppConstants {
 
   public static final String STUDY = "Study";
   public static final String GATEWAY = "Gateway";
+  public static final String INSTITUTION = "Institution";
 
   public static final String WITHDRAWN = "Withdrawn";
+
+  public static final String APPID = "UNCSTAND001";
+  public static final String NOTIFICATION_SUBTYPE = "Announcement";
+  public static final String NOTIFICATIONTEXT_NEW_INSTITUTION = "New Institution Available";
+  public static final String NOTIFICATIONTEXT_INSTITUTION_REMOVED = "Institution Removed";
 }

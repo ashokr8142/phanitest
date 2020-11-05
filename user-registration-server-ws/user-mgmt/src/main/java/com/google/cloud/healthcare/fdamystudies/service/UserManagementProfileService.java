@@ -13,6 +13,7 @@ import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
 import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
 import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
 import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
+import com.google.cloud.healthcare.fdamystudies.model.StateInstitutionMappingBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
 import java.util.List;
 
@@ -45,4 +46,8 @@ public interface UserManagementProfileService {
   public List<String> getStatesList();
 
   public List<String> getInstitutionsList(String state);
+  
+  public boolean updateNewlyAddedInstitutes(List<StateInstitutionMappingBO> newInstitutionList);
+  
+  public boolean removeInstitutions(List<StateInstitutionMappingBO> institutionToRemoveList);
 }

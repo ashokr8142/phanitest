@@ -24,6 +24,7 @@ import com.google.cloud.healthcare.fdamystudies.dao.UserProfileManagementDao;
 import com.google.cloud.healthcare.fdamystudies.model.AppInfoDetailsBO;
 import com.google.cloud.healthcare.fdamystudies.model.AuthInfoBO;
 import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
+import com.google.cloud.healthcare.fdamystudies.model.StateInstitutionMappingBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserInstitution;
 import com.google.cloud.healthcare.fdamystudies.repository.UserInstitutionRepository;
@@ -385,5 +386,21 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
     List<String> institutionsList = userProfileManagementDao.getInstitutionsList(state);
     logger.info("UserManagementProfileServiceImpl - getInstitutionsList() - Ends");
     return institutionsList;
+  }
+
+  @Override
+  public boolean updateNewlyAddedInstitutes(List<StateInstitutionMappingBO> newInstitutionList) {
+    logger.info("UserManagementProfileServiceImpl - updateNewlyAddedInstitutes() - Starts");
+    boolean flag = userProfileManagementDao.updateNewlyAddedInstitutes(newInstitutionList);
+    logger.info("UserManagementProfileServiceImpl - updateNewlyAddedInstitutes() - Ends");
+    return flag;
+  }
+
+  @Override
+  public boolean removeInstitutions(List<StateInstitutionMappingBO> institutionToRemoveList) {
+    logger.info("UserManagementProfileServiceImpl - removeInstitutions() - Starts");
+    boolean flag = userProfileManagementDao.removeInstitutions(institutionToRemoveList);
+    logger.info("UserManagementProfileServiceImpl - removeInstitutions() - Ends");
+    return flag;
   }
 }

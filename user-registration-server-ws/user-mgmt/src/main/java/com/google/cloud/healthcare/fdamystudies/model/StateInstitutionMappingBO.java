@@ -27,4 +27,13 @@ public class StateInstitutionMappingBO {
 
   @Column(name = "institution_id")
   private String institutionId;
+  
+  @Column(name = "newly_added")
+  private Boolean newlyAdded;
+  
+  @Column(name = "to_remove")
+  private Boolean toRemove;
+  
+  @Column(name = "removed")
+  private Boolean removed;
 }
