@@ -10,6 +10,7 @@ package com.google.cloud.healthcare.fdamystudies.service;
 
 import com.google.cloud.healthcare.fdamystudies.bean.StudyMetadataBean;
 import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
+import com.google.cloud.healthcare.fdamystudies.beans.InstitutionAuthDetailsBean;
 import com.google.cloud.healthcare.fdamystudies.beans.NotificationBean;
 import com.google.cloud.healthcare.fdamystudies.beans.NotificationForm;
 import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
@@ -54,6 +55,8 @@ public class StudiesServicesImpl implements StudiesServices {
   @Autowired private CommonDao commonDao;
 
   @Autowired ApplicationPropertyConfiguration applicationPropertyConfiguration;
+
+  @Autowired InstitutionNotificationService institutionNotificationService;
 
   @Override
   public ErrorBean saveStudyMetadata(StudyMetadataBean studyMetadataBean) {
@@ -125,12 +128,6 @@ public class StudiesServicesImpl implements StudiesServices {
 
               sendStudyLevelNotification(
                   studiesMap, studyInfobyStudyCustomId, appInfobyAppCustomId, notificationBean);
-            } else if (notificationBean
-                    .getNotificationType()
-                    .equalsIgnoreCase(AppConstants.INSTITUTION_LEVEL)
-                && appInfobyAppCustomId != null) {
-              sendInstitutionlevelNotification(
-                  allDeviceTokens, appInfobyAppCustomId, notificationBean);
             }
           }
         } else {
@@ -142,6 +139,50 @@ public class StudiesServicesImpl implements StudiesServices {
       return new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
     }
     logger.info("StudiesServicesImpl.SendNotificationAction() - ends");
+    return new ErrorBean(ErrorCode.EC_200.code(), ErrorCode.EC_200.errorMessage());
+  }
+
+  @Override
+  public ErrorBean sendInstitutionNotification(
+      NotificationBean notification, List<Integer> userIdsWithInstitutionAffiliation) {
+    Map<String, JSONArray> allDeviceTokens = new HashMap<>();
+    Map<Object, AppInfoDetailsBO> appInfobyAppCustomId = new HashMap<>();
+    InstitutionAuthDetailsBean institutionAuthDetailsBean = null;
+    logger.info("StudiesServicesImpl.sendInstitutionNotification() - starts");
+    try {
+      HashSet<String> appSet = new HashSet<>();
+      appSet.add(notification.getAppId());
+
+      List<AppInfoDetailsBO> appInfos = commonDao.getAppInfoSet(appSet);
+      if (appInfos != null && !appInfos.isEmpty()) {
+        institutionAuthDetailsBean =
+            userIdsWithInstitutionAffiliation == null
+                ? authInfoBODao.getDeviceTokenOfUsersForInstitutionAffiliation(appInfos, null)
+                : authInfoBODao.getDeviceTokenOfUsersForInstitutionAffiliation(
+                    appInfos, userIdsWithInstitutionAffiliation);
+        if (institutionAuthDetailsBean != null) {
+          allDeviceTokens = institutionAuthDetailsBean.getDeviceMap();
+        }
+        appInfobyAppCustomId =
+            appInfos
+                .stream()
+                .collect(Collectors.toMap(AppInfoDetailsBO::getAppId, Function.identity()));
+      }
+
+      if ((allDeviceTokens != null && !allDeviceTokens.isEmpty())) {
+        if (appInfobyAppCustomId != null) {
+          sendInstitutionlevelNotification(allDeviceTokens, appInfobyAppCustomId, notification);
+          institutionNotificationService.saveNotifications(
+              institutionAuthDetailsBean.getUserIdList(), notification);
+        }
+      } else {
+        return new ErrorBean(ErrorCode.EC_400.code(), ErrorCode.EC_400.errorMessage());
+      }
+    } catch (Exception e) {
+      logger.error("StudiesServicesImpl.sendInstitutionNotification() - error", e);
+      return new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
+    }
+    logger.info("StudiesServicesImpl.sendInstitutionNotification() - ends");
     return new ErrorBean(ErrorCode.EC_200.code(), ErrorCode.EC_200.errorMessage());
   }
 

@@ -8,12 +8,11 @@
 
 package com.google.cloud.healthcare.fdamystudies.repository;
 
+import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
 
 @Repository
 @Transactional
@@ -28,6 +27,6 @@ public interface UserDetailsBORepository extends JpaRepository<UserDetailsBO, In
   UserDetailsBO findByUserId(String userId);
 
   List<UserDetailsBO> findByEmail(String emailId);
-  
+
   UserDetailsBO findByUserDetailsId(Integer userId);
 }

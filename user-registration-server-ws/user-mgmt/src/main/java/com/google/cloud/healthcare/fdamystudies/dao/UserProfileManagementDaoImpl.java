@@ -588,4 +588,30 @@ public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
     logger.info("UserProfileManagementDaoImpl - removeInstitutions() - end");
     return flag;
   }
+
+  @Override
+  public List<Integer> getUserIdsOfInstitutionsToBeRemoved(
+      List<StateInstitutionMappingBO> institutionToRemoveList) {
+    logger.info("UserProfileManagementDaoImpl - getUserIdsOfInstitutionsToBeRemoved() - starts");
+    List<Integer> userIdList = new ArrayList<>();
+    try (Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession()) {
+      for (StateInstitutionMappingBO institution : institutionToRemoveList) {
+        Query query =
+            session.createQuery(
+                "SELECT UI.user.userDetailsId FROM UserInstitution UI WHERE UI.state=:state AND UI.institutionId=:institution");
+        query.setParameter("state", institution.getState());
+        query.setParameter("institution", institution.getInstitutionId());
+        List<Integer> userIds = query.getResultList();
+        for (Integer userId : userIds) {
+          userIdList.add(userId);
+        }
+      }
+    } catch (Exception e) {
+      logger.error(
+          "UserProfileManagementDaoImpl - getUserIdsOfInstitutionsToBeRemoved() - error ", e);
+      return null;
+    }
+    logger.info("UserProfileManagementDaoImpl - getUserIdsOfInstitutionsToBeRemoved() - end");
+    return userIdList;
+  }
 }

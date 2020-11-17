@@ -46,8 +46,11 @@ public interface UserManagementProfileService {
   public List<String> getStatesList();
 
   public List<String> getInstitutionsList(String state);
-  
+
   public boolean updateNewlyAddedInstitutes(List<StateInstitutionMappingBO> newInstitutionList);
-  
+
   public boolean removeInstitutions(List<StateInstitutionMappingBO> institutionToRemoveList);
+
+  public List<Integer> getUserIdsOfInstitutionsToBeRemoved(
+      List<StateInstitutionMappingBO> institutionToRemoveList);
 }

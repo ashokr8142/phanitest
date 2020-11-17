@@ -403,4 +403,15 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
     logger.info("UserManagementProfileServiceImpl - removeInstitutions() - Ends");
     return flag;
   }
+
+  @Override
+  public List<Integer> getUserIdsOfInstitutionsToBeRemoved(
+      List<StateInstitutionMappingBO> institutionToRemoveList) {
+    logger.info(
+        "UserManagementProfileServiceImpl - getUserIdsOfInstitutionsToBeRemoved() - Starts");
+    List<Integer> userIdList =
+        userProfileManagementDao.getUserIdsOfInstitutionsToBeRemoved(institutionToRemoveList);
+    logger.info("UserManagementProfileServiceImpl - getUserIdsOfInstitutionsToBeRemoved() - Ends");
+    return userIdList;
+  }
 }
