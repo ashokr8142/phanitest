@@ -79,4 +79,6 @@ public class AppConstants {
       "A new  affiliated healthcare organization $institute is available for the state of $state, please choose this from My Account";
   public static final String NOTIFICATIONTEXT_INSTITUTION_REMOVED =
       "Your healthcare organization has been removed";
+
+  public static final String GENERIC_INSTITUTION = "0";
 }
