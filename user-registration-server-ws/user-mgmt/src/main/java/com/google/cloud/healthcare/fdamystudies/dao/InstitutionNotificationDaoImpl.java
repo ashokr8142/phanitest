@@ -3,6 +3,7 @@ package com.google.cloud.healthcare.fdamystudies.dao;
 import com.google.cloud.healthcare.fdamystudies.beans.NotificationBean;
 import com.google.cloud.healthcare.fdamystudies.model.InstitutionNotificationBO;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import org.hibernate.Session;
@@ -28,6 +29,7 @@ public class InstitutionNotificationDaoImpl implements InstitutionNotificationDa
     Transaction transaction = null;
     try (Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession()) {
       transaction = session.beginTransaction();
+      DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
       for (Integer userId : userIdsWithInstitution) {
         InstitutionNotificationBO institutionNotificationBO = new InstitutionNotificationBO();
         institutionNotificationBO.setAppId(notificationBean.getAppId());
@@ -35,7 +37,7 @@ public class InstitutionNotificationDaoImpl implements InstitutionNotificationDa
         institutionNotificationBO.setNotificationType(notificationBean.getNotificationType());
         institutionNotificationBO.setNotificationSubType(notificationBean.getNotificationSubType());
         institutionNotificationBO.setUserId(userId);
-        institutionNotificationBO.setCreatedTime(LocalDateTime.now().toString());
+        institutionNotificationBO.setCreatedTime(pattern.format(LocalDateTime.now()));
         session.save(institutionNotificationBO);
       }
       transaction.commit();

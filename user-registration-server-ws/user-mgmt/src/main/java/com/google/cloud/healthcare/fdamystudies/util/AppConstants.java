@@ -81,4 +81,5 @@ public class AppConstants {
       "Your healthcare organization has been removed";
 
   public static final String GENERIC_INSTITUTION = "0";
+  public static final String UTC_TIMEZONE = "+0000";
 }

@@ -9,6 +9,7 @@ import com.google.cloud.healthcare.fdamystudies.model.InstitutionNotificationBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
 import com.google.cloud.healthcare.fdamystudies.repository.InstitutionNotificationRepository;
 import com.google.cloud.healthcare.fdamystudies.repository.UserDetailsBORepository;
+import com.google.cloud.healthcare.fdamystudies.util.AppConstants;
 import com.google.cloud.healthcare.fdamystudies.util.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,8 @@ public class InstitutionNotificationServiceImpl implements InstitutionNotificati
             institutionNotificationBean.setNotificationType(notification.getNotificationType());
             institutionNotificationBean.setNotificationSubType(
                 notification.getNotificationSubType());
-            institutionNotificationBean.setCreatedTime(notification.getCreatedTime());
+            institutionNotificationBean.setCreatedTime(
+                notification.getCreatedTime() + AppConstants.UTC_TIMEZONE);
             institutionNotificationBeanList.add(institutionNotificationBean);
           }
           errorBean = new ErrorBean(ErrorCode.EC_200.code(), ErrorCode.EC_200.errorMessage());
