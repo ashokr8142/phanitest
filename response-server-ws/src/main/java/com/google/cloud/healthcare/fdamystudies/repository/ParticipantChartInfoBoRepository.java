@@ -37,4 +37,7 @@ public interface ParticipantChartInfoBoRepository
       @Param("activityId") String activityId,
       @Param("dateTimeStart") LocalDateTime dateTimeStart,
       @Param("dateTimeEnd") LocalDateTime dateTimeEnd);
+
+  @Query("SELECT PCBO FROM ParticipantChartInfoBo PCBO WHERE PCBO.participantIdentifier=(?1)")
+  List<ParticipantChartInfoBo> findParticipantChartInfo(String participantId);
 }

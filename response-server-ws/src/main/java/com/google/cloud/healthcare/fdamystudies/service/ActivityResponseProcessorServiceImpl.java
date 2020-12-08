@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
@@ -53,6 +54,8 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
   @Autowired ParticipantChartInfoBoRepository participantChartInfoBoRepository;
 
   @Autowired private ApplicationConfiguration appConfig;
+
+  @Autowired private ParticipantSummaryReportService participantSummaryReportService;
 
   private static final Logger logger =
       LoggerFactory.getLogger(ActivityResponseProcessorServiceImpl.class);
@@ -289,6 +292,87 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
     sumResponseBean.setValue(new Double(sum));
   }
 
+  private List<Map<String, List<QuestionnaireActivityStepsBean>>> getActivityIdBreakUp(
+      List<QuestionnaireActivityStepsBean> questionnaireResponses) {
+
+    List<Map<String, List<QuestionnaireActivityStepsBean>>> retChartInfoList =
+        new ArrayList<Map<String, List<QuestionnaireActivityStepsBean>>>();
+    List<QuestionnaireActivityStepsBean> pSQIPublicList =
+        new ArrayList<QuestionnaireActivityStepsBean>();
+    List<QuestionnaireActivityStepsBean> pHQ9PublicList =
+        new ArrayList<QuestionnaireActivityStepsBean>();
+    List<QuestionnaireActivityStepsBean> gAD7PublicList =
+        new ArrayList<QuestionnaireActivityStepsBean>();
+    List<QuestionnaireActivityStepsBean> pTSDPublicList =
+        new ArrayList<QuestionnaireActivityStepsBean>();
+    List<QuestionnaireActivityStepsBean> wSASPublicList =
+        new ArrayList<QuestionnaireActivityStepsBean>();
+
+    Map<String, String> activityIdQIdMappingMap = new HashMap<String, String>();
+    try {
+      activityIdQIdMappingMap.putAll(AppUtil.getquestionIdActivityIdConfig());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    for (QuestionnaireActivityStepsBean responseBean : questionnaireResponses) {
+      String tempQID = responseBean.getKey();
+      if (!tempQID.isEmpty()) {
+        tempQID = tempQID.toLowerCase();
+        String activityValue = activityIdQIdMappingMap.get(tempQID);
+        if (!activityValue.isEmpty()) {
+          switch (activityValue) {
+            case AppConstants.PHQ9PUBLIC_GENERIC_ACTIVITY_ID:
+              pHQ9PublicList.add(responseBean);
+              break;
+
+            case AppConstants.PSQIPUBLIC_GENERIC_ACTIVITY_ID:
+              pSQIPublicList.add(responseBean);
+              break;
+
+            case AppConstants.PTSDPUBLIC_GENERIC_ACTIVITY_ID:
+              pTSDPublicList.add(responseBean);
+              break;
+
+            case AppConstants.GAD7PUBLIC_GENERIC_ACTIVITY_ID:
+              gAD7PublicList.add(responseBean);
+              break;
+
+            case AppConstants.WSASPUBLIC_GENERIC_ACTIVITY_ID:
+              wSASPublicList.add(responseBean);
+              break;
+          }
+        }
+      }
+    }
+
+    Map<String, List<QuestionnaireActivityStepsBean>> pHQ9PublicMap =
+        new HashMap<String, List<QuestionnaireActivityStepsBean>>();
+    pHQ9PublicMap.put(AppConstants.PHQ9PUBLIC_GENERIC_ACTIVITY_ID, pHQ9PublicList);
+    retChartInfoList.add(pHQ9PublicMap);
+
+    Map<String, List<QuestionnaireActivityStepsBean>> pSQIPublicMap =
+        new HashMap<String, List<QuestionnaireActivityStepsBean>>();
+    pSQIPublicMap.put(AppConstants.PSQIPUBLIC_GENERIC_ACTIVITY_ID, pSQIPublicList);
+    retChartInfoList.add(pSQIPublicMap);
+
+    Map<String, List<QuestionnaireActivityStepsBean>> pTSDPublicMap =
+        new HashMap<String, List<QuestionnaireActivityStepsBean>>();
+    pTSDPublicMap.put(AppConstants.PTSDPUBLIC_GENERIC_ACTIVITY_ID, pTSDPublicList);
+    retChartInfoList.add(pTSDPublicMap);
+
+    Map<String, List<QuestionnaireActivityStepsBean>> gAD7PublicMap =
+        new HashMap<String, List<QuestionnaireActivityStepsBean>>();
+    gAD7PublicMap.put(AppConstants.GAD7PUBLIC_GENERIC_ACTIVITY_ID, gAD7PublicList);
+    retChartInfoList.add(gAD7PublicMap);
+
+    Map<String, List<QuestionnaireActivityStepsBean>> wSASPublicMap =
+        new HashMap<String, List<QuestionnaireActivityStepsBean>>();
+    wSASPublicMap.put(AppConstants.WSASPUBLIC_GENERIC_ACTIVITY_ID, wSASPublicList);
+    retChartInfoList.add(wSASPublicMap);
+
+    return retChartInfoList;
+  }
+
   private ActivityValueGroupBean getValueGroupResponses(
       List<QuestionnaireActivityStepsBean> activityMetadataBeanFromWCP,
       QuestionnaireActivityStepsBean responseBean) {
@@ -395,28 +479,45 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
 
       String studyCollectionName = AppUtil.makeStudyCollectionName(studyId);
       logger.info("saveActivityResponseData() : \n Study Collection Name: " + studyCollectionName);
-      // Store data for charts
-
-      sumResponseBean = new QuestionnaireActivityStepsBean();
-      sumResponseBean.setKey(AppConstants.DUMMY_SUM_QUESTION_KEY);
-      calculateScoreSumForChart(
-          questionnaireResponses,
-          sumResponseBean,
-          questionnaireActivityResponseBean.getMetadata().getActivityId());
 
       responsesDao.saveActivityResponseData(
           studyId,
           studyCollectionName,
           AppConstants.ACTIVITIES_COLLECTION_NAME,
           dataToStoreActivityResults);
-      logger.info("saveActivityResponseData() : \n Study Collection Name: " + studyCollectionName);
-      // Save the chart info
-      saveActivityResponseDataForCharts(
-          sumResponseBean,
-          questionnaireActivityResponseBean.getParticipantId(),
-          studyId,
+
+      if (StringUtils.containsIgnoreCase(
           questionnaireActivityResponseBean.getMetadata().getActivityId(),
-          questionnaireActivityResponseBean.getCreatedTimestamp());
+          AppConstants.GENERIC_ACTIVITY_ID)) {
+        List<Map<String, List<QuestionnaireActivityStepsBean>>> activityIdBreakupList =
+            getActivityIdBreakUp(questionnaireResponses);
+        if (!activityIdBreakupList.isEmpty()) {
+          for (Map<String, List<QuestionnaireActivityStepsBean>> activityIdMap :
+              activityIdBreakupList) {
+            if (activityIdMap != null) {
+              sumResponseBean = new QuestionnaireActivityStepsBean();
+              sumResponseBean.setKey(AppConstants.DUMMY_SUM_QUESTION_KEY);
+              for (Map.Entry<String, List<QuestionnaireActivityStepsBean>> activityIdMapEntry :
+                  activityIdMap.entrySet()) {
+                String activityIdTemp = activityIdMapEntry.getKey();
+                List<QuestionnaireActivityStepsBean> qBeanTemp = activityIdMapEntry.getValue();
+
+                calculateScoreSumForChart(qBeanTemp, sumResponseBean, activityIdTemp);
+
+                // Save the chart info
+                saveActivityResponseDataForCharts(
+                    sumResponseBean,
+                    questionnaireActivityResponseBean.getParticipantId(),
+                    studyId,
+                    questionnaireActivityResponseBean.getMetadata().getActivityId(),
+                    questionnaireActivityResponseBean.getCreatedTimestamp());
+              }
+            }
+          }
+        }
+        participantSummaryReportService.saveSummaryReports(
+            questionnaireActivityResponseBean.getParticipantId());
+      }
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
       throw new ProcessResponseException(e.getMessage());
