@@ -316,10 +316,10 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
     }
     for (QuestionnaireActivityStepsBean responseBean : questionnaireResponses) {
       String tempQID = responseBean.getKey();
-      if (!tempQID.isEmpty()) {
+      if (StringUtils.isNotBlank(tempQID)) {
         tempQID = tempQID.toLowerCase();
         String activityValue = activityIdQIdMappingMap.get(tempQID);
-        if (!activityValue.isEmpty()) {
+        if (StringUtils.isNotBlank(activityValue)) {
           switch (activityValue) {
             case AppConstants.PHQ9PUBLIC_GENERIC_ACTIVITY_ID:
               pHQ9PublicList.add(responseBean);
