@@ -509,7 +509,7 @@ public class ActivityResponseProcessorServiceImpl implements ActivityResponsePro
                     sumResponseBean,
                     questionnaireActivityResponseBean.getParticipantId(),
                     studyId,
-                    questionnaireActivityResponseBean.getMetadata().getActivityId(),
+                    activityIdTemp,
                     questionnaireActivityResponseBean.getCreatedTimestamp());
               }
             }
