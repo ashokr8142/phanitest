@@ -146,7 +146,7 @@ public class TableConfigUtil {
             "table, tr, td {border: 1px solid #999999;}table {border-collapse: collapse;}tr {height: 2.2rem;vertical-align: middle;}td.title {width: 67%;}td.value {width: 33%;text-align: center;}");
     StringBuffer cssBuffer = new StringBuffer();
     for (Map.Entry<String, String> color : colors.entrySet()) {
-      String css = "td." + color.getKey() + " {{ background-color: " + color.getValue() + "; }}";
+      String css = "td." + color.getKey() + " { background-color: " + color.getValue() + "; }";
       cssBuffer.append(css);
     }
     return commonCSS.append(cssBuffer);
