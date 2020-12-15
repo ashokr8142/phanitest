@@ -31,7 +31,9 @@ public class SummaryReportUtil {
       headers.setContentType(MediaType.APPLICATION_JSON);
       headers.set(AppConstants.PARTICIPANT_ID_KEY, participantId);
       headers.set(AppConstants.CLIENT_ID_PARAM, appConfig.getRegServerClientId());
-      headers.set(AppConstants.CLIENT_SECRET_PARAM, appConfig.getRegServerClientSecret());
+      headers.set(
+          AppConstants.CLIENT_SECRET_PARAM,
+          ResponseServerUtil.getHashedValue(appConfig.getRegServerClientSecret()));
       HttpEntity<?> request = new HttpEntity<>(summaryReports, headers);
       restTemplate.exchange(
           appConfig.getRegServerSaveSummaryReportsUrl(), HttpMethod.POST, request, String.class);
