@@ -76,7 +76,7 @@ public class AppConstants {
   public static final String APPID = "UNCSTAND001";
   public static final String NOTIFICATION_SUBTYPE = "Announcement";
   public static final String NOTIFICATIONTEXT_NEW_INSTITUTION =
-      "A new  affiliated healthcare organization $institute is available for the state of $state, please choose this from My Account";
+      "A new affiliated healthcare organization $institute is available for the state of $state. Please choose this from My Account if you work for this organization and want to affiliate.";
   public static final String NOTIFICATIONTEXT_INSTITUTION_REMOVED =
       "Your healthcare organization has been removed";
 
