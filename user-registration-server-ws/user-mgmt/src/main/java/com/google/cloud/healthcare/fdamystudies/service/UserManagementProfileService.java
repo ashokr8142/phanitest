@@ -11,7 +11,9 @@ package com.google.cloud.healthcare.fdamystudies.service;
 import com.google.cloud.healthcare.fdamystudies.beans.DeactivateAcctBean;
 import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
 import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBeanV2;
 import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBeanV2;
 import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
 import com.google.cloud.healthcare.fdamystudies.model.StateInstitutionMappingBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
@@ -22,7 +24,12 @@ public interface UserManagementProfileService {
   public UserProfileRespBean getParticipantInfoDetails(
       String userId, Integer appInfoId, Integer orgInfoId);
 
+  public UserProfileRespBeanV2 getParticipantInfoDetailsV2(
+      String userId, Integer appInfoId, Integer orgInfoId);
+
   public ErrorBean updateUserProfile(String userId, UserRequestBean user);
+
+  public ErrorBean updateUserProfileV2(String userId, UserRequestBeanV2 user);
 
   public UserDetailsBO getParticipantDetailsByEmail(
       String email, Integer appInfoId, Integer orgInfoId);

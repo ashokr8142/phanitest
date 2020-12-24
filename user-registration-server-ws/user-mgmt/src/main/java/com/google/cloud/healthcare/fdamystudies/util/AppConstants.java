@@ -73,7 +73,7 @@ public class AppConstants {
 
   public static final String WITHDRAWN = "Withdrawn";
 
-  public static final String APPID = "UNCSTAND001";
+  public static final String APPID = "GCPMS001";
   public static final String NOTIFICATION_SUBTYPE = "Announcement";
   public static final String NOTIFICATIONTEXT_NEW_INSTITUTION =
       "A new affiliated healthcare organization $institute is available for the state of $state. Please choose this from My Account if you work for this organization and want to affiliate.";

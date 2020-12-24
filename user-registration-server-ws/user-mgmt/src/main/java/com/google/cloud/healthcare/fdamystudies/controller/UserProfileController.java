@@ -16,7 +16,9 @@ import com.google.cloud.healthcare.fdamystudies.beans.LoginBean;
 import com.google.cloud.healthcare.fdamystudies.beans.ResponseBean;
 import com.google.cloud.healthcare.fdamystudies.beans.StatesBean;
 import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBeanV2;
 import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBeanV2;
 import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
 import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
 import com.google.cloud.healthcare.fdamystudies.service.CommonService;
@@ -71,10 +73,6 @@ public class UserProfileController {
       @RequestHeader("userId") String userId, @Context HttpServletResponse response) {
     logger.info("UserProfileController getUserProfile() - starts ");
     UserProfileRespBean userPrlofileRespBean = null;
-    if (org.apache.commons.lang3.StringUtils.isBlank(userId)) {
-      ErrorBean errorBean = new ErrorBean(ErrorCode.EC_711.code(), ErrorCode.EC_711.errorMessage());
-      return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
-    }
     try {
       userPrlofileRespBean = userManagementProfService.getParticipantInfoDetails(userId, 0, 0);
       if (userPrlofileRespBean != null) {
@@ -96,6 +94,36 @@ public class UserProfileController {
     return new ResponseEntity<>(userPrlofileRespBean, HttpStatus.OK);
   }
 
+  @GetMapping(value = "/v2/userProfile", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> getUserProfileV2(
+      @RequestHeader("userId") String userId, @Context HttpServletResponse response) {
+    logger.info("UserProfileController getUserProfileV2() - starts ");
+    UserProfileRespBeanV2 userPrlofileRespBean = null;
+    if (org.apache.commons.lang3.StringUtils.isBlank(userId)) {
+      ErrorBean errorBean = new ErrorBean(ErrorCode.EC_711.code(), ErrorCode.EC_711.errorMessage());
+      return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
+    }
+    try {
+      userPrlofileRespBean = userManagementProfService.getParticipantInfoDetailsV2(userId, 0, 0);
+      if (userPrlofileRespBean != null) {
+        userPrlofileRespBean.setMessage(
+            MyStudiesUserRegUtil.ErrorCodes.SUCCESS.getValue().toLowerCase());
+
+      } else {
+        MyStudiesUserRegUtil.getFailureResponse(
+            MyStudiesUserRegUtil.ErrorCodes.STATUS_102.getValue(),
+            MyStudiesUserRegUtil.ErrorCodes.NO_DATA_AVAILABLE.getValue(),
+            MyStudiesUserRegUtil.ErrorCodes.NO_DATA_AVAILABLE.getValue(),
+            response);
+      }
+    } catch (Exception e) {
+      logger.error("UserProfileController getUserProfileV2() - error ", e);
+      return AppUtil.httpResponseForInternalServerError();
+    }
+    logger.info("UserProfileController getUserProfileV2() - Ends ");
+    return new ResponseEntity<>(userPrlofileRespBean, HttpStatus.OK);
+  }
+
   @PostMapping(
       value = "/updateUserProfile",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -106,10 +134,6 @@ public class UserProfileController {
       @Context HttpServletResponse response) {
     logger.info("UserProfileController updateUserProfile() - Starts ");
     ErrorBean errorBean = null;
-    if (org.apache.commons.lang3.StringUtils.isBlank(userId)) {
-      errorBean = new ErrorBean(ErrorCode.EC_711.code(), ErrorCode.EC_711.errorMessage());
-      return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
-    }
     try {
       errorBean = userManagementProfService.updateUserProfile(userId, user);
       if (errorBean.getCode() == ErrorCode.EC_200.code()) {
@@ -126,6 +150,39 @@ public class UserProfileController {
       return AppUtil.httpResponseForInternalServerError();
     }
     logger.info("UserProfileController updateUserProfile() - Ends ");
+    return new ResponseEntity<>(errorBean, HttpStatus.OK);
+  }
+
+  @PostMapping(
+      value = "/v2/updateUserProfile",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> updateUserProfileV2(
+      @RequestHeader("userId") String userId,
+      @RequestBody UserRequestBeanV2 user,
+      @Context HttpServletResponse response) {
+    logger.info("UserProfileController updateUserProfileV2() - Starts ");
+    ErrorBean errorBean = null;
+    if (org.apache.commons.lang3.StringUtils.isBlank(userId)) {
+      errorBean = new ErrorBean(ErrorCode.EC_711.code(), ErrorCode.EC_711.errorMessage());
+      return new ResponseEntity<>(errorBean, HttpStatus.BAD_REQUEST);
+    }
+    try {
+      errorBean = userManagementProfService.updateUserProfileV2(userId, user);
+      if (errorBean.getCode() == ErrorCode.EC_200.code()) {
+        commonService.createActivityLog(
+            userId,
+            "PROFILE UPDATE",
+            "User " + userId + " Profile/Preferences updated successfully.");
+        errorBean = new ErrorBean(HttpStatus.OK.value(), ErrorCode.EC_30.errorMessage());
+      } else {
+        return new ResponseEntity<>(errorBean, HttpStatus.CONFLICT);
+      }
+    } catch (Exception e) {
+      logger.error("UserProfileController updateUserProfileV2() - error ", e);
+      return AppUtil.httpResponseForInternalServerError();
+    }
+    logger.info("UserProfileController updateUserProfileV2() - Ends ");
     return new ResponseEntity<>(errorBean, HttpStatus.OK);
   }
 

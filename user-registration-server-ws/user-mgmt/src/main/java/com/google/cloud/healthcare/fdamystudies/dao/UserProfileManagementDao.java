@@ -21,7 +21,9 @@ public interface UserProfileManagementDao {
 
   public UserDetailsBO getParticipantInfoDetails(String userId);
 
-  public ErrorBean updateUserProfile(
+  public ErrorBean updateUserProfile(String userId, UserDetailsBO userDetail, AuthInfoBO authInfo);
+
+  public ErrorBean updateUserProfileV2(
       String userId,
       UserDetailsBO userDetail,
       AuthInfoBO authInfo,

@@ -14,7 +14,9 @@ import com.google.cloud.healthcare.fdamystudies.beans.DeactivateAcctBean;
 import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
 import com.google.cloud.healthcare.fdamystudies.beans.InstitutionInfoBean;
 import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBeanV2;
 import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBeanV2;
 import com.google.cloud.healthcare.fdamystudies.beans.WithdrawFromStudyBean;
 import com.google.cloud.healthcare.fdamystudies.beans.WithdrawFromStudyRespFromServer;
 import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
@@ -68,13 +70,41 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
   public UserProfileRespBean getParticipantInfoDetails(
       String userId, Integer appInfoId, Integer orgInfoId) {
     logger.info("UserManagementProfileServiceImpl getParticipantInfoDetails() - Starts ");
-    UserProfileRespBean userProfileRespBean = null;
+    UserDetailsBO userDetailsBO = null;
+    UserProfileRespBean userProfileRespBean = new UserProfileRespBean();
+    try {
+      userDetailsBO = userProfileManagementDao.getParticipantInfoDetails(userId);
+      if (userDetailsBO != null) {
+        userProfileRespBean.getProfile().setEmailId(userDetailsBO.getEmail());
+        userProfileRespBean
+            .getSettings()
+            .setRemoteNotifications(userDetailsBO.getRemoteNotificationFlag());
+        userProfileRespBean
+            .getSettings()
+            .setLocalNotifications(userDetailsBO.getLocalNotificationFlag());
+        userProfileRespBean.getSettings().setTouchId(userDetailsBO.getTouchId());
+        userProfileRespBean.getSettings().setPasscode(userDetailsBO.getUsePassCode());
+        userProfileRespBean.getSettings().setLocale(userDetailsBO.getLocale());
+      }
+
+    } catch (Exception e) {
+      logger.error("UserManagementProfileServiceImpl getParticipantInfoDetails() - error ", e);
+    }
+    logger.info("UserManagementProfileServiceImpl getParticipantInfoDetails() - Ends ");
+    return userProfileRespBean;
+  }
+
+  @Override
+  public UserProfileRespBeanV2 getParticipantInfoDetailsV2(
+      String userId, Integer appInfoId, Integer orgInfoId) {
+    logger.info("UserManagementProfileServiceImpl getParticipantInfoDetailsV2() - Starts ");
+    UserProfileRespBeanV2 userProfileRespBean = null;
     try {
       UserDetailsBO userDetailsBO = userProfileManagementDao.getParticipantInfoDetails(userId);
       Optional<UserInstitution> maybeUserInstitution =
           userInstitutionRepository.findByUserUserId(userId);
       if (userDetailsBO != null) {
-        userProfileRespBean = new UserProfileRespBean();
+        userProfileRespBean = new UserProfileRespBeanV2();
         userProfileRespBean.getProfile().setEmailId(userDetailsBO.getEmail());
         userProfileRespBean
             .getSettings()
@@ -98,9 +128,9 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
         }
       }
     } catch (Exception e) {
-      logger.error("UserManagementProfileServiceImpl getParticipantInfoDetails() - error ", e);
+      logger.error("UserManagementProfileServiceImpl getParticipantInfoDetailsV2() - error ", e);
     }
-    logger.info("UserManagementProfileServiceImpl getParticipantInfoDetails() - Ends ");
+    logger.info("UserManagementProfileServiceImpl getParticipantInfoDetailsV2() - Ends ");
     return userProfileRespBean;
   }
 
@@ -135,17 +165,58 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
           }
         }
         authInfo = authInfoDetails(userDetailsBO.getUserDetailsId(), user);
-        errorBean =
-            userProfileManagementDao.updateUserProfile(
-                userId, userDetailsBO, authInfo, user.getInstitutionInfo());
-      } else {
-        errorBean = new ErrorBean(ErrorCode.EC_61.code(), ErrorCode.EC_61.errorMessage());
+        errorBean = userProfileManagementDao.updateUserProfile(userId, userDetailsBO, authInfo);
       }
     } catch (Exception e) {
       logger.error("UserManagementProfileServiceImpl - updateUserProfile() - Error", e);
       errorBean = new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
     }
     logger.info("UserManagementProfileServiceImpl updateUserProfile() - Ends ");
+    return errorBean;
+  }
+
+  @Override
+  public ErrorBean updateUserProfileV2(String userId, UserRequestBeanV2 user) {
+    logger.info("UserManagementProfileServiceImpl updateUserProfileV2() - Starts ");
+    ErrorBean errorBean = null;
+    UserDetailsBO userDetailsBO = null;
+    AuthInfoBO authInfo = null;
+    String deviceToken = null;
+    try {
+      userDetailsBO = userProfileManagementDao.getParticipantInfoDetails(userId);
+      if (userDetailsBO != null) {
+        if (user.getSettings() != null) {
+          if (user.getSettings().getRemoteNotifications() != null) {
+            userDetailsBO.setRemoteNotificationFlag(user.getSettings().getRemoteNotifications());
+          }
+          if (user.getSettings().getLocalNotifications() != null) {
+            userDetailsBO.setLocalNotificationFlag(user.getSettings().getLocalNotifications());
+          }
+          if (user.getSettings().getPasscode() != null) {
+            userDetailsBO.setUsePassCode(user.getSettings().getPasscode());
+          }
+          if (user.getSettings().getTouchId() != null) {
+            userDetailsBO.setTouchId(user.getSettings().getTouchId());
+          }
+          if (!StringUtils.isBlank(user.getSettings().getReminderLeadTime())) {
+            userDetailsBO.setReminderLeadTime(user.getSettings().getReminderLeadTime());
+          }
+          if (!StringUtils.isBlank(user.getSettings().getLocale())) {
+            userDetailsBO.setLocale(user.getSettings().getLocale());
+          }
+        }
+        authInfo = authInfoDetailsV2(userDetailsBO.getUserDetailsId(), user);
+        errorBean =
+            userProfileManagementDao.updateUserProfileV2(
+                userId, userDetailsBO, authInfo, user.getInstitutionInfo());
+      } else {
+        errorBean = new ErrorBean(ErrorCode.EC_61.code(), ErrorCode.EC_61.errorMessage());
+      }
+    } catch (Exception e) {
+      logger.error("UserManagementProfileServiceImpl - updateUserProfileV2() - Error", e);
+      errorBean = new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
+    }
+    logger.info("UserManagementProfileServiceImpl updateUserProfileV2() - Ends ");
     return errorBean;
   }
 
@@ -322,6 +393,37 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
   }
 
   private AuthInfoBO authInfoDetails(Integer userDetailsId, UserRequestBean user) {
+    AuthInfoBO authInfo = null;
+    authInfo = userProfileManagementDao.getAuthInfo(userDetailsId);
+    if (authInfo != null) {
+      if (user.getSettings() != null && user.getSettings().getRemoteNotifications() != null) {
+        authInfo.setRemoteNotificationFlag(user.getSettings().getRemoteNotifications());
+      }
+      if (user.getInfo() != null) {
+        if (!StringUtils.isBlank(user.getInfo().getOs())) {
+          authInfo.setDeviceType(user.getInfo().getOs());
+        }
+        if (!StringUtils.isBlank(user.getInfo().getOs())
+            && (user.getInfo().getOs().equalsIgnoreCase("IOS")
+                || user.getInfo().getOs().equalsIgnoreCase("I"))) {
+          authInfo.setIosAppVersion(user.getInfo().getAppVersion());
+        } else {
+          authInfo.setAndroidAppVersion(user.getInfo().getAppVersion());
+        }
+        if (!StringUtils.isBlank(user.getInfo().getDeviceToken())) {
+          authInfo.setDeviceToken(user.getInfo().getDeviceToken());
+        } // To maintain single session and update old device token
+        // when user changed the device from android to IOS or vice versa
+        else if (!StringUtils.isBlank(authInfo.getDeviceToken())) {
+          authInfo.setDeviceToken(null);
+        }
+      }
+      authInfo.setModifiedOn(new Date());
+    }
+    return authInfo;
+  }
+
+  private AuthInfoBO authInfoDetailsV2(Integer userDetailsId, UserRequestBeanV2 user) {
     AuthInfoBO authInfo = null;
     authInfo = userProfileManagementDao.getAuthInfo(userDetailsId);
     if (authInfo != null) {

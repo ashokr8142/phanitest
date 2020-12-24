@@ -112,12 +112,47 @@ public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
   }
 
   @Override
-  public ErrorBean updateUserProfile(
+  public ErrorBean updateUserProfile(String userId, UserDetailsBO userDetail, AuthInfoBO authInfo) {
+    logger.info("UserProfileManagementDaoImpl updateUserProfile() - Starts ");
+    Transaction transaction = null;
+    ErrorBean errorBean = null;
+    Boolean isUpdatedAuthInfo = false;
+    try (Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession()) {
+      transaction = session.beginTransaction();
+
+      if (null != userDetail) {
+        session.saveOrUpdate(userDetail);
+        errorBean = new ErrorBean(ErrorCode.EC_200.code(), ErrorCode.EC_200.errorMessage());
+        if (null != authInfo) {
+          session.saveOrUpdate(authInfo);
+          isUpdatedAuthInfo = true;
+        }
+      } else {
+        errorBean = new ErrorBean(ErrorCode.EC_61.code(), ErrorCode.EC_61.errorMessage());
+      }
+      transaction.commit();
+    } catch (Exception e) {
+      logger.error("UserProfileManagementDaoImpl updateUserProfile() - error ", e);
+      errorBean = new ErrorBean(ErrorCode.EC_34.code(), ErrorCode.EC_34.errorMessage());
+      if (transaction != null) {
+        try {
+          transaction.rollback();
+        } catch (Exception e1) {
+          logger.error("UserProfileManagementDaoImpl - updateUserProfile() - error rollback", e1);
+        }
+      }
+    }
+    logger.info("UserProfileManagementDaoImpl updateUserProfile() - Starts ");
+    return errorBean;
+  }
+
+  @Override
+  public ErrorBean updateUserProfileV2(
       String userId,
       UserDetailsBO userDetail,
       AuthInfoBO authInfo,
       InstitutionInfoBean institutionInfoBean) {
-    logger.info("UserProfileManagementDaoImpl updateUserProfile() - Starts ");
+    logger.info("UserProfileManagementDaoImpl updateUserProfileV2() - Starts ");
     Transaction transaction = null;
     ErrorBean errorBean = null;
     Boolean isUpdatedAuthInfo = false;
@@ -165,17 +200,17 @@ public class UserProfileManagementDaoImpl implements UserProfileManagementDao {
       }
       transaction.commit();
     } catch (Exception e) {
-      logger.error("UserProfileManagementDaoImpl updateUserProfile() - error ", e);
+      logger.error("UserProfileManagementDaoImpl updateUserProfileV2() - error ", e);
       errorBean = new ErrorBean(ErrorCode.EC_34.code(), ErrorCode.EC_34.errorMessage());
       if (transaction != null) {
         try {
           transaction.rollback();
         } catch (Exception e1) {
-          logger.error("UserProfileManagementDaoImpl - updateUserProfile() - error rollback", e1);
+          logger.error("UserProfileManagementDaoImpl - updateUserProfileV2() - error rollback", e1);
         }
       }
     }
-    logger.info("UserProfileManagementDaoImpl updateUserProfile() - Starts ");
+    logger.info("UserProfileManagementDaoImpl updateUserProfileV2() - Starts ");
     return errorBean;
   }
 
