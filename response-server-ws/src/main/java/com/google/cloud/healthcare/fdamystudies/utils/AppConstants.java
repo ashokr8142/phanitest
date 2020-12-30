@@ -85,12 +85,6 @@ public class AppConstants {
   public static final String GAD7PUBLIC_GENERIC_ACTIVITY_ID = "GAD7Public";
   public static final String PTSDPUBLIC_GENERIC_ACTIVITY_ID = "PTSDPublic";
   public static final String WSASPUBLIC_GENERIC_ACTIVITY_ID = "WSASPublic";
-  public static final String GENERIC_ACTIVITY_ID = "WeeklyV";
-  public static final String CURRENT_WEEK_REPORT_TEXT = "Summary Report: Week of ";
-  public static final String PAST_WEEK_REPORT_TEXT = "Past Reports";
-
-  public static final String DATE_FORMAT_yyyy_MM_dd = "yyyy-MM-dd";
-  public static final String DATE_FORMAT_MMMM_dd_yyyy = "MMMM dd, yyyy";
 
   public static final List<String> getActivityIdsToProcessForChart() {
     List<String> chartActivityIdList = new ArrayList<String>();

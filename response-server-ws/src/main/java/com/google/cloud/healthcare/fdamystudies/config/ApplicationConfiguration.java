@@ -80,9 +80,6 @@ public class ApplicationConfiguration {
   @Value("${regServerPartStudyInfoUrl}")
   private String regServerPartStudyInfoUrl;
 
-  @Value("${regServerSaveSummaryReportsUrl}")
-  private String regServerSaveSummaryReportsUrl;
-
   @Value("${chartDateStart}")
   private String chartDateStart;
 }
