@@ -35,9 +35,7 @@ public enum ErrorCode {
 
   EC_718(718, "UNAUTHORIZED"),
 
-  EC_719(719, "Invalid clientId or secretKey"),
-  
-  EC_720(720, "No data available");
+  EC_719(719, "Invalid clientId or secretKey");
 
   private final int code;
 
