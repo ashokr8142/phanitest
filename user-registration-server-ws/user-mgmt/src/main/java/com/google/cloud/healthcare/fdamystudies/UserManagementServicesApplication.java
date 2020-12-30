@@ -10,13 +10,12 @@ package com.google.cloud.healthcare.fdamystudies;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableScheduling
 public class UserManagementServicesApplication {
 
   public static void main(String[] args) {
+
     SpringApplication.run(UserManagementServicesApplication.class, args);
   }
 }

@@ -28,7 +28,6 @@ public class AppConstants {
   public static final String USER_DETAILS_ID = "userDetailsId";
   public static final String STUDY_LEVEL = "ST";
   public static final String GATEWAY_LEVEL = "GT";
-  public static final String INSTITUTION_LEVEL = "IT";
   public static final String USER_REGISTRATION_CONTROLLER_ENDS_MESSAGE =
       "UserRegistrationController registerUser() - ends";
   public static final boolean FALSE = false;
@@ -69,17 +68,6 @@ public class AppConstants {
 
   public static final String STUDY = "Study";
   public static final String GATEWAY = "Gateway";
-  public static final String INSTITUTION = "Institution";
 
   public static final String WITHDRAWN = "Withdrawn";
-
-  public static final String APPID = "GCPMS001";
-  public static final String NOTIFICATION_SUBTYPE = "Announcement";
-  public static final String NOTIFICATIONTEXT_NEW_INSTITUTION =
-      "A new affiliated healthcare organization $institute is available for the state of $state. Please choose this from My Account if you work for this organization and want to affiliate.";
-  public static final String NOTIFICATIONTEXT_INSTITUTION_REMOVED =
-      "Your healthcare organization has been removed";
-
-  public static final String GENERIC_INSTITUTION = "0";
-  public static final String UTC_TIMEZONE = "+0000";
 }

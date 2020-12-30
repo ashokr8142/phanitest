@@ -11,25 +11,16 @@ package com.google.cloud.healthcare.fdamystudies.service;
 import com.google.cloud.healthcare.fdamystudies.beans.DeactivateAcctBean;
 import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
 import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
-import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBeanV2;
 import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
-import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBeanV2;
 import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
-import com.google.cloud.healthcare.fdamystudies.model.StateInstitutionMappingBO;
 import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
-import java.util.List;
 
 public interface UserManagementProfileService {
 
   public UserProfileRespBean getParticipantInfoDetails(
       String userId, Integer appInfoId, Integer orgInfoId);
 
-  public UserProfileRespBeanV2 getParticipantInfoDetailsV2(
-      String userId, Integer appInfoId, Integer orgInfoId);
-
   public ErrorBean updateUserProfile(String userId, UserRequestBean user);
-
-  public ErrorBean updateUserProfileV2(String userId, UserRequestBeanV2 user);
 
   public UserDetailsBO getParticipantDetailsByEmail(
       String email, Integer appInfoId, Integer orgInfoId);
@@ -47,17 +38,4 @@ public interface UserManagementProfileService {
 
   public int resendConfirmationthroughEmail(
       String applicationId, String securityToken, String emailId);
-
-  public ErrorBean removeDeviceToken(String userId);
-
-  public List<String> getStatesList();
-
-  public List<String> getInstitutionsList(String state);
-
-  public boolean updateNewlyAddedInstitutes(List<StateInstitutionMappingBO> newInstitutionList);
-
-  public boolean removeInstitutions(List<StateInstitutionMappingBO> institutionToRemoveList);
-
-  public List<Integer> getUserIdsOfInstitutionsToBeRemoved(
-      List<StateInstitutionMappingBO> institutionToRemoveList);
 }
