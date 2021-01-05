@@ -8,6 +8,21 @@
 
 package com.google.cloud.healthcare.fdamystudies.service;
 
+import com.google.cloud.healthcare.fdamystudies.bean.StudyMetadataBean;
+import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
+import com.google.cloud.healthcare.fdamystudies.beans.InstitutionAuthDetailsBean;
+import com.google.cloud.healthcare.fdamystudies.beans.NotificationBean;
+import com.google.cloud.healthcare.fdamystudies.beans.NotificationForm;
+import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
+import com.google.cloud.healthcare.fdamystudies.dao.AuthInfoBODao;
+import com.google.cloud.healthcare.fdamystudies.dao.CommonDao;
+import com.google.cloud.healthcare.fdamystudies.dao.StudiesDao;
+import com.google.cloud.healthcare.fdamystudies.model.AppInfoDetailsBO;
+import com.google.cloud.healthcare.fdamystudies.model.StudyInfoBO;
+import com.google.cloud.healthcare.fdamystudies.util.AppConstants;
+import com.google.cloud.healthcare.fdamystudies.util.ErrorCode;
+import com.notnoop.apns.APNS;
+import com.notnoop.apns.ApnsService;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -27,20 +42,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.google.cloud.healthcare.fdamystudies.bean.StudyMetadataBean;
-import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
-import com.google.cloud.healthcare.fdamystudies.beans.NotificationBean;
-import com.google.cloud.healthcare.fdamystudies.beans.NotificationForm;
-import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
-import com.google.cloud.healthcare.fdamystudies.dao.AuthInfoBODao;
-import com.google.cloud.healthcare.fdamystudies.dao.CommonDao;
-import com.google.cloud.healthcare.fdamystudies.dao.StudiesDao;
-import com.google.cloud.healthcare.fdamystudies.model.AppInfoDetailsBO;
-import com.google.cloud.healthcare.fdamystudies.model.StudyInfoBO;
-import com.google.cloud.healthcare.fdamystudies.util.AppConstants;
-import com.google.cloud.healthcare.fdamystudies.util.ErrorCode;
-import com.notnoop.apns.APNS;
-import com.notnoop.apns.ApnsService;
 
 @Service
 public class StudiesServicesImpl implements StudiesServices {
@@ -54,6 +55,8 @@ public class StudiesServicesImpl implements StudiesServices {
   @Autowired private CommonDao commonDao;
 
   @Autowired ApplicationPropertyConfiguration applicationPropertyConfiguration;
+
+  @Autowired InstitutionNotificationService institutionNotificationService;
 
   @Override
   public ErrorBean saveStudyMetadata(StudyMetadataBean studyMetadataBean) {
@@ -139,6 +142,50 @@ public class StudiesServicesImpl implements StudiesServices {
     return new ErrorBean(ErrorCode.EC_200.code(), ErrorCode.EC_200.errorMessage());
   }
 
+  @Override
+  public ErrorBean sendInstitutionNotification(
+      NotificationBean notification, List<Integer> userIdsWithInstitutionAffiliation) {
+    Map<String, JSONArray> allDeviceTokens = new HashMap<>();
+    Map<Object, AppInfoDetailsBO> appInfobyAppCustomId = new HashMap<>();
+    InstitutionAuthDetailsBean institutionAuthDetailsBean = null;
+    logger.info("StudiesServicesImpl.sendInstitutionNotification() - starts");
+    try {
+      HashSet<String> appSet = new HashSet<>();
+      appSet.add(notification.getAppId());
+
+      List<AppInfoDetailsBO> appInfos = commonDao.getAppInfoSet(appSet);
+      if (appInfos != null && !appInfos.isEmpty()) {
+        institutionAuthDetailsBean =
+            userIdsWithInstitutionAffiliation == null
+                ? authInfoBODao.getDeviceTokenOfUsersForInstitutionAffiliation(appInfos, null)
+                : authInfoBODao.getDeviceTokenOfUsersForInstitutionAffiliation(
+                    appInfos, userIdsWithInstitutionAffiliation);
+        if (institutionAuthDetailsBean != null) {
+          allDeviceTokens = institutionAuthDetailsBean.getDeviceMap();
+        }
+        appInfobyAppCustomId =
+            appInfos
+                .stream()
+                .collect(Collectors.toMap(AppInfoDetailsBO::getAppId, Function.identity()));
+      }
+
+      if ((allDeviceTokens != null && !allDeviceTokens.isEmpty())) {
+        if (appInfobyAppCustomId != null) {
+          sendInstitutionlevelNotification(allDeviceTokens, appInfobyAppCustomId, notification);
+          institutionNotificationService.saveNotifications(
+              institutionAuthDetailsBean.getUserIdList(), notification);
+        }
+      } else {
+        return new ErrorBean(ErrorCode.EC_400.code(), ErrorCode.EC_400.errorMessage());
+      }
+    } catch (Exception e) {
+      logger.error("StudiesServicesImpl.sendInstitutionNotification() - error", e);
+      return new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
+    }
+    logger.info("StudiesServicesImpl.sendInstitutionNotification() - ends");
+    return new ErrorBean(ErrorCode.EC_200.code(), ErrorCode.EC_200.errorMessage());
+  }
+
   private void sendStudyLevelNotification(
       Map<Integer, Map<String, JSONArray>> studiesMap,
       Map<Object, StudyInfoBO> studyInfobyStudyCustomId,
@@ -166,6 +213,22 @@ public class StudiesServicesImpl implements StudiesServices {
       Map<Object, AppInfoDetailsBO> appInfobyAppCustomId,
       NotificationBean notificationBean) {
     notificationBean.setNotificationType(AppConstants.GATEWAY);
+    if (allDeviceTokens.get(AppConstants.DEVICE_ANDROID) != null
+        && allDeviceTokens.get(AppConstants.DEVICE_ANDROID).length() != 0) {
+      notificationBean.setDeviceToken(allDeviceTokens.get(AppConstants.DEVICE_ANDROID));
+      pushFCMNotification(notificationBean, appInfobyAppCustomId.get(notificationBean.getAppId()));
+    }
+    if (allDeviceTokens.get(AppConstants.DEVICE_IOS) != null) {
+      notificationBean.setDeviceToken(allDeviceTokens.get(AppConstants.DEVICE_IOS));
+      pushNotification(notificationBean, appInfobyAppCustomId.get(notificationBean.getAppId()));
+    }
+  }
+
+  private void sendInstitutionlevelNotification(
+      Map<String, JSONArray> allDeviceTokens,
+      Map<Object, AppInfoDetailsBO> appInfobyAppCustomId,
+      NotificationBean notificationBean) {
+    notificationBean.setNotificationType(AppConstants.INSTITUTION);
     if (allDeviceTokens.get(AppConstants.DEVICE_ANDROID) != null
         && allDeviceTokens.get(AppConstants.DEVICE_ANDROID).length() != 0) {
       notificationBean.setDeviceToken(allDeviceTokens.get(AppConstants.DEVICE_ANDROID));
@@ -237,29 +300,29 @@ public class StudiesServicesImpl implements StudiesServices {
           && notificationBean.getDeviceToken().length() > 0
           && appPropertiesDetails != null) {
         File root = null;
-        FileOutputStream fop=null;
+        FileOutputStream fop = null;
         certificatePassword = appPropertiesDetails.getIosCertificatePassword();
         try {
-          if(appPropertiesDetails.getIosCertificate()!=null) {
+          if (appPropertiesDetails.getIosCertificate() != null) {
             byte[] decodedBytes =
-              java.util.Base64.getDecoder()
-                  .decode(appPropertiesDetails.getIosCertificate().replaceAll("\n", ""));
-          file = File.createTempFile("pushCert_" + appPropertiesDetails.getAppId(), ".p12");
-          fop = new FileOutputStream(file);
-          fop.write(decodedBytes);
-          fop.flush();
-          fop.close();
-          file.deleteOnExit();
+                java.util.Base64.getDecoder()
+                    .decode(appPropertiesDetails.getIosCertificate().replaceAll("\n", ""));
+            file = File.createTempFile("pushCert_" + appPropertiesDetails.getAppId(), ".p12");
+            fop = new FileOutputStream(file);
+            fop.write(decodedBytes);
+            fop.flush();
+            fop.close();
+            file.deleteOnExit();
           }
         } catch (Exception e) {
           logger.error("FdahpUserRegWSController pushNotificationCertCreation:", e);
-        }finally {
-          if(fop!=null) {
+        } finally {
+          if (fop != null) {
             fop.close();
           }
         }
         ApnsService service = null;
-        if (file != null && certificatePassword!= null) {
+        if (file != null && certificatePassword != null) {
           if (iosNotificationType.equals("production")) {
             service =
                 APNS.newService()

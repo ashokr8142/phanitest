@@ -8,37 +8,43 @@
 
 package com.google.cloud.healthcare.fdamystudies.service;
 
+import com.google.cloud.healthcare.fdamystudies.bean.StudyReqBean;
+import com.google.cloud.healthcare.fdamystudies.beans.AppOrgInfoBean;
+import com.google.cloud.healthcare.fdamystudies.beans.DeactivateAcctBean;
+import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
+import com.google.cloud.healthcare.fdamystudies.beans.InstitutionInfoBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBeanV2;
+import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
+import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBeanV2;
+import com.google.cloud.healthcare.fdamystudies.beans.WithdrawFromStudyBean;
+import com.google.cloud.healthcare.fdamystudies.beans.WithdrawFromStudyRespFromServer;
+import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
+import com.google.cloud.healthcare.fdamystudies.dao.CommonDao;
+import com.google.cloud.healthcare.fdamystudies.dao.FdaEaUserDetailsDao;
+import com.google.cloud.healthcare.fdamystudies.dao.UserProfileManagementDao;
+import com.google.cloud.healthcare.fdamystudies.model.AppInfoDetailsBO;
+import com.google.cloud.healthcare.fdamystudies.model.AuthInfoBO;
+import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
+import com.google.cloud.healthcare.fdamystudies.model.StateInstitutionMappingBO;
+import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
+import com.google.cloud.healthcare.fdamystudies.model.UserInstitution;
+import com.google.cloud.healthcare.fdamystudies.repository.UserInstitutionRepository;
+import com.google.cloud.healthcare.fdamystudies.util.EmailNotification;
+import com.google.cloud.healthcare.fdamystudies.util.ErrorCode;
+import com.google.cloud.healthcare.fdamystudies.util.MyStudiesUserRegUtil;
+import com.google.cloud.healthcare.fdamystudies.util.UserManagementUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.google.cloud.healthcare.fdamystudies.bean.StudyReqBean;
-import com.google.cloud.healthcare.fdamystudies.beans.AppOrgInfoBean;
-import com.google.cloud.healthcare.fdamystudies.beans.DeactivateAcctBean;
-import com.google.cloud.healthcare.fdamystudies.beans.ErrorBean;
-import com.google.cloud.healthcare.fdamystudies.beans.UserProfileRespBean;
-import com.google.cloud.healthcare.fdamystudies.beans.UserRequestBean;
-import com.google.cloud.healthcare.fdamystudies.beans.WithdrawFromStudyBean;
-import com.google.cloud.healthcare.fdamystudies.beans.WithdrawFromStudyRespFromServer;
-import com.google.cloud.healthcare.fdamystudies.config.ApplicationPropertyConfiguration;
-import com.google.cloud.healthcare.fdamystudies.dao.CommonDao;
-import com.google.cloud.healthcare.fdamystudies.dao.UserProfileManagementDao;
-import com.google.cloud.healthcare.fdamystudies.model.AppInfoDetailsBO;
-import com.google.cloud.healthcare.fdamystudies.model.AuthInfoBO;
-import com.google.cloud.healthcare.fdamystudies.model.LoginAttemptsBO;
-import com.google.cloud.healthcare.fdamystudies.model.UserDetailsBO;
-import com.google.cloud.healthcare.fdamystudies.util.EmailNotification;
-import com.google.cloud.healthcare.fdamystudies.util.ErrorCode;
-import com.google.cloud.healthcare.fdamystudies.util.MyStudiesUserRegUtil;
-import com.google.cloud.healthcare.fdamystudies.util.UserManagementUtil;
 
 @Service
 public class UserManagementProfileServiceImpl implements UserManagementProfileService {
@@ -52,6 +58,10 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
   @Autowired CommonDao commonDao;
 
   @Autowired private UserManagementUtil userManagementUtil;
+
+  @Autowired private FdaEaUserDetailsDao userDetailsDao;
+
+  @Autowired private UserInstitutionRepository userInstitutionRepository;
 
   private static final Logger logger =
       LoggerFactory.getLogger(UserManagementProfileServiceImpl.class);
@@ -81,6 +91,46 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
       logger.error("UserManagementProfileServiceImpl getParticipantInfoDetails() - error ", e);
     }
     logger.info("UserManagementProfileServiceImpl getParticipantInfoDetails() - Ends ");
+    return userProfileRespBean;
+  }
+
+  @Override
+  public UserProfileRespBeanV2 getParticipantInfoDetailsV2(
+      String userId, Integer appInfoId, Integer orgInfoId) {
+    logger.info("UserManagementProfileServiceImpl getParticipantInfoDetailsV2() - Starts ");
+    UserProfileRespBeanV2 userProfileRespBean = null;
+    try {
+      UserDetailsBO userDetailsBO = userProfileManagementDao.getParticipantInfoDetails(userId);
+      Optional<UserInstitution> maybeUserInstitution =
+          userInstitutionRepository.findByUserUserId(userId);
+      if (userDetailsBO != null) {
+        userProfileRespBean = new UserProfileRespBeanV2();
+        userProfileRespBean.getProfile().setEmailId(userDetailsBO.getEmail());
+        userProfileRespBean
+            .getSettings()
+            .setRemoteNotifications(userDetailsBO.getRemoteNotificationFlag());
+        userProfileRespBean
+            .getSettings()
+            .setLocalNotifications(userDetailsBO.getLocalNotificationFlag());
+        userProfileRespBean.getSettings().setTouchId(userDetailsBO.getTouchId());
+        userProfileRespBean.getSettings().setPasscode(userDetailsBO.getUsePassCode());
+        userProfileRespBean.getSettings().setLocale(userDetailsBO.getLocale());
+
+        if (maybeUserInstitution.isPresent()) {
+          UserInstitution userInstitution = maybeUserInstitution.get();
+
+          InstitutionInfoBean institutionInfoBean = new InstitutionInfoBean();
+          institutionInfoBean.setInstitutionId(userInstitution.getInstitutionId());
+          institutionInfoBean.setStateId(userInstitution.getState());
+          institutionInfoBean.setStudyId(userInstitution.getStudyId());
+
+          userProfileRespBean.setInstitutionInfo(institutionInfoBean);
+        }
+      }
+    } catch (Exception e) {
+      logger.error("UserManagementProfileServiceImpl getParticipantInfoDetailsV2() - error ", e);
+    }
+    logger.info("UserManagementProfileServiceImpl getParticipantInfoDetailsV2() - Ends ");
     return userProfileRespBean;
   }
 
@@ -122,6 +172,51 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
       errorBean = new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
     }
     logger.info("UserManagementProfileServiceImpl updateUserProfile() - Ends ");
+    return errorBean;
+  }
+
+  @Override
+  public ErrorBean updateUserProfileV2(String userId, UserRequestBeanV2 user) {
+    logger.info("UserManagementProfileServiceImpl updateUserProfileV2() - Starts ");
+    ErrorBean errorBean = null;
+    UserDetailsBO userDetailsBO = null;
+    AuthInfoBO authInfo = null;
+    String deviceToken = null;
+    try {
+      userDetailsBO = userProfileManagementDao.getParticipantInfoDetails(userId);
+      if (userDetailsBO != null) {
+        if (user.getSettings() != null) {
+          if (user.getSettings().getRemoteNotifications() != null) {
+            userDetailsBO.setRemoteNotificationFlag(user.getSettings().getRemoteNotifications());
+          }
+          if (user.getSettings().getLocalNotifications() != null) {
+            userDetailsBO.setLocalNotificationFlag(user.getSettings().getLocalNotifications());
+          }
+          if (user.getSettings().getPasscode() != null) {
+            userDetailsBO.setUsePassCode(user.getSettings().getPasscode());
+          }
+          if (user.getSettings().getTouchId() != null) {
+            userDetailsBO.setTouchId(user.getSettings().getTouchId());
+          }
+          if (!StringUtils.isBlank(user.getSettings().getReminderLeadTime())) {
+            userDetailsBO.setReminderLeadTime(user.getSettings().getReminderLeadTime());
+          }
+          if (!StringUtils.isBlank(user.getSettings().getLocale())) {
+            userDetailsBO.setLocale(user.getSettings().getLocale());
+          }
+        }
+        authInfo = authInfoDetailsV2(userDetailsBO.getUserDetailsId(), user);
+        errorBean =
+            userProfileManagementDao.updateUserProfileV2(
+                userId, userDetailsBO, authInfo, user.getInstitutionInfo());
+      } else {
+        errorBean = new ErrorBean(ErrorCode.EC_61.code(), ErrorCode.EC_61.errorMessage());
+      }
+    } catch (Exception e) {
+      logger.error("UserManagementProfileServiceImpl - updateUserProfileV2() - Error", e);
+      errorBean = new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
+    }
+    logger.info("UserManagementProfileServiceImpl updateUserProfileV2() - Ends ");
     return errorBean;
   }
 
@@ -326,5 +421,99 @@ public class UserManagementProfileServiceImpl implements UserManagementProfileSe
       authInfo.setModifiedOn(new Date());
     }
     return authInfo;
+  }
+
+  private AuthInfoBO authInfoDetailsV2(Integer userDetailsId, UserRequestBeanV2 user) {
+    AuthInfoBO authInfo = null;
+    authInfo = userProfileManagementDao.getAuthInfo(userDetailsId);
+    if (authInfo != null) {
+      if (user.getSettings() != null && user.getSettings().getRemoteNotifications() != null) {
+        authInfo.setRemoteNotificationFlag(user.getSettings().getRemoteNotifications());
+      }
+      if (user.getInfo() != null) {
+        if (!StringUtils.isBlank(user.getInfo().getOs())) {
+          authInfo.setDeviceType(user.getInfo().getOs());
+        }
+        if (!StringUtils.isBlank(user.getInfo().getOs())
+            && (user.getInfo().getOs().equalsIgnoreCase("IOS")
+                || user.getInfo().getOs().equalsIgnoreCase("I"))) {
+          authInfo.setIosAppVersion(user.getInfo().getAppVersion());
+        } else {
+          authInfo.setAndroidAppVersion(user.getInfo().getAppVersion());
+        }
+        if (!StringUtils.isBlank(user.getInfo().getDeviceToken())) {
+          authInfo.setDeviceToken(user.getInfo().getDeviceToken());
+        } // To maintain single session and update old device token
+        // when user changed the device from android to IOS or vice versa
+        else if (!StringUtils.isBlank(authInfo.getDeviceToken())) {
+          authInfo.setDeviceToken(null);
+        }
+      }
+      authInfo.setModifiedOn(new Date());
+    }
+    return authInfo;
+  }
+
+  @Override
+  public ErrorBean removeDeviceToken(String userId) {
+    logger.info("UserManagementProfileServiceImpl - removeDeviceToken() - Starts");
+    ErrorBean errorBean = null;
+    UserDetailsBO userDetails = null;
+    try {
+      if (userId != null) {
+        userDetails = userDetailsDao.loadUserDetailsByUserId(userId);
+      }
+      if (userDetails != null) {
+        errorBean = userProfileManagementDao.removeDeviceToken(userDetails.getUserDetailsId());
+      }
+    } catch (Exception e) {
+      logger.error("UserManagementProfileServiceImpl - removeDeviceToken() - error() ", e);
+      errorBean = new ErrorBean(ErrorCode.EC_500.code(), ErrorCode.EC_500.errorMessage());
+    }
+    logger.info("UserManagementProfileServiceImpl - removeDeviceToken() - Ends");
+    return errorBean;
+  }
+
+  @Override
+  public List<String> getStatesList() {
+    logger.info("UserManagementProfileServiceImpl - getStatesList() - Starts");
+    List<String> statesList = userProfileManagementDao.getStatesList();
+    logger.info("UserManagementProfileServiceImpl - getStatesList() - Ends");
+    return statesList;
+  }
+
+  @Override
+  public List<String> getInstitutionsList(String state) {
+    logger.info("UserManagementProfileServiceImpl - getInstitutionsList() - Starts");
+    List<String> institutionsList = userProfileManagementDao.getInstitutionsList(state);
+    logger.info("UserManagementProfileServiceImpl - getInstitutionsList() - Ends");
+    return institutionsList;
+  }
+
+  @Override
+  public boolean updateNewlyAddedInstitutes(List<StateInstitutionMappingBO> newInstitutionList) {
+    logger.info("UserManagementProfileServiceImpl - updateNewlyAddedInstitutes() - Starts");
+    boolean flag = userProfileManagementDao.updateNewlyAddedInstitutes(newInstitutionList);
+    logger.info("UserManagementProfileServiceImpl - updateNewlyAddedInstitutes() - Ends");
+    return flag;
+  }
+
+  @Override
+  public boolean removeInstitutions(List<StateInstitutionMappingBO> institutionToRemoveList) {
+    logger.info("UserManagementProfileServiceImpl - removeInstitutions() - Starts");
+    boolean flag = userProfileManagementDao.removeInstitutions(institutionToRemoveList);
+    logger.info("UserManagementProfileServiceImpl - removeInstitutions() - Ends");
+    return flag;
+  }
+
+  @Override
+  public List<Integer> getUserIdsOfInstitutionsToBeRemoved(
+      List<StateInstitutionMappingBO> institutionToRemoveList) {
+    logger.info(
+        "UserManagementProfileServiceImpl - getUserIdsOfInstitutionsToBeRemoved() - Starts");
+    List<Integer> userIdList =
+        userProfileManagementDao.getUserIdsOfInstitutionsToBeRemoved(institutionToRemoveList);
+    logger.info("UserManagementProfileServiceImpl - getUserIdsOfInstitutionsToBeRemoved() - Ends");
+    return userIdList;
   }
 }

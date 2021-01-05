@@ -8,11 +8,11 @@
 
 package com.google.cloud.healthcare.fdamystudies.repository;
 
+import com.google.cloud.healthcare.fdamystudies.model.AuthInfoBO;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import com.google.cloud.healthcare.fdamystudies.model.AuthInfoBO;
 
 @Repository
 public interface AuthInfoBORepository extends JpaRepository<AuthInfoBO, Integer> {
@@ -20,4 +20,14 @@ public interface AuthInfoBORepository extends JpaRepository<AuthInfoBO, Integer>
   @Query(
       "SELECT a FROM UserAppDetailsBO u,AuthInfoBO a where u.userDetailsId = a.userId and u.appInfoId in (?1) and a.remoteNotificationFlag=1 and (a.deviceToken is not NULL and a.deviceToken != '' and a.deviceType is not NULL and a.deviceType != '') ")
   public List<AuthInfoBO> findDevicesTokens(List<Integer> appIds);
+
+  @Query(
+      "SELECT a FROM UserAppDetailsBO u,AuthInfoBO a where u.userDetailsId = a.userId and u.appInfoId in (?1) and u.userDetailsId not in (?2) and a.remoteNotificationFlag=1 and (a.deviceToken is not NULL and a.deviceToken != '' and a.deviceType is not NULL and a.deviceType != '') ")
+  public List<AuthInfoBO> findDevicesTokensOfUsersWithNoInstitutionAffiliation(
+      List<Integer> appIds, List<Integer> userDetailsIds);
+
+  @Query(
+      "SELECT a FROM UserAppDetailsBO u,AuthInfoBO a where u.userDetailsId = a.userId and u.appInfoId in (?1) and u.userDetailsId in (?2) and a.remoteNotificationFlag=1 and (a.deviceToken is not NULL and a.deviceToken != '' and a.deviceType is not NULL and a.deviceType != '') ")
+  public List<AuthInfoBO> findDevicesTokensOfUsersWithInstitutionAffiliation(
+      List<Integer> appIds, List<Integer> userDetailsIds);
 }
