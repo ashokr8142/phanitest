@@ -111,9 +111,16 @@ public class ParticipantSummaryReportServiceImpl implements ParticipantSummaryRe
       cal.setTime(inputDate);
       startWeek = cal.get(Calendar.WEEK_OF_YEAR);
 
+      int totalNumberOfWeeks = cal.getWeeksInWeekYear();
       cal.setTime(finishDate);
       finishWeek = cal.get(Calendar.WEEK_OF_YEAR);
-      diff = finishWeek - startWeek + 1;
+
+      if (finishWeek > startWeek) {
+        diff = Math.abs(finishWeek - startWeek) + 1;
+      } else {
+        int weekDiff = totalNumberOfWeeks - startWeek;
+        diff = weekDiff + finishWeek + 1;
+      }
 
       cal = Calendar.getInstance();
       cal.setTime(finishDate);
