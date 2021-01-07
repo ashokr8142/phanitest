@@ -10,7 +10,9 @@ import com.google.cloud.healthcare.fdamystudies.utils.TableConfigUtil;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +20,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,9 +85,6 @@ public class ParticipantSummaryReportServiceImpl implements ParticipantSummaryRe
     Map<String, List<ParticipantChartInfoBo>> surveyResponsesGroupedByWeek =
         new LinkedHashMap<String, List<ParticipantChartInfoBo>>();
     try {
-
-      int startWeek;
-      int finishWeek;
       int diff;
       SimpleDateFormat sdf = new SimpleDateFormat(AppConstants.DATE_FORMAT_yyyy_MM_dd);
       Calendar cal;
@@ -106,21 +106,28 @@ public class ParticipantSummaryReportServiceImpl implements ParticipantSummaryRe
       List<ParticipantChartInfoBo> participantChartListGroupedByWeek = null;
 
       inputDate = sdf.parse(formatedDate);
+      formatedDate = SummaryReportUtil.startOfDate(formatedDate);
+      inputDate = sdf.parse(formatedDate);
 
       cal = Calendar.getInstance();
       cal.setTime(inputDate);
-      startWeek = cal.get(Calendar.WEEK_OF_YEAR);
 
-      int totalNumberOfWeeks = cal.getWeeksInWeekYear();
+      // Getting the timezone
+      TimeZone tz = cal.getTimeZone();
+      // Getting zone id
+      ZoneId zoneId = tz.toZoneId();
+      // conversion
+      LocalDateTime localStartDate = LocalDateTime.ofInstant(cal.toInstant(), zoneId);
+
+      cal = Calendar.getInstance();
       cal.setTime(finishDate);
-      finishWeek = cal.get(Calendar.WEEK_OF_YEAR);
 
-      if (finishWeek > startWeek) {
-        diff = Math.abs(finishWeek - startWeek) + 1;
-      } else {
-        int weekDiff = totalNumberOfWeeks - startWeek;
-        diff = weekDiff + finishWeek + 1;
-      }
+      LocalDateTime localEndDate = LocalDateTime.ofInstant(cal.toInstant(), zoneId);
+
+      long diffInDays = ChronoUnit.DAYS.between(localStartDate, localEndDate);
+      int weeks = (int) diffInDays / 7;
+
+      diff = weeks + 1;
 
       cal = Calendar.getInstance();
       cal.setTime(finishDate);
