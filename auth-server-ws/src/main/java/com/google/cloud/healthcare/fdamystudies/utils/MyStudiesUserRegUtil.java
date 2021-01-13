@@ -8,6 +8,7 @@
 
 package com.google.cloud.healthcare.fdamystudies.utils;
 
+import com.google.cloud.healthcare.fdamystudies.exception.SystemException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
-import com.google.cloud.healthcare.fdamystudies.exception.SystemException;
 
 public class MyStudiesUserRegUtil {
 
@@ -75,7 +75,7 @@ public class MyStudiesUserRegUtil {
 
     INVALID_USERNAME_PASSWORD_MSG("Invalid username or password"),
 
-    PASSWORD_EXPIRED("Password has expired"),
+    PASSWORD_EXPIRED("Your Password is expired. Please use forgot password to reset your password"),
 
     INVALID_EMAIL_ID("Invalid email id");
 
